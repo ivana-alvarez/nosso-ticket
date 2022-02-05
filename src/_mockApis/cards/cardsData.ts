@@ -1,5 +1,6 @@
 export const cardsData = [
     {
+        card_description: 'Tarjeta TSC',
         card_no: '1001020002985261',
         dept_no: 25,
         card_serial: 'CC681AEE',
@@ -25,6 +26,7 @@ export const cardsData = [
         id_no: 'V20698370',
     },
     {
+        card_description: 'Tarjeta TSC 1',
         card_no: '1001020002985261',
         dept_no: 25,
         card_serial: 'CC681AEE',
@@ -50,6 +52,7 @@ export const cardsData = [
         id_no: 'V20698370',
     },
     {
+        card_description: 'Tarjeta TSC 2',
         card_no: '1001020002985261',
         dept_no: 25,
         card_serial: 'CC681AEE',

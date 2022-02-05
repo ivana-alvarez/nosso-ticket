@@ -186,16 +186,30 @@ export interface TBanksProps {
 }
 
 export interface TCardsProps {
-    id?: string
-    category: string
-    name: string
-    description: string
-    allowed_media: Array<string>
-    is_ticket_allowed: boolean
-    web_rechargable: boolean
-    allowed_actions: Array<string>
-    abbreviation: string
-    currency?: string
+    card_description: string
+    card_no: string
+    dept_no: number
+    card_serial: string
+    card_type: number
+    card_status: number
+    order_no: number
+    init_time: string
+    opcard_no: string
+    issue_time: string
+    cash_serial: number
+    bt_time: string
+    last_supply_time: string
+    last_riding_time: string
+    ss_times: number
+    supply_money: string
+    paid: string
+    card_money: string
+    card_deposit: string
+    name1: string
+    name2: string
+    surname1: string
+    surname2: string
+    id_no: string
 }
 export interface TCardsCProps extends TCardsProps {
     factor: number
