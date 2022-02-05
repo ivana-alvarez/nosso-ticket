@@ -19,6 +19,7 @@ export default function AlertDialog({
     setOpen,
     title,
     handleAccept,
+    acceptButtonText,
     children,
 }) {
     const theme = useTheme()
@@ -63,7 +64,7 @@ export default function AlertDialog({
                         onClick={handleAccept}
                         autoFocus
                     >
-                        Aceptar
+                        {acceptButtonText}
                     </Button>
                 </DialogActions>
             </Dialog>

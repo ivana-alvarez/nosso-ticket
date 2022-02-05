@@ -15,6 +15,7 @@ import {
     Controller,
     // SubmitErrorHandler,
 } from 'react-hook-form'
+import CardsActions from 'components/cards/CardsActions'
 const basicData = [
     {
         id: 'basic1',
@@ -51,36 +52,7 @@ const ViewSystem = () => {
                             <p className="text-center my-4">Tarjeta RSC</p>
                         </div>
                         <div className="w-full lg:w-2/3">
-                            <div className="flex justify-around">
-                                <Button
-                                    variant="text"
-                                    size="large"
-                                    onClick={() => setOpen(true)}
-                                >
-                                    <div className="flex flex-col items-center">
-                                        <SyncAltIcon className="w-12 h-12" />
-                                        <p>Actualizar</p>
-                                    </div>
-                                </Button>
-                                <Button variant="text" size="small">
-                                    <div className="flex flex-col items-center">
-                                        <SyncAltIcon className="w-12 h-12" />
-                                        <p>Recargar</p>
-                                    </div>
-                                </Button>
-                                <Button variant="text" size="small">
-                                    <div className="flex flex-col items-center">
-                                        <SyncAltIcon className="w-12 h-12" />
-                                        <p>Bloquear</p>
-                                    </div>
-                                </Button>
-                                <Button variant="text" size="small">
-                                    <div className="flex flex-col items-center">
-                                        <SyncAltIcon className="w-12 h-12" />
-                                        <p>Eliminar</p>
-                                    </div>
-                                </Button>
-                            </div>
+                            <CardsActions setOpen={setOpen} />
                             <div className="w-full my-5 px-10">
                                 <div className="flex my-4 ">
                                     <p className="w-1/2">Saldo Actual</p>
@@ -170,6 +142,7 @@ const ViewSystem = () => {
                 setOpen={setOpen}
                 handleAccept={() => console.log('hola')}
                 title="Recarga de Saldo"
+                acceptButtonText="Aceptar"
             >
                 <div className="flex flex-wrap">
                     <div className="w-full lg:w-1/2 px-4">
