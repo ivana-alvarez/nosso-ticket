@@ -19,6 +19,8 @@ const CreateTransfer = Loadable(
 const ViewSystem = Loadable(lazy(() => import('views/system/ViewSystem')))
 const CreateSystem = Loadable(lazy(() => import('views/system/CreateSystem')))
 
+const ViewSummary = Loadable(lazy(()=> import('views/summary/ViewSummary')))
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -60,6 +62,10 @@ const MainRoutes = {
         {
             path: '/system/create',
             element: <CreateSystem />,
+        },
+        {
+            path: '/summary',
+            element:<ViewSummary />,
         },
     ],
 }
