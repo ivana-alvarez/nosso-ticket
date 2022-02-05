@@ -81,7 +81,7 @@ interface TableCustomProps {
         | {}[]
     data: { any }[]
     title: string
-    handleCreate? : React.MouseEventHandler<HTMLButtonElement>
+    handleCreate?: React.MouseEventHandler<HTMLButtonElement>
     extraOptionIcon?: React.ReactNode
     extraOptionAction?: React.MouseEventHandler<HTMLButtonElement>
     addIconTooltip?: string
@@ -220,21 +220,20 @@ const TableCustom = ({
                     </TableBody>
                 </Table>
             </TableContainer>
-                {handleCreate != undefined &&  addIconTooltip ? (
-                    <div className="fixed right-4 bottom-10">
-                        <Tooltip title={addIconTooltip} placement="top">
-                            <Fab
-                                color="primary"
-                                aria-label="add"
-                                onClick={handleCreate}
-                                // disabled={open}
-                            >
-                                <AddIcon />
-                            </Fab>
-                        </Tooltip>
-                    </div>
-                ) : null}
-            
+            {handleCreate !== undefined && addIconTooltip ? (
+                <div className="fixed right-4 bottom-10">
+                    <Tooltip title={addIconTooltip} placement="top">
+                        <Fab
+                            color="primary"
+                            aria-label="add"
+                            onClick={handleCreate}
+                            // disabled={open}
+                        >
+                            <AddIcon />
+                        </Fab>
+                    </Tooltip>
+                </div>
+            ) : null}
 
             {/* table pagination */}
             <Pagination
