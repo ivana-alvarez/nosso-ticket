@@ -1,21 +1,16 @@
-// ==============================|| SAMPLE PAGE ||============================== //
-
-import { Button, MenuItem, TextField } from '@material-ui/core'
-import Accordion from 'ui-component/extended/Accordion'
-
-import SyncAltIcon from '@mui/icons-material/SyncAlt'
-import SubCard from 'ui-component/cards/SubCard'
-
-import TableStickyHead from '../../components/TableStickyHead'
 import React from 'react'
-import AlertDialog from 'components/AlertDialog'
-import {
-    useForm,
-    // SubmitHandler,
-    Controller,
-    // SubmitErrorHandler,
-} from 'react-hook-form'
+import Accordion from 'ui-component/extended/Accordion'
+import SubCard from 'ui-component/cards/SubCard'
+import TableStickyHead from '../../components/TableStickyHead'
 import CardsActions from 'components/cards/CardsActions'
+import CardsInfo from 'components/cards/CardsInfo'
+import RechargeCardForm from 'components/cards/RechargeCardForm'
+import BlockCardForm from 'components/cards/BlockCardForm'
+import { useSelector } from 'react-redux'
+import { DefaultRootStateProps } from 'types'
+import { Fab, Tooltip } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
+
 const basicData = [
     {
         id: 'basic1',
@@ -24,191 +19,88 @@ const basicData = [
     },
 ]
 
-const typesCompany = [
-    {
-        id: 'as123',
-        name: 'as123',
-    },
-]
-
 const ViewSystem = () => {
-    const {
-        // handleSubmit,
-        control,
-        // formState: { errors, dirtyFields },
-        // setValue,
-        // getValues,
-    } = useForm({
-        // resolver: yupResolver(Schema),
-    })
+    const cards = useSelector((state: DefaultRootStateProps) => state.cards)
     const [open, setOpen] = React.useState<boolean>(false)
+    const [modal, setModal] = React.useState<string>('')
+
+    const updateHandle = () => {
+        console.log('u')
+    }
+    const rechargeHandle = () => {
+        setOpen(true)
+        setModal('recharge')
+    }
+    const blockHandle = () => {
+        setOpen(true)
+        setModal('block')
+    }
+    const deleteHandle = () => {
+        console.log('d')
+    }
+
     return (
         <div className="flex flex-wrap">
-            <div className="w-full xl:w-1/2 p-4">
-                <SubCard>
-                    <div className="flex flex-wrap">
-                        <div className="w-full lg:w-1/3 my-4">
-                            <div className="w-full h-36 bg-black rounded-md"></div>
-                            <p className="text-center my-4">Tarjeta RSC</p>
-                        </div>
-                        <div className="w-full lg:w-2/3">
-                            <CardsActions setOpen={setOpen} />
-                            <div className="w-full my-5 px-10">
-                                <div className="flex my-4 ">
-                                    <p className="w-1/2">Saldo Actual</p>
-                                    <p className="w-1/2">Saldo Actual</p>
+            {cards.map(
+                ({
+                    card_description,
+                    card_status,
+                    card_money,
+                    init_time,
+                    issue_time,
+                    card_type,
+                }) => (
+                    <div className="w-full xl:w-1/2 p-4">
+                        <SubCard>
+                            <div className="flex flex-wrap">
+                                <div className="w-full lg:w-1/3 my-4">
+                                    <div className="w-full h-36 bg-black rounded-md"></div>
+                                    <p className="text-center my-4">
+                                        {card_description}
+                                    </p>
                                 </div>
-                                <div className="flex my-4">
-                                    <p className="w-1/2">Fecha de Venta</p>
-                                    <p className="w-1/2">Saldo Actual</p>
-                                </div>
-                                <div className="flex my-4">
-                                    <p className="w-1/2">Fecha de Expiración</p>
-                                    <p className="w-1/2">Saldo Actual</p>
-                                </div>
-                                <div className="flex my-4">
-                                    <p className="w-1/2">Tipo de Tarjeta</p>
-                                    <p className="w-1/2">Saldo Actual</p>
+                                <div className="w-full lg:w-2/3">
+                                    <CardsActions
+                                        updateHandle={updateHandle}
+                                        rechargeHandle={rechargeHandle}
+                                        blockHandle={blockHandle}
+                                        deleteHandle={deleteHandle}
+                                    />
+                                    <CardsInfo
+                                        card_status={card_status}
+                                        card_money={card_money}
+                                        init_time={init_time}
+                                        issue_time={issue_time}
+                                        card_type={card_type}
+                                    />
                                 </div>
                             </div>
-                        </div>
+                            <div>
+                                <Accordion data={basicData} />
+                            </div>
+                        </SubCard>
                     </div>
-                    <div>
-                        <Accordion data={basicData} />
-                    </div>
-                </SubCard>
+                )
+            )}
+            <div className="fixed right-4 bottom-12 right-12">
+                <Tooltip title="Agregar Tarjeta" placement="top">
+                    <Fab
+                        color="primary"
+                        aria-label="add"
+                        onClick={() => {
+                            console.log('edit')
+                        }}
+                    >
+                        <AddIcon />
+                    </Fab>
+                </Tooltip>
             </div>
-            <div className="w-full xl:w-1/2 p-4">
-                <SubCard>
-                    <div className="flex flex-wrap">
-                        <div className="w-full lg:w-1/3 my-4">
-                            <div className="w-full h-36 bg-black rounded-md"></div>
-                            <p className="text-center my-4">Tarjeta RSC</p>
-                        </div>
-                        <div className="w-full lg:w-2/3">
-                            <div className="flex justify-around">
-                                <Button variant="text" size="large">
-                                    <div className="flex flex-col items-center">
-                                        <SyncAltIcon className="w-12 h-12" />
-                                        <p>Actualizar</p>
-                                    </div>
-                                </Button>
-                                <Button variant="text" size="small">
-                                    <div className="flex flex-col items-center">
-                                        <SyncAltIcon className="w-12 h-12" />
-                                        <p>Recargar</p>
-                                    </div>
-                                </Button>
-                                <Button variant="text" size="small">
-                                    <div className="flex flex-col items-center">
-                                        <SyncAltIcon className="w-12 h-12" />
-                                        <p>Bloquear</p>
-                                    </div>
-                                </Button>
-                                <Button variant="text" size="small">
-                                    <div className="flex flex-col items-center">
-                                        <SyncAltIcon className="w-12 h-12" />
-                                        <p>Eliminar</p>
-                                    </div>
-                                </Button>
-                            </div>
-                            <div className="w-full my-5 px-10">
-                                <div className="flex my-4 ">
-                                    <p className="w-1/2">Saldo Actual</p>
-                                    <p className="w-1/2">Saldo Actual</p>
-                                </div>
-                                <div className="flex my-4">
-                                    <p className="w-1/2">Fecha de Venta</p>
-                                    <p className="w-1/2">Saldo Actual</p>
-                                </div>
-                                <div className="flex my-4">
-                                    <p className="w-1/2">Fecha de Expiración</p>
-                                    <p className="w-1/2">Saldo Actual</p>
-                                </div>
-                                <div className="flex my-4">
-                                    <p className="w-1/2">Tipo de Tarjeta</p>
-                                    <p className="w-1/2">Saldo Actual</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <Accordion data={basicData} />
-                    </div>
-                </SubCard>
-            </div>
-            <AlertDialog
-                open={open}
-                setOpen={setOpen}
-                handleAccept={() => console.log('hola')}
-                title="Recarga de Saldo"
-                acceptButtonText="Aceptar"
-            >
-                <div className="flex flex-wrap">
-                    <div className="w-full lg:w-1/2 px-4">
-                        <div className="w-full h-36 bg-black rounded-md"></div>
-                        <p className="text-center my-4">Tarjeta RSC</p>
-                    </div>
-                    <div className="w-full lg:w-1/2 px-4">
-                        <div className="my4">
-                            <Controller
-                                name="company_type"
-                                control={control}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        select
-                                        fullWidth
-                                        label="Monto a Recargar"
-                                        size="small"
-                                        autoComplete="off"
-                                        // error={!!errors.company_type}
-                                        // helperText={errors.company_type?.message}
-                                        // disabled={readOnly}
-                                    >
-                                        {typesCompany.map((option) => (
-                                            <MenuItem
-                                                key={option.id}
-                                                value={option.id}
-                                            >
-                                                {option.name}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                )}
-                            />
-                        </div>
-                        <div className="my-4">
-                            <Controller
-                                name="company_type"
-                                control={control}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        select
-                                        fullWidth
-                                        label="Medio de Pago"
-                                        size="small"
-                                        autoComplete="off"
-                                        // error={!!errors.company_type}
-                                        // helperText={errors.company_type?.message}
-                                        // disabled={readOnly}
-                                    >
-                                        {typesCompany.map((option) => (
-                                            <MenuItem
-                                                key={option.id}
-                                                value={option.id}
-                                            >
-                                                {option.name}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                )}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </AlertDialog>
+            {modal === 'recharge' ? (
+                <RechargeCardForm open={open} setOpen={setOpen} />
+            ) : null}
+            {modal === 'block' ? (
+                <BlockCardForm open={open} setOpen={setOpen} />
+            ) : null}
         </div>
     )
 }
