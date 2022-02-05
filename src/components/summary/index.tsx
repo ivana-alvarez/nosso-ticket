@@ -24,6 +24,7 @@ import PersonOutlineTwoToneIcon from '@material-ui/icons/PersonOutlineTwoTone'
 // import AltRouteIcon from '@mui/icons-material/AltRoute';
 import { DefaultRootStateProps } from 'types'
 import AffiliateTitles from './AffiliateTitles'
+import Recharge from './Recharge'
 
 // style constant
 const useStyles = makeStyles((theme: Theme) => ({
@@ -219,7 +220,7 @@ function a11yProps(index: number) {
                                 <Grid item xs={12} lg={8}>
                                     <CardContent className={classes.cardPanels}>
                                         <TabPanel value={value} index={1}>
-                                        <div></div>
+                                            <Recharge /> 
                                         </TabPanel>
                                     </CardContent>
                                 </Grid>
