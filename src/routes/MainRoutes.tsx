@@ -19,8 +19,10 @@ const CreateTransfer = Loadable(
 const ViewSystem = Loadable(lazy(() => import('views/system/ViewSystem')))
 const CreateSystem = Loadable(lazy(() => import('views/system/CreateSystem')))
 
+
 const ViewSummary = Loadable(lazy(()=> import('views/summary/ViewSummary')))
 
+const ProfileForm = Loadable(lazy(() => import('views/profile/CreateProfile')))
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -66,6 +68,10 @@ const MainRoutes = {
         {
             path: '/summary',
             element:<ViewSummary />,
+        },
+        {
+            path: '/profile',
+            element: <ProfileForm />,
         },
     ],
 }
