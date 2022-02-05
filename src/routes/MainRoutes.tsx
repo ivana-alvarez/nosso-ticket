@@ -6,7 +6,18 @@ import Loadable from 'ui-component/Loadable'
 import AuthGuard from 'utils/route-guard/AuthGuard'
 
 //Empresas operadoras
-const SamplePage = Loadable(lazy(() => import('views/sample-page')))
+const ViewCards = Loadable(lazy(() => import('views/cards/ViewCards')))
+const CreateCards = Loadable(lazy(() => import('views/cards/CreateCards')))
+const ViewPayments = Loadable(lazy(() => import('views/payments/ViewPayments')))
+const CreatePayments = Loadable(
+    lazy(() => import('views/payments/CreatePayments'))
+)
+const ViewTransfer = Loadable(lazy(() => import('views/transfer/ViewTransfer')))
+const CreateTransfer = Loadable(
+    lazy(() => import('views/transfer/CreateTransfer'))
+)
+const ViewSystem = Loadable(lazy(() => import('views/system/ViewSystem')))
+const CreateSystem = Loadable(lazy(() => import('views/system/CreateSystem')))
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -19,8 +30,36 @@ const MainRoutes = {
     ),
     children: [
         {
-            path: '/sample-page',
-            element: <SamplePage />,
+            path: '/cards/list',
+            element: <ViewCards />,
+        },
+        {
+            path: '/cards/create',
+            element: <CreateCards />,
+        },
+        {
+            path: '/payments/list',
+            element: <ViewPayments />,
+        },
+        {
+            path: '/payments/create',
+            element: <CreatePayments />,
+        },
+        {
+            path: '/transfer/list',
+            element: <ViewTransfer />,
+        },
+        {
+            path: '/transfer/create',
+            element: <CreateTransfer />,
+        },
+        {
+            path: '/system/list',
+            element: <ViewSystem />,
+        },
+        {
+            path: '/system/create',
+            element: <CreateSystem />,
         },
     ],
 }

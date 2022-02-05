@@ -1,11 +1,11 @@
 import { NavItemType } from 'types'
-import Sample from './Sample'
+import Main from './Main'
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const handleItems = () => {
     const menuItems: { items: NavItemType[] } = {
-        items: [Sample],
+        items: [Main],
     }
     return menuItems
 }
