@@ -18,8 +18,8 @@ export default function AlertDialog({
     open,
     setOpen,
     title,
-    description,
     handleAccept,
+    children,
 }) {
     const theme = useTheme()
 
@@ -30,18 +30,19 @@ export default function AlertDialog({
     return (
         <>
             <Dialog
-                maxWidth="xs"
+                maxWidth="sm"
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
                 sx={{ p: 3 }}
+                fullWidth
             >
                 <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         <Typography variant="body2" component="span">
-                            {description}
+                            {children}
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
