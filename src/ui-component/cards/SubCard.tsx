@@ -57,14 +57,14 @@ const SubCard = ({
             {/* card header and action */}
             {!darkTitle && title && (
                 <CardHeader
-                    sx={{ p: 1.2 }}
+                    sx={{ p: 2.5 }}
                     title={<Typography variant="h5">{title}</Typography>}
                     action={secondary}
                 />
             )}
             {darkTitle && title && (
                 <CardHeader
-                    sx={{ p: 1.2 }}
+                    sx={{ p: 2.5 }}
                     title={<Typography variant="h4">{title}</Typography>}
                     action={secondary}
                 />
@@ -85,7 +85,7 @@ const SubCard = ({
 
             {/* card content */}
             {content && (
-                <CardContent sx={{ p: 0 }} className={contentClass || ''}>
+                <CardContent sx={{ p: 2.5 }} className={contentClass || ''}>
                     {children}
                 </CardContent>
             )}

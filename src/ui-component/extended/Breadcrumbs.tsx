@@ -20,7 +20,7 @@ import { NavItemType, NavItemTypeObject, OverrideIcon } from 'types';
 const useStyles = makeStyles((theme: Theme) => ({
     link: {
         display: 'flex',
-        color: theme.palette.grey[500],
+        color: theme.palette.grey[900],
         textDecoration: 'none',
         alignContent: 'center',
         alignItems: 'center'
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         textDecoration: 'none',
         alignContent: 'center',
         alignItems: 'center',
-        color: theme.palette.grey[900]
+        color: theme.palette.grey[500]
     },
     icon: {
         marginRight: theme.spacing(0.75),
