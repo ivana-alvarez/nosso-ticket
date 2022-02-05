@@ -29,7 +29,10 @@ import {
     // FormHelperText,
     // Switch,
     // MenuItem,
+    Link, 
+    Box,
 } from '@material-ui/core'
+
 import AnimateButton from 'ui-component/extended/AnimateButton'
 
 // project imports
@@ -103,8 +106,20 @@ const useStyles = makeStyles((theme: Theme) => ({
         zIndex: 1,
         padding: 0.5,
         cursor: 'pointer',
-        width: '30%',
+        width: '40%',
     },
+    box: {
+        // height: 00,
+        display: "flex",
+        marginLeft:20,
+        // border: "1px solid black",
+
+        // padding: 8
+      },
+      spreadBox: {
+        justifyContent: "space-around",
+        alignItems: "center"
+      }
 }))
 
 //types form
@@ -124,7 +139,7 @@ const initialValues = {
 
 // ==============================|| login PROFILE FORM ||============================== //
 
-const LoginForm = (props: { login?: number }, { ...others }) => {
+const LoginForm = (props : { login?: number, isRecover: Boolean, handleRecover: () => void, handleRegister: () => void}) => {
     // CUSTOMS HOOKS
     const classes = useStyles()
     const dispatch = useDispatch()
@@ -146,11 +161,14 @@ const LoginForm = (props: { login?: number }, { ...others }) => {
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword)
     }
+    // const handleLink = () => {
+    //     setISRecover(false)
+    // }
 
     const handleMouseDownPassword = (event: React.SyntheticEvent) => {
         event.preventDefault()
     }
-
+    
     const onInvalid: SubmitErrorHandler<Inputs> = (data, e) => {
         console.log('onInvalied', data)
         if (!data.username || !data.password) return
@@ -245,9 +263,15 @@ const LoginForm = (props: { login?: number }, { ...others }) => {
                         />
                     </Grid>
 
-                    <Grid item xs={12} md={12}>
+                    {/* <Grid item xs={12} md={12}> */}
+                    <Box
+                        component="span"
+                        // m={1}
+                        className={`${classes.spreadBox} ${classes.box}`}
+                    >
                         <FormControlLabel
-                            // sx={{marginTop: '10px', }}
+                            sx={{marginTop: '10px', }}
+                            style={{marginRight:100}}
                             control={
                                 <Checkbox
                                     checked={checked}
@@ -262,17 +286,44 @@ const LoginForm = (props: { login?: number }, { ...others }) => {
                             }
                             label={'Remember me'}
                         />
-                    </Grid>
-                    <Grid item md={12} sx={{ marginLeft: '125px' }}>
+                        {/* <Button
+                                
+                                style={{}}
+                                // variant="contained"
+                                // size="large"
+                                // type="submit"
+                        > */}
+                            <Link  style={{marginRight:0,}}  underline='none' href='#' onClick={() => props.handleRecover()} variant="body2"> 
+                                ¿Olvidaste tu contreseña?
+                            </Link>
+                        {/* </Button> */}
+                       
+                    </Box>
+                    {/* </Grid> */}
+                    
+                    <Grid item md={12} >
                         <AnimateButton>
                             <Button
+                            style={{width:375}}
                                 variant="contained"
                                 size="large"
                                 type="submit"
-                            >
+                        >
                                 Iniciar sesión
                             </Button>
                         </AnimateButton>
+                    </Grid>
+                    <Grid item md={12}>
+                        <Button
+                            style={{width:375}}
+                            onClick={() => props.handleRegister()}
+                                // variant="contained"
+                                size="large"
+                                // type="submit"
+                        >
+                            Crear usuario
+                        </Button>
+
                     </Grid>
                 </Grid>
             </form>
