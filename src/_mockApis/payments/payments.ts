@@ -44,4 +44,13 @@ export const payments = [
         monto: '10',
         active: 'aprobado',
     },
+    {
+        fecha: '6/02/2022',
+        titulo: 'tarjeta',
+        operacion: 'recarga',
+        equipo: 'nodo',
+        referencia: '5897',
+        monto: '18',
+        active: 'denegado',
+    },
 ]

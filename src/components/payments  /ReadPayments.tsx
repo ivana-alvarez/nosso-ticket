@@ -149,7 +149,7 @@ const ReadPayments = () => {
             <TableCustom
                 columns={columns}
                 data={rowsInitial}
-                title="Histórico de pagos y recargas"
+                title="Histórico de pagos y recargass"
                 // addIconTooltip="Añadir nodo"
                 // handleCreate={handleCreate}
             />
