@@ -26,18 +26,28 @@ const Cards = {
         {
             id: 'cards',
             title: <FormattedMessage id="Gestión de Tarjetas" />,
-            type: 'item',
-            url: '/cards/list',
+            type: 'collapse',
+            // url: '/cards/list',
             icon: icons.IconBrandChrome,
             breadcrumbs: false,
         },
         {
             id: 'payments',
             title: <FormattedMessage id="Pagos y Recargas" />,
-            type: 'item',
-            url: '/payments/list',
+            type: 'collapse',
+            // url: '/payments/list',
             icon: icons.IconBrandChrome,
-            breadcrumbs: false,
+            // breadcrumbs: false,
+            children: [
+                {
+                    id: 'detalles_income',
+                    title: <FormattedMessage id="Gestion de pagos"/>,
+                    type: 'item',
+                    // icon: icons.ReportsDetailsOperators,
+                    url: '/payment_management',
+                    breadcrumbs: false,
+                },
+            ],
         },
         {
             id: 'balance transfer',
