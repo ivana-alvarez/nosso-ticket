@@ -148,6 +148,7 @@ const ReadPayments = () => {
                 columns={columns}
                 data={rowsInitial}
                 title="Histórico de pagos y recargas"
+
                 // addIconTooltip="Añadir nodo"
                 // handleCreate={handleCreate}
             />

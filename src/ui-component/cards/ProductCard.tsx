@@ -1,58 +1,84 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 // material-ui
-import { Button, CardContent, CardMedia, Grid, Rating, Stack, Typography } from '@material-ui/core';
+import {
+    Button,
+    CardContent,
+    CardMedia,
+    Grid,
+    Rating,
+    Stack,
+    Typography,
+} from '@material-ui/core'
 
 // project import
-import MainCard from './MainCard';
-import SkeletonProductPlaceholder from 'ui-component/cards/Skeleton/ProductPlaceholder';
-import { KeyedObject } from 'types';
-import { ADD_PRODUCTS, SNACKBAR_OPEN } from 'store/actions';
+import MainCard from './MainCard'
+import SkeletonProductPlaceholder from 'ui-component/cards/Skeleton/ProductPlaceholder'
+import { KeyedObject } from 'types'
+import { ADD_PRODUCTS, SNACKBAR_OPEN } from 'store/actions'
 
 // assets
-import ShoppingCartTwoToneIcon from '@material-ui/icons/ShoppingCartTwoTone';
+import ShoppingCartTwoToneIcon from '@material-ui/icons/ShoppingCartTwoTone'
 
-const prodImage = require.context('assets/images/e-commerce', true);
+// const prodImage = require.context('assets/images/e-commerce', true)
 
 // ==============================|| PRODUCT CARD ||============================== //
 
 export interface ProductCardProps extends KeyedObject {
-    id?: string | number;
-    color?: string;
-    name: string;
-    image: string;
-    description?: string;
-    offerPrice?: number;
-    salePrice?: number;
-    rating?: number;
+    id?: string | number
+    color?: string
+    name: string
+    image: string
+    description?: string
+    offerPrice?: number
+    salePrice?: number
+    rating?: number
 }
 
-const ProductCard = ({ id, color, name, image, description, offerPrice, salePrice, rating }: ProductCardProps) => {
-    const dispatch = useDispatch();
+const ProductCard = ({
+    id,
+    color,
+    name,
+    image,
+    description,
+    offerPrice,
+    salePrice,
+    rating,
+}: ProductCardProps) => {
+    const dispatch = useDispatch()
 
-    const prodProfile = image && prodImage(`./${image}`).default;
-    const [productRating] = React.useState<number | undefined>(rating);
+    // const prodProfile = image && prodImage(`./${image}`).default
+    const [productRating] = React.useState<number | undefined>(rating)
 
     const addCart = () => {
         dispatch({
             type: ADD_PRODUCTS,
-            product: { id, name, image, salePrice, offerPrice, color, size: 8, quantity: 1 }
-        });
+            product: {
+                id,
+                name,
+                image,
+                salePrice,
+                offerPrice,
+                color,
+                size: 8,
+                quantity: 1,
+            },
+        })
         dispatch({
             type: SNACKBAR_OPEN,
             open: true,
             message: 'Add To Cart Success',
             variant: 'alert',
-            alertSeverity: 'success'
-        });
-    };
+            alertSeverity: 'success',
+        })
+    }
 
-    const [isLoading, setLoading] = React.useState(true);
+    const [isLoading, setLoading] = React.useState(true)
     React.useEffect(() => {
-        setLoading(false);
-    }, []);
+        setLoading(false)
+    }, [])
 
     return (
         <>
@@ -65,16 +91,16 @@ const ProductCard = ({ id, color, name, image, description, offerPrice, salePric
                     sx={{
                         '&:hover': {
                             transform: 'scale3d(1.02, 1.02, 1)',
-                            transition: 'all .4s ease-in-out'
-                        }
+                            transition: 'all .4s ease-in-out',
+                        },
                     }}
                 >
                     <CardMedia
                         sx={{ height: 220 }}
-                        image={prodProfile}
+                        // image={prodProfile}
                         title="Contemplative Reptile"
                         component={Link}
-                        to={`/e-commerce/product-details/${id}`}
+                        to=""
                     />
                     <CardContent sx={{ p: 2 }}>
                         <Grid container spacing={2}>
@@ -94,7 +120,7 @@ const ProductCard = ({ id, color, name, image, description, offerPrice, salePric
                                         variant="body2"
                                         sx={{
                                             overflow: 'hidden',
-                                            height: 45
+                                            height: 45,
                                         }}
                                     >
                                         {description}
@@ -102,24 +128,53 @@ const ProductCard = ({ id, color, name, image, description, offerPrice, salePric
                                 </Grid>
                             )}
                             <Grid item xs={12} sx={{ pt: '8px !important' }}>
-                                <Stack direction="row" alignItems="center" spacing={1}>
-                                    <Rating precision={0.5} name="size-small" value={productRating} size="small" readOnly />
-                                    <Typography variant="caption">({offerPrice}+)</Typography>
+                                <Stack
+                                    direction="row"
+                                    alignItems="center"
+                                    spacing={1}
+                                >
+                                    <Rating
+                                        precision={0.5}
+                                        name="size-small"
+                                        value={productRating}
+                                        size="small"
+                                        readOnly
+                                    />
+                                    <Typography variant="caption">
+                                        ({offerPrice}+)
+                                    </Typography>
                                 </Stack>
                             </Grid>
                             <Grid item xs={12}>
-                                <Stack direction="row" justifyContent="space-between" alignItems="center">
+                                <Stack
+                                    direction="row"
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                >
                                     <Grid container spacing={1}>
                                         <Grid item>
-                                            <Typography variant="h4">${offerPrice}</Typography>
+                                            <Typography variant="h4">
+                                                ${offerPrice}
+                                            </Typography>
                                         </Grid>
                                         <Grid item>
-                                            <Typography variant="h6" sx={{ color: 'grey.500', textDecoration: 'line-through' }}>
+                                            <Typography
+                                                variant="h6"
+                                                sx={{
+                                                    color: 'grey.500',
+                                                    textDecoration:
+                                                        'line-through',
+                                                }}
+                                            >
                                                 ${salePrice}
                                             </Typography>
                                         </Grid>
                                     </Grid>
-                                    <Button variant="contained" sx={{ minWidth: 0 }} onClick={addCart}>
+                                    <Button
+                                        variant="contained"
+                                        sx={{ minWidth: 0 }}
+                                        onClick={addCart}
+                                    >
                                         <ShoppingCartTwoToneIcon fontSize="small" />
                                     </Button>
                                 </Stack>
@@ -129,7 +184,7 @@ const ProductCard = ({ id, color, name, image, description, offerPrice, salePric
                 </MainCard>
             )}
         </>
-    );
-};
+    )
+}
 
-export default ProductCard;
+export default ProductCard

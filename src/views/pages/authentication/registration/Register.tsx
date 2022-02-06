@@ -31,7 +31,8 @@ import LogoGobDark from 'components/icons/LogoGobDark'
 import LogoGobLight from 'components/icons/LogoGobLight'
 import CintilloLight from 'components/icons/CintilloLight'
 import CintilloDark from 'components/icons/CintilloDark'
-import RecoverForm from './RecoverForm'
+
+import UserRegisterForm from './UserRegister'
 
 // style constant
 // const useStyles = makeStyles((theme: Theme) => ({
@@ -84,7 +85,7 @@ import RecoverForm from './RecoverForm'
 
 // ================================|| AUTH1 - LOGIN ||================================ //
 
-const Recover = () => {
+const Register = () => {
     // const classes = useStyles()
     const theme = useTheme()
     // const navigate = useNavigate()
@@ -92,6 +93,7 @@ const Recover = () => {
     const themeState = useSelector(
         (state: DefaultRootStateProps) => state.customization.navType
     )
+
 
     return (
         <>
@@ -130,6 +132,7 @@ const Recover = () => {
                             </div>
                         </div>
                         <div className="m-7">
+                        
                             <AuthCardWrapper sx={{ marginTop: '110px' }}>
                                 <Grid
                                     container
@@ -211,17 +214,14 @@ const Recover = () => {
                                                                 : 'h2'
                                                         }
                                                     >
-                                                        Hola, recuperamos tu
-                                                        contrasena
+                                                         Hola, bienvenido
                                                     </Typography>
                                                     <Typography
                                                         color="textPrimary"
                                                         gutterBottom
                                                         variant="h4"
                                                     >
-                                                        Enviaremos su nueva
-                                                        contrasena a su correo
-                                                        registrado en el sistema
+                                                       Registre sus datos para crear su usuario  
                                                     </Typography>
                                                 </Stack>
                                             </Grid>
@@ -230,10 +230,11 @@ const Recover = () => {
 
                                     <Grid item xs={12}>
                                         {/* <FirebaseLogin login={1} /> */}
-                                        <RecoverForm login={1} />
+                                        <UserRegisterForm login={1} />
                                     </Grid>
                                 </Grid>
                             </AuthCardWrapper>
+                       
                         </div>
                     </Grid>
                     <Grid
@@ -304,4 +305,4 @@ const Recover = () => {
     )
 }
 
-export default Recover
+export default Register

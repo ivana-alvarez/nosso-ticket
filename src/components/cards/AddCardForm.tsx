@@ -34,17 +34,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         '& .Mui-focused input': {
             boxShadow: 'none',
         },
-        [theme.breakpoints.down('lg')]: {
-            width: '250px',
-        },
-        [theme.breakpoints.down('md')]: {
-            width: '100%',
-            marginLeft: '4px',
-            background:
-                theme.palette.mode === 'dark'
-                    ? theme.palette.dark[800]
-                    : '#fff',
-        },
     },
     ButtonControl: {
         width: '50%',
@@ -98,8 +87,8 @@ const RechargeCardForm = ({ open, setOpen }) => {
             >
                 <div className="flex flex-wrap">
                     <div className="w-full lg:w-1/2 px-4">
-                        <div className="">
-                            <Card1 />
+                        <div className="flex justify-center">
+                            <Card1 className="max-h-48" />
                         </div>
                         <div className={classes.searchControl}>
                             <Controller

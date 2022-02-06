@@ -40,7 +40,7 @@ const RechargeCardForm = ({ open, setOpen }) => {
                 <div className="flex flex-wrap">
                     <div className="w-full lg:w-1/2 px-4">
                         <div className="flex justify-center">
-                            <Card1 className="max-h-48" />
+                            <Card1 className="max-h-48 w-full" />
                         </div>
                         <p className="text-center my-4">Tarjeta RSC</p>
                     </div>

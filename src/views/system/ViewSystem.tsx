@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux'
 import { DefaultRootStateProps } from 'types'
 import { Fab, Tooltip } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
+import dayjs from 'dayjs'
 
 const basicData = [
     {
@@ -77,8 +78,12 @@ const ViewSystem = () => {
                                     <CardsInfo
                                         card_status={card_status}
                                         card_money={card_money}
-                                        init_time={init_time}
-                                        issue_time={issue_time}
+                                        init_time={dayjs(init_time).format(
+                                            'DD/MM/YYYY'
+                                        )}
+                                        issue_time={dayjs(issue_time).format(
+                                            'DD/MM/YYYY'
+                                        )}
                                         card_type={card_type}
                                     />
                                 </div>

@@ -641,3 +641,10 @@ export interface TIncomeReports {
     node_type?: string
     node_code?: string
 }
+
+export interface TRegister {
+    email:string
+    name:string
+    last_name:string
+    identification:string
+}
