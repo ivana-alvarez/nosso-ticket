@@ -23,6 +23,9 @@ const CreateSystem = Loadable(lazy(() => import('views/system/CreateSystem')))
 const ViewSummary = Loadable(lazy(()=> import('views/summary/ViewSummary')))
 
 const ProfileForm = Loadable(lazy(() => import('views/profile/CreateProfile')))
+const PaymentManagement = Loadable(lazy(()=> import('views/payments/ViewPaymentManagement')))
+
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -73,6 +76,10 @@ const MainRoutes = {
             path: '/profile',
             element: <ProfileForm />,
         },
+        {
+            path:'/payment_management',
+            element: <PaymentManagement />,
+        }
     ],
 }
 

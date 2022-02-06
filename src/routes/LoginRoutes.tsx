@@ -8,10 +8,12 @@ import Loadable from 'ui-component/Loadable';
 
 // login routing
 const AuthLogin = Loadable(lazy(() => import('views/pages/authentication/authentication1/Login1')));
+const Register = Loadable(lazy(() => import('views/pages/authentication/registration/Register')));
+const Recover = Loadable(lazy(() => import('views/pages/authentication/recover/Recover')));
 
 // ==============================|| AUTH ROUTING ||============================== //
 
-const LoginRoutes = {
+const LoginRoutes = [{
     path: 'login',
     element: <MinimalLayout />,
     children: [
@@ -26,6 +28,35 @@ const LoginRoutes = {
             )
         }
     ]
-};
+    },
+    {
+    path: 'register',
+    element: <MinimalLayout />,
+    children: [
+        {
+            path: '/register',
+            element: (
+                // <NavMotion>
+                    <Register />
+                // </NavMotion>
+            )
+        }
+    ]
+    },
+    {
+        path: 'recover',
+        element: <MinimalLayout />,
+        children: [
+            {
+                path: '/recover',
+                element: (
+                    // <NavMotion>
+                        <Recover />
+                    // </NavMotion>
+                )
+            }
+        ]
+        }
+]
 
 export default LoginRoutes;

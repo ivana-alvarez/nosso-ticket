@@ -124,7 +124,7 @@ const Schema = yup.object().shape({
     name: yup.string().required('Este campo es requerido'),
     last_name: yup.string().required('Este campo es requerido'),
     identification: yup.string().required('Este campo es requerido'),
-    password: yup.string().required('Este campo es requerido'),
+    passwordR: yup.string().required('Este campo es requerido'),
     
 })
 
