@@ -1,4 +1,4 @@
-import ReadPayments from 'components/payments  /ReadPayments'
+import ReadPayments from 'components/payments/ReadPayments'
 
 const ViewPayments = () => {
     return <ReadPayments />
