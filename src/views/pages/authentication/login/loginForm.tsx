@@ -13,7 +13,7 @@ import {
 // Redux
 import { useDispatch } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 
 // material-ui
@@ -32,7 +32,7 @@ import {
     // FormHelperText,
     // Switch,
     // MenuItem,
-    // Link, 
+    Link, 
     Box,
 } from '@material-ui/core'
 
@@ -147,7 +147,8 @@ const LoginForm = (props : { login?: number}) => {
     // CUSTOMS HOOKS
     const classes = useStyles()
     const dispatch = useDispatch()
-    // const navigate = useNavigate()
+    
+    const navigate = useNavigate()
     const {
         handleSubmit,
         control,
@@ -167,20 +168,19 @@ const LoginForm = (props : { login?: number}) => {
         setShowPassword(!showPassword)
     }
     // const handleLink = () => {
-    //     setISRecover(false)
+    //     history.push('/register')
     // }
 
     const handleMouseDownPassword = (event: React.SyntheticEvent) => {
         event.preventDefault()
     }
     
-    // const handleRegister = () => {
-    //     navigate('/register')
-    // }
-    // const handleRecover = () => {
-    //     window.history.pushState({}, '/recover')
-    //     // navigate('/recover')
-    // }
+    const handleRegister = () => {
+        navigate('/register')
+    }
+    const handleRecover = () => {
+        navigate('/recover')
+    }
     const onInvalid: SubmitErrorHandler<Inputs> = (data, e) => {
         console.log('onInvalied', data)
         if (!data.username || !data.password) return
@@ -297,22 +297,21 @@ const LoginForm = (props : { login?: number}) => {
                             label={'Remember me'}
                         />
 
-                            {/* <Link state="/recover" underline='none'  onClick={handleRecover} variant="body2">  */}
+                            <Link style={{marginTop:10}}underline='none'  onClick={handleRecover} variant="body2"> 
                             
 
                                 <Button
-                                    style={{marginTop:10,}} 
+                                    // style={{marginTop:10,}} 
                                 // style={{width:375}}
                                     // variant="contained"
                                     size="small"
                                     // type="submit"
                                 >
-                                    <Link to={{pathname:"/recover"}}> 
+                                    
                                         ¿Olvidaste tu contreseña?
-                                    </Link>
                                 </Button>
                             
-                            {/* </Link> */}
+                            </Link>
                        
                     </Box>
                     <Grid item md={12} >
@@ -330,14 +329,13 @@ const LoginForm = (props : { login?: number}) => {
                     <Grid item md={12}>
                         <Button
                             style={{width:375}}
-                            // onClick={handleRegister}
+                            onClick={handleRegister}
                                 // variant="contained"
                                 size="large"
                                 // type="submit"
                         >
-                            <Link to={{pathname:"/register"}} > 
+                            
                                 Crear usuario
-                            </Link>
                         </Button>
 
                     </Grid>
