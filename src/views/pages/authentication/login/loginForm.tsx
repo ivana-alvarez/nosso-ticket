@@ -12,6 +12,9 @@ import {
 
 // Redux
 import { useDispatch } from 'react-redux'
+// import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+
 
 // material-ui
 import { makeStyles } from '@material-ui/styles'
@@ -29,7 +32,7 @@ import {
     // FormHelperText,
     // Switch,
     // MenuItem,
-    Link, 
+    // Link, 
     Box,
 } from '@material-ui/core'
 
@@ -43,6 +46,7 @@ import { gridSpacing } from 'store/constant'
 import { getLoginRequest } from 'store/login/loginActions'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Visibility from '@material-ui/icons/Visibility'
+// import path from 'path'
 
 // CONSTANTS
 
@@ -139,10 +143,11 @@ const initialValues = {
 
 // ==============================|| login PROFILE FORM ||============================== //
 
-const LoginForm = (props : { login?: number, isRecover: Boolean, handleRecover: () => void, handleRegister: () => void}) => {
+const LoginForm = (props : { login?: number}) => {
     // CUSTOMS HOOKS
     const classes = useStyles()
     const dispatch = useDispatch()
+    // const navigate = useNavigate()
     const {
         handleSubmit,
         control,
@@ -169,6 +174,13 @@ const LoginForm = (props : { login?: number, isRecover: Boolean, handleRecover: 
         event.preventDefault()
     }
     
+    // const handleRegister = () => {
+    //     navigate('/register')
+    // }
+    // const handleRecover = () => {
+    //     window.history.pushState({}, '/recover')
+    //     // navigate('/recover')
+    // }
     const onInvalid: SubmitErrorHandler<Inputs> = (data, e) => {
         console.log('onInvalied', data)
         if (!data.username || !data.password) return
@@ -263,10 +275,8 @@ const LoginForm = (props : { login?: number, isRecover: Boolean, handleRecover: 
                         />
                     </Grid>
 
-                    {/* <Grid item xs={12} md={12}> */}
                     <Box
                         component="span"
-                        // m={1}
                         className={`${classes.spreadBox} ${classes.box}`}
                     >
                         <FormControlLabel
@@ -286,21 +296,25 @@ const LoginForm = (props : { login?: number, isRecover: Boolean, handleRecover: 
                             }
                             label={'Remember me'}
                         />
-                        {/* <Button
-                                
-                                style={{}}
-                                // variant="contained"
-                                // size="large"
-                                // type="submit"
-                        > */}
-                            <Link  style={{marginRight:0,}}  underline='none' href='#' onClick={() => props.handleRecover()} variant="body2"> 
-                                ¿Olvidaste tu contreseña?
-                            </Link>
-                        {/* </Button> */}
+
+                            {/* <Link state="/recover" underline='none'  onClick={handleRecover} variant="body2">  */}
+                            
+
+                                <Button
+                                    style={{marginTop:10,}} 
+                                // style={{width:375}}
+                                    // variant="contained"
+                                    size="small"
+                                    // type="submit"
+                                >
+                                    <Link to={{pathname:"/recover"}}> 
+                                        ¿Olvidaste tu contreseña?
+                                    </Link>
+                                </Button>
+                            
+                            {/* </Link> */}
                        
                     </Box>
-                    {/* </Grid> */}
-                    
                     <Grid item md={12} >
                         <AnimateButton>
                             <Button
@@ -308,7 +322,7 @@ const LoginForm = (props : { login?: number, isRecover: Boolean, handleRecover: 
                                 variant="contained"
                                 size="large"
                                 type="submit"
-                        >
+                            >
                                 Iniciar sesión
                             </Button>
                         </AnimateButton>
@@ -316,12 +330,14 @@ const LoginForm = (props : { login?: number, isRecover: Boolean, handleRecover: 
                     <Grid item md={12}>
                         <Button
                             style={{width:375}}
-                            onClick={() => props.handleRegister()}
+                            // onClick={handleRegister}
                                 // variant="contained"
                                 size="large"
                                 // type="submit"
                         >
-                            Crear usuario
+                            <Link to={{pathname:"/register"}} > 
+                                Crear usuario
+                            </Link>
                         </Button>
 
                     </Grid>

@@ -31,7 +31,7 @@ import LogoDark from 'components/icons/LogoDark'
 // import LogoGobLight from 'components/icons/LogoGobLight'
 // import CintilloLight from 'components/icons/CintilloLight'
 // import CintilloDark from 'components/icons/CintilloDark'
-import Recover from './recover'
+// import Recover from './recover'
 
 
 
@@ -142,7 +142,7 @@ const RecoverCardWrapper = () => {
 
                                 <Grid item xs={12}>
                                     {/* <FirebaseLogin login={1} /> */}
-                                    <Recover />
+                                    {/* <Recover /> */}
                                 </Grid>
                             </Grid>
                         </AuthCardWrapper>
