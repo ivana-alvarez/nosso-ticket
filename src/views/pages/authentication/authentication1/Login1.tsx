@@ -1,6 +1,7 @@
+import React from 'react'
 // Redux
 import { useSelector } from 'react-redux'
-
+// import { useNavigate } from 'react-router-dom'
 // material-ui
 // import { makeStyles } from '@material-ui/styles'
 import { useTheme } from '@material-ui/core/styles'
@@ -30,6 +31,8 @@ import LogoGobDark from 'components/icons/LogoGobDark'
 import LogoGobLight from 'components/icons/LogoGobLight'
 import CintilloLight from 'components/icons/CintilloLight'
 import CintilloDark from 'components/icons/CintilloDark'
+import RecoverCardWrapper from '../recover'
+import UserRegisterCardWrapper from '../registration'
 
 // style constant
 // const useStyles = makeStyles((theme: Theme) => ({
@@ -85,11 +88,24 @@ import CintilloDark from 'components/icons/CintilloDark'
 const Login = () => {
     // const classes = useStyles()
     const theme = useTheme()
+    // const navigate = useNavigate()
     const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'))
     const themeState = useSelector(
         (state: DefaultRootStateProps) => state.customization.navType
     )
+    const [isRecover, setIsRecover] = React.useState(false)
+    const [isRegister, setRegister] = React.useState(false)
+    console.log(isRecover)
 
+    const handleRecover = (): void => {
+        console.log("sssss")
+        setIsRecover(true)
+        
+        // navigate('recover')
+    }
+    const handleRegister = () => {
+        setRegister(true)
+    }
     return (
         <>
             <AuthWrapper1 className="relative">
@@ -127,7 +143,9 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="m-7">
+                        {!isRecover && !isRegister &&
                             <AuthCardWrapper sx={{ marginTop: '110px' }}>
+                               sdcasdc 
                                 <Grid
                                     container
                                     spacing={2}
@@ -226,10 +244,20 @@ const Login = () => {
 
                                     <Grid item xs={12}>
                                         {/* <FirebaseLogin login={1} /> */}
-                                        <LoginForm login={1} />
+                                        <LoginForm  isRecover={isRecover} handleRecover={handleRecover} handleRegister={handleRegister} login={1} />
                                     </Grid>
                                 </Grid>
                             </AuthCardWrapper>
+                        }
+                        {isRecover &&
+                            
+                            <RecoverCardWrapper />
+
+                        }
+                        {isRegister &&
+                            <UserRegisterCardWrapper  />
+
+                        }
                         </div>
                     </Grid>
                     <Grid

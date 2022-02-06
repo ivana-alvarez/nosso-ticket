@@ -16,6 +16,14 @@ const Cards = {
     type: 'group',
     children: [
         {
+            id: 'summary',
+            title: <FormattedMessage id="Resumen" />,
+            type: 'item',
+            url: '/summary',
+            icon: icons.IconBrandChrome,
+            breadcrumbs: false,
+        },
+        {
             id: 'cards',
             title: <FormattedMessage id="Gestión de Tarjetas" />,
             type: 'item',
