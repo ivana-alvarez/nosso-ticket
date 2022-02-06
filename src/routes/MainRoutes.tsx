@@ -73,6 +73,7 @@ const MainRoutes = {
             element:<ViewSummary />,
         },
         {
+
             path: '/profile',
             element: <ProfileForm />,
         },

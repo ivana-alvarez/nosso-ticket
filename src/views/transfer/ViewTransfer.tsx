@@ -1,10 +1,12 @@
 // ==============================|| SAMPLE PAGE ||============================== //
 
+import TransferIndex from 'components/transfer/TransferIndex'
+
 const ViewTransfer = () => {
     return (
-        <div className="w-1/2">
-            <p>Hola View Transfer</p>
-        </div>
+        <>
+            <TransferIndex />
+        </>
     )
 }
 

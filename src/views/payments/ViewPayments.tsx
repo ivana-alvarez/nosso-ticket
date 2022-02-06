@@ -1,11 +1,9 @@
 // ==============================|| SAMPLE PAGE ||============================== //
 
+import ReadPayments from 'components/payments  /ReadPayments'
+
 const ViewPayments = () => {
-    return (
-        <div className="w-1/2">
-            <p>Hola View Payments</p>
-        </div>
-    )
+    return <ReadPayments />
 }
 
 export default ViewPayments
