@@ -1,0 +1,20 @@
+export const REGISTER = [
+    {
+        email:"pablito@gmail.com",
+        name:"Pablo",
+        last_name:"Escpbar", 
+        identification:"23698563",
+    },
+    {
+        email:"pablito@gmail.com",
+        name:"Pablo",
+        last_name:"Escpbar", 
+        identification:"23698563",
+    },
+    {
+        email:"pablito@gmail.com",
+        name:"Pablo",
+        last_name:"Escpbar", 
+        identification:"23698563",
+    },
+]
