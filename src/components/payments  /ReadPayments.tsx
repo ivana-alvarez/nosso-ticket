@@ -13,8 +13,6 @@ import { payments } from '../../_mockApis/payments/payments'
 // import { useDispatch } from 'react-redux'
 // import { DefaultRootStateProps } from 'types/index'
 
-// import { getNodeRequest } from 'store/nodes/nodeActions'
-
 const columns = [
     {
         Header: 'Fechas',
@@ -149,7 +147,7 @@ const ReadPayments = () => {
             <TableCustom
                 columns={columns}
                 data={rowsInitial}
-                title="Histórico de pagos y recargass"
+                title="Histórico de pagos y recargas"
                 // addIconTooltip="Añadir nodo"
                 // handleCreate={handleCreate}
             />
