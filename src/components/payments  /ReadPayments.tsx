@@ -142,7 +142,7 @@ const ReadPayments = () => {
             })
         )
         setRowsInitial(rows)
-    }, [payments])
+    }, [])
 
     return (
         <>
