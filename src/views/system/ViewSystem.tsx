@@ -5,6 +5,8 @@ import TableStickyHead from '../../components/TableStickyHead'
 import CardsActions from 'components/cards/CardsActions'
 import CardsInfo from 'components/cards/CardsInfo'
 import RechargeCardForm from 'components/cards/RechargeCardForm'
+import AddCardForm from 'components/cards/AddCardForm'
+import Card1 from 'components/icons/Card1'
 import BlockCardForm from 'components/cards/BlockCardForm'
 import { useSelector } from 'react-redux'
 import { DefaultRootStateProps } from 'types'
@@ -38,6 +40,10 @@ const ViewSystem = () => {
     const deleteHandle = () => {
         console.log('d')
     }
+    const handleAdd = () => {
+        setOpen(true)
+        setModal('add')
+    }
 
     return (
         <div className="flex flex-wrap">
@@ -54,7 +60,9 @@ const ViewSystem = () => {
                         <SubCard>
                             <div className="flex flex-wrap">
                                 <div className="w-full lg:w-1/3 my-4">
-                                    <div className="w-full h-36 bg-black rounded-md"></div>
+                                    <div className="flex justify-center">
+                                        <Card1 className="max-h-48" />
+                                    </div>
                                     <p className="text-center my-4">
                                         {card_description}
                                     </p>
@@ -84,19 +92,16 @@ const ViewSystem = () => {
             )}
             <div className="fixed right-4 bottom-12 right-12">
                 <Tooltip title="Agregar Tarjeta" placement="top">
-                    <Fab
-                        color="primary"
-                        aria-label="add"
-                        onClick={() => {
-                            console.log('edit')
-                        }}
-                    >
+                    <Fab color="primary" aria-label="add" onClick={handleAdd}>
                         <AddIcon />
                     </Fab>
                 </Tooltip>
             </div>
             {modal === 'recharge' ? (
                 <RechargeCardForm open={open} setOpen={setOpen} />
+            ) : null}
+            {modal === 'add' ? (
+                <AddCardForm open={open} setOpen={setOpen} />
             ) : null}
             {modal === 'block' ? (
                 <BlockCardForm open={open} setOpen={setOpen} />

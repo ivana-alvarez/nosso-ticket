@@ -170,8 +170,7 @@ const ProfileBank = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     }
     const onChangeFilialCompany = (event) => {
         const name = event.target.name
-
-        if (name === 'phone_active') {
+        if (name === 'phone_active')
             setPhoneActive(!phoneActive)
             setValue(name, !phoneActive)
         }

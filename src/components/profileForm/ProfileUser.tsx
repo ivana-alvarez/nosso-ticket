@@ -140,10 +140,12 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     const handleSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name
 
+
         if (name === 'used_title') {
             setUsedTitle(!usedTitle)
             setValue(name, !usedTitle)
         }
+
 
         if (name === 'balance_title') {
             setBalanceTitle(!balanceTitle)

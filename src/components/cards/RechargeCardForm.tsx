@@ -6,6 +6,7 @@ import {
 } from 'react-hook-form'
 import { MenuItem, TextField } from '@material-ui/core'
 import AlertDialog from 'components/AlertDialog'
+import Card1 from 'components/icons/Card1'
 
 const typesCompany = [
     {
@@ -38,7 +39,9 @@ const RechargeCardForm = ({ open, setOpen }) => {
             >
                 <div className="flex flex-wrap">
                     <div className="w-full lg:w-1/2 px-4">
-                        <div className="w-full h-36 bg-black rounded-md"></div>
+                        <div className="flex justify-center">
+                            <Card1 className="max-h-48" />
+                        </div>
                         <p className="text-center my-4">Tarjeta RSC</p>
                     </div>
                     <div className="w-full lg:w-1/2 px-4">
