@@ -31,12 +31,9 @@ import LogoDark from 'components/icons/LogoDark'
 // import LogoGobLight from 'components/icons/LogoGobLight'
 // import CintilloLight from 'components/icons/CintilloLight'
 // import CintilloDark from 'components/icons/CintilloDark'
-// import Recover from './recover'
-
-
+// import Recover fro./Recoverver'
 
 const RecoverCardWrapper = () => {
-
     const theme = useTheme()
     const matchDownSM = useMediaQuery(theme.breakpoints.down('sm'))
     const themeState = useSelector(
@@ -44,112 +41,69 @@ const RecoverCardWrapper = () => {
     )
     return (
         <>
-
-                    <AuthCardWrapper sx={{ marginTop: '110px' }}>
-                            <Grid
-                                container
-                                spacing={2}
-                                justifyContent="center"
-                            >
-                                <Grid item xs={12}>
-                                    <Grid
-                                        container
-                                        direction={
-                                            matchDownSM
-                                                ? 'column-reverse'
-                                                : 'row'
-                                        }
-                                        alignItems={
-                                            matchDownSM
-                                                ? 'center'
-                                                : 'center'
-                                        }
-                                        justifyContent={
-                                            matchDownSM
-                                                ? 'center'
-                                                : 'center'
-                                        }
-                                    >
-                                        <Grid
-                                            item
-                                            sx={{ mb: { xs: 3, sm: 0 } }}
-                                        >
-                                            {themeState === 'dark' ? (
-                                                <LogoDark className="w-52" />
-                                            ) : (
-                                                <LogoLight className="w-52" />
-                                            )}
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <Grid
-                                        container
-                                        direction={
-                                            matchDownSM
-                                                ? 'column-reverse'
-                                                : 'row'
-                                        }
-                                        alignItems={
-                                            matchDownSM
-                                                ? 'center'
-                                                : 'inherit'
-                                        }
-                                        justifyContent={
-                                            matchDownSM
-                                                ? 'center'
-                                                : 'space-between'
-                                        }
-                                    >
-                                        <Grid item>
-                                            <Stack
-                                                justifyContent={
-                                                    matchDownSM
-                                                        ? 'center'
-                                                        : 'flex-start'
-                                                }
-                                                textAlign={
-                                                    matchDownSM
-                                                        ? 'center'
-                                                        : 'inherit'
-                                                }
-                                            >
-                                                <Typography
-                                                    color={
-                                                        theme.palette
-                                                            .secondary.main
-                                                    }
-                                                    gutterBottom
-                                                    variant={
-                                                        matchDownSM
-                                                            ? 'h3'
-                                                            : 'h2'
-                                                    }
-                                                >
-                                                    Hola, recuperamos tu contrasena 
-                                                </Typography>
-                                                <Typography
-                                                    color="textPrimary"
-                                                    gutterBottom
-                                                    variant="h4"
-                                                >
-                                                   Enviaremos su nueva contrasena a su correo registrado en el sistema  
-                                                </Typography>
-                                            </Stack>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    {/* <FirebaseLogin login={1} /> */}
-                                    {/* <Recover /> */}
-                                </Grid>
+            <AuthCardWrapper sx={{ marginTop: '110px' }}>
+                <Grid container spacing={2} justifyContent="center">
+                    <Grid item xs={12}>
+                        <Grid
+                            container
+                            direction={matchDownSM ? 'column-reverse' : 'row'}
+                            alignItems={matchDownSM ? 'center' : 'center'}
+                            justifyContent={matchDownSM ? 'center' : 'center'}
+                        >
+                            <Grid item sx={{ mb: { xs: 3, sm: 0 } }}>
+                                {themeState === 'dark' ? (
+                                    <LogoDark className="w-52" />
+                                ) : (
+                                    <LogoLight className="w-52" />
+                                )}
                             </Grid>
-                        </AuthCardWrapper>
-            </>
-        
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Grid
+                            container
+                            direction={matchDownSM ? 'column-reverse' : 'row'}
+                            alignItems={matchDownSM ? 'center' : 'inherit'}
+                            justifyContent={
+                                matchDownSM ? 'center' : 'space-between'
+                            }
+                        >
+                            <Grid item>
+                                <Stack
+                                    justifyContent={
+                                        matchDownSM ? 'center' : 'flex-start'
+                                    }
+                                    textAlign={
+                                        matchDownSM ? 'center' : 'inherit'
+                                    }
+                                >
+                                    <Typography
+                                        color={theme.palette.secondary.main}
+                                        gutterBottom
+                                        variant={matchDownSM ? 'h3' : 'h2'}
+                                    >
+                                        Hola, recuperamos tu contrasena
+                                    </Typography>
+                                    <Typography
+                                        color="textPrimary"
+                                        gutterBottom
+                                        variant="h4"
+                                    >
+                                        Enviaremos su nueva contrasena a su
+                                        correo registrado en el sistema
+                                    </Typography>
+                                </Stack>
+                            </Grid>
+                        </Grid>
+                    </Grid>
 
+                    <Grid item xs={12}>
+                        {/* <FirebaseLogin login={1} /> */}
+                        {/* <Recover /> */}
+                    </Grid>
+                </Grid>
+            </AuthCardWrapper>
+        </>
     )
-
 }
 export default RecoverCardWrapper

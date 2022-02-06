@@ -93,7 +93,6 @@ const Recover = () => {
         (state: DefaultRootStateProps) => state.customization.navType
     )
 
-
     return (
         <>
             <AuthWrapper1 className="relative">
@@ -131,7 +130,6 @@ const Recover = () => {
                             </div>
                         </div>
                         <div className="m-7">
-                        
                             <AuthCardWrapper sx={{ marginTop: '110px' }}>
                                 <Grid
                                     container
@@ -213,7 +211,7 @@ const Recover = () => {
                                                                 : 'h2'
                                                         }
                                                     >
-                                                        Hola, recuperamos tu 
+                                                        Hola, recuperamos tu
                                                         contrasena
                                                     </Typography>
                                                     <Typography
@@ -221,10 +219,9 @@ const Recover = () => {
                                                         gutterBottom
                                                         variant="h4"
                                                     >
-                                                        Enviaremos su nueva 
-                                                        contrasena 
-                                                        a su correo registrado 
-                                                        en el sistema  
+                                                        Enviaremos su nueva
+                                                        contrasena a su correo
+                                                        registrado en el sistema
                                                     </Typography>
                                                 </Stack>
                                             </Grid>
@@ -237,7 +234,6 @@ const Recover = () => {
                                     </Grid>
                                 </Grid>
                             </AuthCardWrapper>
-                       
                         </div>
                     </Grid>
                     <Grid

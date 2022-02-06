@@ -30,6 +30,24 @@ const Cards = {
             // url: '/cards/list',
             icon: icons.IconBrandChrome,
             breadcrumbs: false,
+            children: [
+                {
+                    id: 'Listar tarjetas',
+                    title: <FormattedMessage id="Listar de tarjetas" />,
+                    type: 'item',
+                    // icon: icons.ReportsDetailsOperators,
+                    url: '/cards/list',
+                    breadcrumbs: false,
+                },
+                {
+                    id: 'Comprar Tarjeta',
+                    title: <FormattedMessage id="Comprar Tarjeta" />,
+                    type: 'item',
+                    // icon: icons.ReportsDetailsOperators,
+                    url: '/system/list',
+                    breadcrumbs: false,
+                },
+            ],
         },
         {
             id: 'payments',
@@ -41,7 +59,7 @@ const Cards = {
             children: [
                 {
                     id: 'detalles_income',
-                    title: <FormattedMessage id="Gestion de pagos"/>,
+                    title: <FormattedMessage id="Gestion de pagos" />,
                     type: 'item',
                     // icon: icons.ReportsDetailsOperators,
                     url: '/payment_management',
@@ -57,14 +75,14 @@ const Cards = {
             icon: icons.IconBrandChrome,
             breadcrumbs: false,
         },
-        {
-            id: 'system',
-            title: <FormattedMessage id="Estado del sistema" />,
-            type: 'item',
-            url: '/system/list',
-            icon: icons.IconBrandChrome,
-            breadcrumbs: false,
-        },
+        // {
+        //     id: 'system',
+        //     title: <FormattedMessage id="Estado del sistema" />,
+        //     type: 'item',
+        //     url: '/system/list',
+        //     icon: icons.IconBrandChrome,
+        //     breadcrumbs: false,
+        // },
     ],
 }
 

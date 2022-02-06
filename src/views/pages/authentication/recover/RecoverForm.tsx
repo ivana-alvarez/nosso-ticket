@@ -35,13 +35,11 @@ import AnimateButton from 'ui-component/extended/AnimateButton'
 // project imports
 import { gridSpacing } from 'store/constant'
 
-
 //Icons
 // import { DefaultRootStateProps, TCardsProps } from 'types'
 // import { getLoginRequest } from 'store/login/loginActions'
 
 // CONSTANTS
-
 
 // style constant
 const useStyles = makeStyles((theme: Theme) => ({
@@ -114,7 +112,6 @@ interface Inputs {
 //schema validation
 const Schema = yup.object().shape({
     email: yup.string().max(255).required('Email es requerido'),
-    
 })
 // const initialValues = {
 //     username: 'user4',
@@ -141,7 +138,7 @@ const RecoverForm = (props: { login?: number }, { ...others }) => {
     // STATES
     // const scriptedRef = useScriptRef();
     // const [items] = React.useState(initialValues)
-    
+
     const onInvalid: SubmitErrorHandler<Inputs> = (data, e) => {
         console.log('onInvalied', data)
         // if (!data.username || !data.password) return
@@ -150,8 +147,7 @@ const RecoverForm = (props: { login?: number }, { ...others }) => {
     const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
         const { email } = data
         console.log(email)
-        window.location.reload();
-
+        window.location.reload()
     }
 
     return (
@@ -178,32 +174,32 @@ const RecoverForm = (props: { login?: number }, { ...others }) => {
                                     size="small"
                                     autoComplete="off"
                                     error={!!errors.email}
-                                    helperText={ errors.email?.message }
+                                    helperText={errors.email?.message}
                                     disabled={false}
                                 />
                             )}
                         />
                     </Grid>
-                    <Grid style={{marginTop: 20, alignItems : "center"}} >
+                    <Grid style={{ marginTop: 20, alignItems: 'center' }}>
                         <Typography
-                            style={{marginLeft:120}}
+                            style={{ marginLeft: 120 }}
                             color="textPrimary"
                             gutterBottom
                             variant="h5"
                         >
-                            Por favor ingrese su correo  
+                            Por favor ingrese su correo
                         </Typography>
                     </Grid>
-                    
-                    <Grid item md={12} >
+
+                    <Grid item md={12}>
                         <AnimateButton>
                             <Button
-                                style={{width:375}}
+                                style={{ width: 375 }}
                                 variant="contained"
                                 size="large"
                                 type="submit"
                             >
-                                Enviar 
+                                Enviar
                             </Button>
                         </AnimateButton>
                     </Grid>
