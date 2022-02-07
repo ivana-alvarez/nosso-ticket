@@ -24,8 +24,8 @@ import {
     Theme,
     IconButton,
     // Typography,
-    FormControlLabel,
-    Checkbox,
+    // FormControlLabel,
+    // Checkbox,
     // CardActions,
     // Divider,
     // FormHelperText,
@@ -156,7 +156,7 @@ const LoginForm = (props: { login?: number }) => {
 
     // STATES
     // const scriptedRef = useScriptRef();
-    const [checked, setChecked] = React.useState(true)
+    // const [checked, setChecked] = React.useState(true)
     const [items] = React.useState(initialValues)
     const [showPassword, setShowPassword] = React.useState(false)
     const handleClickShowPassword = () => {
@@ -274,7 +274,7 @@ const LoginForm = (props: { login?: number }) => {
                         component="span"
                         className={`${classes.spreadBox} ${classes.box}`}
                     >
-                        <FormControlLabel
+                        {/* <FormControlLabel
                             sx={{ marginTop: '10px' }}
                             style={{ marginRight: 100 }}
                             control={
@@ -290,7 +290,7 @@ const LoginForm = (props: { login?: number }) => {
                                 />
                             }
                             label={'Remember me'}
-                        />
+                        /> */}
 
                         <Link
                             style={{ marginTop: 10 }}
@@ -300,19 +300,19 @@ const LoginForm = (props: { login?: number }) => {
                         >
                             <Button
                                 // style={{marginTop:10,}}
-                                // style={{width:375}}
+                                style={{ width: 580 }}
                                 // variant="contained"
                                 size="small"
                                 // type="submit"
                             >
-                                ¿Olvidaste tu contreseña?
+                                ¿Olvidaste tu contraseña?
                             </Button>
                         </Link>
                     </Box>
                     <Grid item md={12}>
                         <AnimateButton>
                             <Button
-                                style={{ width: 375 }}
+                                style={{ width: 350 }}
                                 variant="contained"
                                 size="large"
                                 type="submit"
@@ -323,7 +323,7 @@ const LoginForm = (props: { login?: number }) => {
                     </Grid>
                     <Grid item md={12}>
                         <Button
-                            style={{ width: 375 }}
+                            style={{ width: 350 }}
                             onClick={handleRegister}
                             // variant="contained"
                             size="large"

@@ -204,7 +204,7 @@ const AffiliateTitles = () => {
                                         {summ.current_state ? (
                                             <>
                                                 <Chip
-                                                    label="Actibo"
+                                                    label="Activo"
                                                     size="small"
                                                     chipcolor="success"
                                                     sx={{ width: '96px' }}

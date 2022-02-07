@@ -19,7 +19,7 @@ import MainCard from 'ui-component/cards/MainCard'
 import { gridSpacing } from 'store/constant'
 
 // assets
-import CreditCardTwoToneIcon from '@material-ui/icons/CreditCardTwoTone'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 // import FleetProfile from './FleetProfile'
 import { DefaultRootStateProps } from 'types'
 import TransferForm from './TransferForm'
@@ -116,7 +116,7 @@ const TransferIndex = ({
     const tabsOption = [
         {
             label: 'Transferencia de saldo',
-            icon: <CreditCardTwoToneIcon sx={{ fontSize: 'large' }} />,
+            icon: <ExitToAppIcon />,
             caption: 'Transferencia entre títulos de transporte',
         },
         // {

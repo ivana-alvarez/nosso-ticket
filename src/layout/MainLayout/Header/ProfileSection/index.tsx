@@ -68,11 +68,11 @@ const useStyles = makeStyles((theme: Theme) => ({
                 ? theme.palette.dark.main
                 : theme.palette.primary.light,
         '&[aria-controls="menu-list-grow"], &:hover': {
-            borderColor: theme.palette.primary.main,
-            background: `${theme.palette.primary.main}!important`,
-            color: theme.palette.primary.light,
+            borderColor: '#5D299F',
+            background: `'#5D299F'!important`,
+            color: '#5D299F',
             '& svg': {
-                stroke: theme.palette.primary.light,
+                stroke: '#5D299F',
             },
         },
     },
@@ -134,7 +134,7 @@ const ProfileSection = () => {
     const navigate = useNavigate()
     const customization = useSelector(
         (state: DefaultRootStateProps) => state.customization
-    ) 
+    )
     const user = useSelector(
         (state: DefaultRootStateProps) => state.login?.user?.content
     )
@@ -150,7 +150,7 @@ const ProfileSection = () => {
     // const [notification, setNotification] = React.useState(false)
     const [selectedIndex] = React.useState(1)
     const [open, setOpen] = React.useState(false)
-    const [greeting, setGreeting] = React.useState<String>("")
+    const [greeting, setGreeting] = React.useState<String>('')
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
      * */
@@ -185,14 +185,14 @@ const ProfileSection = () => {
     const handleGreeting = () => {
         const date = new Date()
         const hours = date.getHours()
-        if(hours >=0 && hours < 12) setGreeting("Buenos dias")
-        if(hours >=12 && hours < 18) setGreeting("Buenas tardes")
-        if(hours >=18 && hours < 24) setGreeting("Buenas noches") 
+        if (hours >= 0 && hours < 12) setGreeting('Buenos dias')
+        if (hours >= 12 && hours < 18) setGreeting('Buenas tardes')
+        if (hours >= 18 && hours < 24) setGreeting('Buenas noches')
     }
     const prevOpen = React.useRef(open)
-    React.useEffect(()=> {
+    React.useEffect(() => {
         handleGreeting()
-    },[])
+    }, [])
 
     React.useEffect(() => {
         if (prevOpen.current === true && open === false) {
@@ -218,11 +218,7 @@ const ProfileSection = () => {
                 //     />
                 // }
                 label={
-                    <IconSettings
-                        stroke={1.5}
-                        size="1.5rem"
-                        color={theme.palette.primary.main}
-                    />
+                    <IconSettings stroke={1.5} size="1.5rem" color="#5D299F" />
                 }
                 variant="outlined"
                 ref={anchorRef}
@@ -363,9 +359,8 @@ const ProfileSection = () => {
                                                 onClick={handleProfile}
                                             >
                                                 <ListItemIcon>
-                                                {/* <AccountCircle sx={{color:pick[500]}} /> */}
-                                                <IconAccountCircle className='w-6 fill-current'/>
-                                                    
+                                                    {/* <AccountCircle sx={{color:pick[500]}} /> */}
+                                                    <IconAccountCircle className="w-6 fill-current" />
                                                 </ListItemIcon>
                                                 <ListItemText
                                                     primary={
@@ -398,7 +393,6 @@ const ProfileSection = () => {
                                                     }
                                                 />
                                             </ListItemButton>
-                                            
                                         </List>
                                         {/* </PerfectScrollbar> */}
                                     </CardContent>
