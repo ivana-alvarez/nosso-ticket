@@ -37,13 +37,11 @@ import { gridSpacing } from 'store/constant'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-
 //Icons
 // import { DefaultRootStateProps, TCardsProps } from 'types'
 // import { getLoginRequest } from 'store/login/loginActions'
 
 // CONSTANTS
-
 
 // style constant
 const useStyles = makeStyles((theme: Theme) => ({
@@ -77,10 +75,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             width: '100%',
             marginLeft: '4px',
-            background:
-                theme.palette.mode === 'dark'
-                    ? theme.palette.dark[800]
-                    : '#fff',
         },
     },
     ButtonControl: {
@@ -112,11 +106,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 //types form
 interface Inputs {
     email: string
-    name:string
-    last_name:string
-    identification:number
-    passwordR:string
-    config_password:string
+    name: string
+    last_name: string
+    identification: number
+    passwordR: string
+    config_password: string
 }
 //schema validation
 const Schema = yup.object().shape({
@@ -125,7 +119,6 @@ const Schema = yup.object().shape({
     last_name: yup.string().required('Este campo es requerido'),
     identification: yup.string().required('Este campo es requerido'),
     passwordR: yup.string().required('Este campo es requerido'),
-    
 })
 
 // ==============================|| login PROFILE FORM ||============================== //
@@ -154,7 +147,7 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
     const handleMouseDownPassword = (event: React.SyntheticEvent) => {
         event.preventDefault()
     }
-    
+
     const onInvalid: SubmitErrorHandler<Inputs> = (data, e) => {
         console.log('onInvalied', data)
         // if (!data.username || !data.password) return
@@ -163,185 +156,183 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
     const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
         const { email, name, last_name, identification, passwordR } = data
         console.log(email)
-        console.log(name) 
-        console.log(last_name) 
-        console.log(identification) 
-        console.log(passwordR)        // window.location.reload();
-
+        console.log(name)
+        console.log(last_name)
+        console.log(identification)
+        console.log(passwordR) // window.location.reload();
     }
 
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
-                    <Grid container spacing={gridSpacing} style={{marginTop:10}}>
-                        <Grid
-                            item
-                            xs={12}
-                            sm={12}
-                            md={12}
-                            className={classes.searchControl}
-                        >
-                            <Controller
-                                name="email"
-                                control={control}
-                                // defaultValue={''}
-                                // defaultValue= {''}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        fullWidth
-                                        label="Correo   "
-                                        size="small"
-                                        autoComplete="off"
-                                        error={!!errors.email}
-                                        helperText={ errors.email?.message }
-                                        disabled={false}
-                                    />
-                                )}
-                            />
-                        </Grid>
-
-                        <Grid
-                            item
-                            xs={12}
-                            sm={12}
-                            md={12}
-                            // sx={{ padding: '1%'}}
-                            className={classes.searchControl}
-                        >
-                            <Controller
-                                name="name"
-                                control={control}
-                                // defaultValue= {''}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        fullWidth
-                                        label="Nombre"
-                                        size="small"
-                                        autoComplete="off"
-                                        error={!!errors.name}
-                                        helperText={errors.name?.message}
-                                        disabled={false}
-                                    />
-                                )}
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            xs={12}
-                            sm={12}
-                            md={12}
-                            // sx={{ padding: '1%'}}
-                            className={classes.searchControl}
-                        >
-                            <Controller
-                                name="last_name"
-                                control={control}
-                                // defaultValue= {''}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        fullWidth
-                                        label="Apellido"
-                                        size="small"
-                                        autoComplete="off"
-                                        error={!!errors.last_name}
-                                        helperText={errors.last_name?.message}
-                                        disabled={false}
-                                    />
-                                )}
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            xs={12}
-                            sm={12}
-                            md={12}
-                            // sx={{ padding: '1%'}}
-                            className={classes.searchControl}
-                        >
-                            <Controller
-                                name="identification"
-                                control={control}
-                                // defaultValue= {''}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        fullWidth
-                                        label="Cedula de identidad"
-                                        size="small"
-                                        autoComplete="off"
-                                        error={!!errors.identification}
-                                        helperText={errors.identification?.message}
-                                        disabled={false}
-                                    />
-                                )}
-                            />
-                        </Grid>
-                        <Grid
-                            item
-                            xs={12}
-                            sm={12}
-                            md={12}
-                            // sx={{ padding: '1%'}}
-                            className={classes.searchControl}
-                        >
-                            <Controller
-                                name="passwordR"
-                                control={control}
-                                // defaultValue={items.password || ''}
-                                // defaultValue={''}
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
-                                        fullWidth
-                                        label="Contraseña"
-                                        size="small"
-                                        autoComplete="off"
-                                        error={!!errors.passwordR}
-                                        helperText={errors.passwordR?.message}
-                                        disabled={false}
-                                        type={showPassword ? 'text' : 'password'}
-                                        InputProps={{
-                                            endAdornment: (
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={
-                                                        handleClickShowPassword
-                                                    }
-                                                    onMouseDown={
-                                                        handleMouseDownPassword
-                                                    }
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? (
-                                                        <Visibility />
-                                                    ) : (
-                                                        <VisibilityOff />
-                                                    )}
-                                                </IconButton>
-                                            ),
-                                        }}
-                                    />
-                                )}
-                            />
-                        </Grid>
-                        
-                        <Grid item md={12} >
-                            <AnimateButton>
-                                <Button
-                                    style={{width:375}}
-                                    variant="contained"
-                                    size="large"
-                                    type="submit"
-                                >
-                                    Enviar 
-                                </Button>
-                            </AnimateButton>
-                        </Grid>
+                <Grid container spacing={gridSpacing} style={{ marginTop: 10 }}>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        className={classes.searchControl}
+                    >
+                        <Controller
+                            name="email"
+                            control={control}
+                            // defaultValue={''}
+                            // defaultValue= {''}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    label="Correo   "
+                                    size="small"
+                                    autoComplete="off"
+                                    error={!!errors.email}
+                                    helperText={errors.email?.message}
+                                    disabled={false}
+                                />
+                            )}
+                        />
                     </Grid>
-                
+
+                    <Grid
+                        item
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        // sx={{ padding: '1%'}}
+                        className={classes.searchControl}
+                    >
+                        <Controller
+                            name="name"
+                            control={control}
+                            // defaultValue= {''}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    label="Nombre"
+                                    size="small"
+                                    autoComplete="off"
+                                    error={!!errors.name}
+                                    helperText={errors.name?.message}
+                                    disabled={false}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        // sx={{ padding: '1%'}}
+                        className={classes.searchControl}
+                    >
+                        <Controller
+                            name="last_name"
+                            control={control}
+                            // defaultValue= {''}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    label="Apellido"
+                                    size="small"
+                                    autoComplete="off"
+                                    error={!!errors.last_name}
+                                    helperText={errors.last_name?.message}
+                                    disabled={false}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        // sx={{ padding: '1%'}}
+                        className={classes.searchControl}
+                    >
+                        <Controller
+                            name="identification"
+                            control={control}
+                            // defaultValue= {''}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    label="Cedula de identidad"
+                                    size="small"
+                                    autoComplete="off"
+                                    error={!!errors.identification}
+                                    helperText={errors.identification?.message}
+                                    disabled={false}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        // sx={{ padding: '1%'}}
+                        className={classes.searchControl}
+                    >
+                        <Controller
+                            name="passwordR"
+                            control={control}
+                            // defaultValue={items.password || ''}
+                            // defaultValue={''}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    label="Contraseña"
+                                    size="small"
+                                    autoComplete="off"
+                                    error={!!errors.passwordR}
+                                    helperText={errors.passwordR?.message}
+                                    disabled={false}
+                                    type={showPassword ? 'text' : 'password'}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                onMouseDown={
+                                                    handleMouseDownPassword
+                                                }
+                                                edge="end"
+                                            >
+                                                {showPassword ? (
+                                                    <Visibility />
+                                                ) : (
+                                                    <VisibilityOff />
+                                                )}
+                                            </IconButton>
+                                        ),
+                                    }}
+                                />
+                            )}
+                        />
+                    </Grid>
+
+                    <Grid item md={12}>
+                        <AnimateButton>
+                            <Button
+                                style={{ width: 375 }}
+                                variant="contained"
+                                size="large"
+                                type="submit"
+                            >
+                                Enviar
+                            </Button>
+                        </AnimateButton>
+                    </Grid>
+                </Grid>
             </form>
         </>
     )

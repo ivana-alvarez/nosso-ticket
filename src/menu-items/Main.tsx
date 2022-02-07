@@ -36,7 +36,7 @@ const Cards = {
                     title: <FormattedMessage id="Listar de tarjetas" />,
                     type: 'item',
                     // icon: icons.ReportsDetailsOperators,
-                    url: '/cards/list',
+                    url: '/system/list',
                     breadcrumbs: false,
                 },
                 {
@@ -44,7 +44,7 @@ const Cards = {
                     title: <FormattedMessage id="Comprar Tarjeta" />,
                     type: 'item',
                     // icon: icons.ReportsDetailsOperators,
-                    url: '/system/list',
+                    url: '/cards/list',
                     breadcrumbs: false,
                 },
             ],

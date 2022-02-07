@@ -13,8 +13,7 @@ import {
 // Redux
 import { useDispatch } from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom'
 
 // material-ui
 import { makeStyles } from '@material-ui/styles'
@@ -32,7 +31,7 @@ import {
     // FormHelperText,
     // Switch,
     // MenuItem,
-    Link, 
+    Link,
     Box,
 } from '@material-ui/core'
 
@@ -82,10 +81,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             width: '100%',
             marginLeft: '4px',
-            background:
-                theme.palette.mode === 'dark'
-                    ? theme.palette.dark[800]
-                    : '#fff',
         },
     },
     ButtonControl: {
@@ -114,16 +109,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     box: {
         // height: 00,
-        display: "flex",
-        marginLeft:20,
+        display: 'flex',
+        marginLeft: 20,
         // border: "1px solid black",
 
         // padding: 8
-      },
-      spreadBox: {
-        justifyContent: "space-around",
-        alignItems: "center"
-      }
+    },
+    spreadBox: {
+        justifyContent: 'space-around',
+        alignItems: 'center',
+    },
 }))
 
 //types form
@@ -143,11 +138,11 @@ const initialValues = {
 
 // ==============================|| login PROFILE FORM ||============================== //
 
-const LoginForm = (props : { login?: number}) => {
+const LoginForm = (props: { login?: number }) => {
     // CUSTOMS HOOKS
     const classes = useStyles()
     const dispatch = useDispatch()
-    
+
     const navigate = useNavigate()
     const {
         handleSubmit,
@@ -174,7 +169,7 @@ const LoginForm = (props : { login?: number}) => {
     const handleMouseDownPassword = (event: React.SyntheticEvent) => {
         event.preventDefault()
     }
-    
+
     const handleRegister = () => {
         navigate('/register')
     }
@@ -280,8 +275,8 @@ const LoginForm = (props : { login?: number}) => {
                         className={`${classes.spreadBox} ${classes.box}`}
                     >
                         <FormControlLabel
-                            sx={{marginTop: '10px', }}
-                            style={{marginRight:100}}
+                            sx={{ marginTop: '10px' }}
+                            style={{ marginRight: 100 }}
                             control={
                                 <Checkbox
                                     checked={checked}
@@ -297,27 +292,27 @@ const LoginForm = (props : { login?: number}) => {
                             label={'Remember me'}
                         />
 
-                            <Link style={{marginTop:10}}underline='none'  onClick={handleRecover} variant="body2"> 
-                            
-
-                                <Button
-                                    // style={{marginTop:10,}} 
+                        <Link
+                            style={{ marginTop: 10 }}
+                            underline="none"
+                            onClick={handleRecover}
+                            variant="body2"
+                        >
+                            <Button
+                                // style={{marginTop:10,}}
                                 // style={{width:375}}
-                                    // variant="contained"
-                                    size="small"
-                                    // type="submit"
-                                >
-                                    
-                                        ¿Olvidaste tu contreseña?
-                                </Button>
-                            
-                            </Link>
-                       
+                                // variant="contained"
+                                size="small"
+                                // type="submit"
+                            >
+                                ¿Olvidaste tu contreseña?
+                            </Button>
+                        </Link>
                     </Box>
-                    <Grid item md={12} >
+                    <Grid item md={12}>
                         <AnimateButton>
                             <Button
-                            style={{width:375}}
+                                style={{ width: 375 }}
                                 variant="contained"
                                 size="large"
                                 type="submit"
@@ -328,16 +323,14 @@ const LoginForm = (props : { login?: number}) => {
                     </Grid>
                     <Grid item md={12}>
                         <Button
-                            style={{width:375}}
+                            style={{ width: 375 }}
                             onClick={handleRegister}
-                                // variant="contained"
-                                size="large"
-                                // type="submit"
+                            // variant="contained"
+                            size="large"
+                            // type="submit"
                         >
-                            
-                                Crear usuario
+                            Crear usuario
                         </Button>
-
                     </Grid>
                 </Grid>
             </form>
