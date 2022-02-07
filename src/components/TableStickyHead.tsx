@@ -19,22 +19,47 @@ const useStyles = makeStyles({
 })
 
 // table data
-function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number
-) {
-    return { name, calories, fat, carbs, protein }
-}
 
 const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
+    {
+        card_no: '1001020002985176',
+        card_serial: 'AF34ABCD',
+        action_code: 'TRA',
+        action_type: 'ENT',
+        moment: '2022-02-02T15:34:16',
+        company_code: '1008020200002',
+        node_code: '1008020200002',
+        node_type: '200',
+        line: '03',
+        paid: '4.0',
+        paid_iso_code: '937',
+    },
+    {
+        card_no: '1001020002985176',
+        card_serial: 'AF34ABCD',
+        action_code: 'TRA',
+        action_type: 'ENT',
+        moment: '2022-02-02T15:34:16',
+        company_code: '1008020200002',
+        node_code: '1008020200002',
+        node_type: '200',
+        line: '03',
+        paid: '4.0',
+        paid_iso_code: '937',
+    },
+    {
+        card_no: '1001020002985176',
+        card_serial: 'AF34ABCD',
+        action_code: 'TRA',
+        action_type: 'ENT',
+        moment: '2022-02-02T15:34:16',
+        company_code: '1008020200002',
+        node_code: '1008020200002',
+        node_type: '200',
+        line: '03',
+        paid: '4.0',
+        paid_iso_code: '937',
+    },
 ]
 
 // ==============================|| TABLE - DENSE ||============================== //
@@ -52,34 +77,34 @@ export default function DenseTable() {
                 >
                     <TableHead>
                         <TableRow>
-                            <TableCell sx={{ pl: 3 }}>
-                                Dessert (100g serving)
-                            </TableCell>
-                            <TableCell align="right">Calories</TableCell>
-                            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                            <TableCell sx={{ pl: 3 }}>Estación</TableCell>
+                            <TableCell align="right">Fecha</TableCell>
+                            <TableCell align="right">Operador</TableCell>
+                            <TableCell align="right">Monto</TableCell>
                             <TableCell sx={{ pr: 3 }} align="right">
-                                Protein&nbsp;(g)
+                                Balance
                             </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((row) => (
-                            <TableRow hover key={row.name}>
+                            <TableRow hover key={row.card_no}>
                                 <TableCell
                                     sx={{ pl: 3 }}
                                     component="th"
                                     scope="row"
                                 >
-                                    {row.name}
+                                    {row.company_code}
                                 </TableCell>
                                 <TableCell align="right">
-                                    {row.calories}
+                                    {row.moment}
                                 </TableCell>
-                                <TableCell align="right">{row.fat}</TableCell>
-                                <TableCell align="right">{row.carbs}</TableCell>
+                                <TableCell align="right">
+                                    {row.node_code}
+                                </TableCell>
+                                <TableCell align="right">{row.paid}</TableCell>
                                 <TableCell sx={{ pr: 3 }} align="right">
-                                    {row.protein}
+                                    {row.card_serial}
                                 </TableCell>
                             </TableRow>
                         ))}
