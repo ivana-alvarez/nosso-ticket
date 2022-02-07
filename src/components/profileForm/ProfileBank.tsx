@@ -52,10 +52,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             width: '100%',
             marginLeft: '4px',
-            background:
-                theme.palette.mode === 'dark'
-                    ? theme.palette.dark[800]
-                    : '#fff',
         },
     },
 }))
@@ -170,9 +166,12 @@ const ProfileBank = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     }
     const onChangeFilialCompany = (event) => {
         const name = event.target.name
-        if (name === 'phone_active') setPhoneActive(!phoneActive)
-        setValue(name, !phoneActive)
-    }
+        
+        if (name === 'phone_active') {
+            setPhoneActive(!phoneActive)
+            setValue(name, !phoneActive)
+        }
+}
     const handlePhoneActive = () => {
         setValue('phone_active', !phoneActive, {
             shouldValidate: true,

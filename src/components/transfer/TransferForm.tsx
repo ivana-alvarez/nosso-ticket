@@ -54,10 +54,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             width: '100%',
             marginLeft: '4px',
-            background:
-                theme.palette.mode === 'dark'
-                    ? theme.palette.dark[800]
-                    : '#fff',
         },
     },
 }))
@@ -158,23 +154,23 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         //         shouldValidate: true,
         //     })
     }
-    const onChangeToCard = (event) => {
-        const name = event.target.name
+    // const onChangeToCard = (event) => {
+    //     const name = event.target.name
 
-        if (name === 'to_card') {
-            setMyAccount(!myAccount)
-            setValue(name, !myAccount)
-        }
-    }
+    //     if (name === 'to_card') {
+    //         setMyAccount(!myAccount)
+    //         setValue(name, !myAccount)
+    //     }
+    // }
 
-    const onChangeFromCard = (event) => {
-        const name = event.target.name
+    // const onChangeFromCard = (event) => {
+    //     const name = event.target.name
 
-        if (name === 'from_card') {
-            setOtherAccount(!otherAccount)
-            setValue(name, !otherAccount)
-        }
-    }
+    //     if (name === 'from_card') {
+    //         setOtherAccount(!otherAccount)
+    //         setValue(name, !otherAccount)
+    //     }
+    // }
     const handleMyAccount = () => {
         setValue('card_my_account', !myAccount, {
             shouldValidate: true,
@@ -322,14 +318,14 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                     size="small"
                                     autoComplete="off"
                                     {...field}
-                                    disabled={readOnlyState}
+                                    disabled={readOnly}
                                     error={!!errors.from_card}
                                     helperText={errors.from_card?.message}
                                 >
                                     {cardsData.map((option) => (
                                         <MenuItem
-                                            key={option.card_no}
-                                            value={option.card_no}
+                                            key={option.card_serial}
+                                            value={option.card_serial}
                                         >
                                             {option.card_description}
                                         </MenuItem>
@@ -411,15 +407,15 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                             label="Tarjetas asociadas"
                                             size="small"
                                             autoComplete="off"
-                                            onChange={onChangeToCard}
+                                            // onChange={onChangeToCard}
                                             error={!!errors.to_card}
                                             helperText={errors.to_card?.message}
                                             disabled={readOnly}
                                         >
                                             {cardsData.map((option) => (
                                                 <MenuItem
-                                                    key={option.card_no}
-                                                    value={option.card_no}
+                                                    key={option.card_serial}
+                                                    value={option.card_serial}
                                                 >
                                                     {option.card_description}
                                                 </MenuItem>
@@ -453,7 +449,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                             label="Monto a transferir"
                                             size="small"
                                             autoComplete="off"
-                                            onChange={onChangeToCard}
+                                            // onChange={onChangeToCard}
                                             error={!!errors.amount_transfer}
                                             helperText={
                                                 errors.amount_transfer?.message
@@ -501,7 +497,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                             label="Código de tarjeta"
                                             size="small"
                                             autoComplete="off"
-                                            onChange={onChangeFromCard}
+                                            // onChange={onChangeFromCard}
                                             error={!!errors.code_card}
                                             helperText={
                                                 errors.code_card?.message
@@ -536,7 +532,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                             label="Montos posibles a transferir"
                                             size="small"
                                             autoComplete="off"
-                                            onChange={onChangeToCard}
+                                            // onChange={onChangeFromCard}
                                             error={!!errors.to2_card}
                                             helperText={
                                                 errors.to2_card?.message

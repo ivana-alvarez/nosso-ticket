@@ -95,7 +95,7 @@ const ViewSystem = () => {
                     </div>
                 )
             )}
-            <div className="fixed right-4 bottom-12 right-12">
+            <div className="fixed right-12 bottom-12">
                 <Tooltip title="Agregar Tarjeta" placement="top">
                     <Fab color="primary" aria-label="add" onClick={handleAdd}>
                         <AddIcon />

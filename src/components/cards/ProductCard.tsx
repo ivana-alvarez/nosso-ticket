@@ -5,8 +5,9 @@ import MainCard from 'ui-component/cards/MainCard'
 import ShoppingCartTwoToneIcon from '@material-ui/icons/ShoppingCartTwoTone'
 import Card1 from 'components/icons/Card1'
 import CheckIcon from '@mui/icons-material/Check'
+import CloseIcon from '@mui/icons-material/Close'
 
-const ProductCard = () => {
+const ProductCard = ({ cardType, name, description, price, benefits }) => {
     return (
         <MainCard
             content={false}
@@ -22,13 +23,19 @@ const ProductCard = () => {
                 <Card1 className="max-h-40 mt-4" />
             </div>
             <div className="m-4">
-                <Typography variant="h4">Boleto Monedero TSC</Typography>
+                <Typography variant="h4">{name}</Typography>
             </div>
             <div className="flex flex-wrap">
-                <div className="w-1/3 text-center px-2">
-                    <CheckIcon className="w-10 h-10" />
-                    <p className="text-xs">Recarga en MATT</p>
-                </div>
+                {benefits.map((benefit) => (
+                    <div className="w-1/3 text-center px-2 my-2">
+                        {benefit.active ? (
+                            <CheckIcon className="w-10 h-10" />
+                        ) : (
+                            <CloseIcon className="w-10 h-10" />
+                        )}
+                        <p className="text-xs">{benefit.name}</p>
+                    </div>
+                ))}
             </div>
             <Grid item xs={12} className="m-4">
                 <Typography
@@ -38,12 +45,7 @@ const ProductCard = () => {
                     //     height: 45,
                     // }}
                 >
-                    Este soporte incluye 10 viajes luego de lo cual, el usuario
-                    deberá realizar su recarga en las Boleterias habilitadas en
-                    las Estaciones del Sistema Ferroviario Ezequiel Zamora. El
-                    Titulo de Transporte deberá ser retirado en las Oficinas de
-                    Atención Nosso Ticket ubicadas en la Estación de Charallave
-                    Norte en horario Comercial...
+                    {description}
                 </Typography>
             </Grid>
 
@@ -55,7 +57,9 @@ const ProductCard = () => {
                 >
                     <Grid container spacing={1}>
                         <Grid item>
-                            <Typography variant="h4">10 Bolívares</Typography>
+                            <Typography variant="h4">
+                                {price} Bolívares
+                            </Typography>
                         </Grid>
                         {/* <Grid item>
                             <Typography

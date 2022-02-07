@@ -8,13 +8,12 @@ import {
 } from 'react-hook-form'
 // import { useNavigate } from 'react-router-dom'
 // import { useSelector } from 'react-redux'
-import {
-    // SEX,
-    // RIF_OPTIONS,
-    // DEPARTMENTS,
-    // NUMBER_CODE,
-    // ROLES,
-} from 'store/constant'
+import // SEX,
+// RIF_OPTIONS,
+// DEPARTMENTS,
+// NUMBER_CODE,
+// ROLES,
+'store/constant'
 import { makeStyles } from '@material-ui/styles'
 import { yupResolver } from '@hookform/resolvers/yup'
 // import AnimateButton from 'ui-component/extended/AnimateButton'
@@ -31,7 +30,7 @@ import {
     // Divider,
     // Button,
     // Stack,
-    // IconButton,    
+    // IconButton,
 } from '@material-ui/core'
 
 import Chip from 'ui-component/extended/Chip'
@@ -58,14 +57,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             width: '100%',
             marginLeft: '4px',
-            background:
-                theme.palette.mode === 'dark'
-                    ? theme.palette.dark[800]
-                    : '#fff',
         },
     },
 }))
-
 
 // ==============================|| PROFILE 1 - PROFILE ACCOUNT ||============================== //
 interface Inputs {
@@ -82,8 +76,8 @@ interface Inputs {
     username: string
     cellphone_code: string
     contact_number: number
-    login_password:string 
-    current_password:string
+    login_password: string
+    current_password: string
     password: string
     password_confirm: string
     employee_code?: string
@@ -111,13 +105,17 @@ const Schema = yup.object().shape({
         .string()
         .email('Debe ser un email válido')
         .required('Este campo es requerido'),
-    username: yup.string()
+    username: yup
+        .string()
         .required('Este campo es requerido')
-        .notOneOf([
-            yup.ref('first_name'),
-            yup.ref('second_name'),
-            yup.ref('last_name')
-        ], 'El usuario debe ser unico'),
+        .notOneOf(
+            [
+                yup.ref('first_name'),
+                yup.ref('second_name'),
+                yup.ref('last_name'),
+            ],
+            'El usuario debe ser unico'
+        ),
     password: yup
         .string()
         .min(4, 'Mínimo 4 caracteres')
@@ -126,11 +124,10 @@ const Schema = yup.object().shape({
     password_confirm: yup
         .string()
         .required('Este campo es requerido')
-        .oneOf([yup.ref('password')], 'Las contraseñas no coinciden'),  
-    }
-)
+        .oneOf([yup.ref('password')], 'Las contraseñas no coinciden'),
+})
 
-const AffiliateTitles= () => {
+const AffiliateTitles = () => {
     const classes = useStyles()
     // const dispatch = useDispatch()
     // const navigate = useNavigate()
@@ -140,7 +137,6 @@ const AffiliateTitles= () => {
     // const [showPassword, setShowPassword] = React.useState<boolean>(false)
     // const [showConfirmPassword, setShowConfirmPassword] = React.useState<boolean>(false)
     const {
-        
         control,
         // formState: { errors },
         // setValue,
@@ -149,33 +145,32 @@ const AffiliateTitles= () => {
         resolver: yupResolver(Schema),
     })
 
-    
     return (
-        <form >
+        <form>
             {SUMMARY.map((summ) => {
-
-            return <>
-            
-
-            <Grid container spacing={2} sx={{ marginTop: '20px' }}>
-                <Grid item xs={12}>
-                    <Typography variant="h4">
-                        {summ.title}
-                    </Typography>
-                </Grid>
-                <Controller
-                    name="user_id"
-                    control={control}
-                    // defaultValue={userData?.employee_code}
-                    render={({ field }) => (
-                        <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            className={classes.searchControl}
-                        >
-                            <label htmlFor="Id del usuario">Estado actual</label>
-                            {/* <TextField
+                return (
+                    <>
+                        <Grid container spacing={2} sx={{ marginTop: '20px' }}>
+                            <Grid item xs={12}>
+                                <Typography variant="h4">
+                                    {summ.title}
+                                </Typography>
+                            </Grid>
+                            <Controller
+                                name="user_id"
+                                control={control}
+                                // defaultValue={userData?.employee_code}
+                                render={({ field }) => (
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        md={6}
+                                        className={classes.searchControl}
+                                    >
+                                        <label htmlFor="Id del usuario">
+                                            Estado actual
+                                        </label>
+                                        {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -188,44 +183,45 @@ const AffiliateTitles= () => {
                                   }}
                                 variant="standard"
                             /> */}
-                        </Grid>
-                    )}
-                />
+                                    </Grid>
+                                )}
+                            />
 
-                <Controller
-                    name="first_name"
-                    control={control}
-                    // defaultValue={userData?.first_name}
-                    render={({ field }) => (
-                        <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            className={classes.searchControl}
-                        >
-                            <label htmlFor="">{summ.current_state}</label>
-                            {summ.current_state ? (
-                                <>
-                                    <Chip
-                                        label="Actibo"
-                                        size="small"
-                                        chipcolor="success"
-                                        sx={{ width: '96px' }}
-                                    />
-                                </>
-                                ) : (
-                                    <>
-                                    <Chip
-                                        label="Bloqueado"
-                                        size="small"
-                                        chipcolor="orange"
-                                        sx={{ width: '96px' }}
-                                    />
-                                    </>
-                                )
-                            }
-                            
-                            {/* <TextField
+                            <Controller
+                                name="first_name"
+                                control={control}
+                                // defaultValue={userData?.first_name}
+                                render={({ field }) => (
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        md={6}
+                                        className={classes.searchControl}
+                                    >
+                                        <label htmlFor="">
+                                            {summ.current_state}
+                                        </label>
+                                        {summ.current_state ? (
+                                            <>
+                                                <Chip
+                                                    label="Actibo"
+                                                    size="small"
+                                                    chipcolor="success"
+                                                    sx={{ width: '96px' }}
+                                                />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Chip
+                                                    label="Bloqueado"
+                                                    size="small"
+                                                    chipcolor="orange"
+                                                    sx={{ width: '96px' }}
+                                                />
+                                            </>
+                                        )}
+
+                                        {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -238,23 +234,23 @@ const AffiliateTitles= () => {
                                 }}
                                 variant="standard"
                             /> */}
-                        </Grid>
-                    )}
-                />
+                                    </Grid>
+                                )}
+                            />
 
-                <Controller
-                    name="second_name"
-                    control={control}
-                    // defaultValue={userData?.second_name}
-                    render={({ field }) => (
-                        <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            className={classes.searchControl}
-                        >
-                            <label htmlFor="">Saldo actual</label>
-                            {/* <TextField
+                            <Controller
+                                name="second_name"
+                                control={control}
+                                // defaultValue={userData?.second_name}
+                                render={({ field }) => (
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        md={6}
+                                        className={classes.searchControl}
+                                    >
+                                        <label htmlFor="">Saldo actual</label>
+                                        {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -267,24 +263,26 @@ const AffiliateTitles= () => {
                                   }}
                                 variant="standard"
                             /> */}
-                        </Grid>
-                    )}
-                />
+                                    </Grid>
+                                )}
+                            />
 
-                <Controller
-                    name="last_name"
-                    control={control}
-                    // defaultValue={userData?.last_name}
-                    render={({ field }) => (
-                        <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            lg={4}
-                            className={classes.searchControl}
-                        >
-                            <label htmlFor="">{summ.current_balance}</label>
-                            {/* <TextField
+                            <Controller
+                                name="last_name"
+                                control={control}
+                                // defaultValue={userData?.last_name}
+                                render={({ field }) => (
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        md={6}
+                                        lg={4}
+                                        className={classes.searchControl}
+                                    >
+                                        <label htmlFor="">
+                                            {summ.current_balance}
+                                        </label>
+                                        {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -297,23 +295,23 @@ const AffiliateTitles= () => {
                                 }}
                                 variant="standard"
                             /> */}
-                        </Grid>
-                    )}
-                />
+                                    </Grid>
+                                )}
+                            />
 
-                <Controller
-                    name="personal_id"
-                    control={control}
-                    // defaultValue={userData?.personal_id?.replace(/\D/g, '')}
-                    render={({ field }) => (
-                        <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            className={classes.searchControl}
-                        >
-                            <label htmlFor="">Ultimo uso</label>
-                            {/* <TextField
+                            <Controller
+                                name="personal_id"
+                                control={control}
+                                // defaultValue={userData?.personal_id?.replace(/\D/g, '')}
+                                render={({ field }) => (
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        md={6}
+                                        className={classes.searchControl}
+                                    >
+                                        <label htmlFor="">Ultimo uso</label>
+                                        {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -326,23 +324,25 @@ const AffiliateTitles= () => {
                                 }}
                                 variant="standard"
                             /> */}
-                        </Grid>
-                    )}
-                />
+                                    </Grid>
+                                )}
+                            />
 
-                <Controller
-                    name="contact_number"
-                    control={control}
-                    // defaultValue={userData?.mobile}
-                    render={({ field }) => (
-                        <Grid
-                            item
-                            xs={12}
-                            md={6}
-                            className={classes.searchControl}
-                        >
-                            <label htmlFor="">{summ.last_use}</label>
-                            {/* <TextField
+                            <Controller
+                                name="contact_number"
+                                control={control}
+                                // defaultValue={userData?.mobile}
+                                render={({ field }) => (
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        md={6}
+                                        className={classes.searchControl}
+                                    >
+                                        <label htmlFor="">
+                                            {summ.last_use}
+                                        </label>
+                                        {/* <TextField
                                 type="number"
                                 fullWidth                    
                                 size="small"
@@ -356,13 +356,13 @@ const AffiliateTitles= () => {
                                 }}
                                 variant="standard"
                             /> */}
+                                    </Grid>
+                                )}
+                            />
                         </Grid>
-                    )}
-                />
-            </Grid>
 
-            {/* <Divider sx={{ marginTop: '70px' }} /> */}
-            {/* <CardActions>
+                        {/* <Divider sx={{ marginTop: '70px' }} /> */}
+                        {/* <CardActions>
                 <Grid container justifyContent="flex-end" spacing={0}>
                     <Grid item>
                             <Grid item sx={{ display: 'flex' }}>
@@ -388,8 +388,9 @@ const AffiliateTitles= () => {
                     </Grid>
                 </Grid>
             </CardActions> */}
-            </>
-        })}
+                    </>
+                )
+            })}
         </form>
     )
 }

@@ -41,12 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             color: ' transparent !important',
             marginLeft: '5px',
         },
-        [theme.breakpoints.down('md')]: {
-            background:
-                theme.palette.mode === 'dark'
-                    ? theme.palette.dark[800]
-                    : '#ffff',
-        },
+        [theme.breakpoints.down('md')]: {},
     },
     borderDebug: {
         border: '1px solid red',

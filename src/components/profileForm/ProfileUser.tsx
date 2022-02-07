@@ -74,10 +74,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         [theme.breakpoints.down('md')]: {
             width: '100%',
             marginLeft: '4px',
-            background:
-                theme.palette.mode === 'dark'
-                    ? theme.palette.dark[800]
-                    : '#fff',
         },
     },
 }))
@@ -140,12 +136,10 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     const handleSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name
 
-
         if (name === 'used_title') {
             setUsedTitle(!usedTitle)
             setValue(name, !usedTitle)
         }
-
 
         if (name === 'balance_title') {
             setBalanceTitle(!balanceTitle)
