@@ -14,7 +14,7 @@ const Register = Loadable(
     lazy(() => import('views/pages/authentication/registration/Register'))
 )
 const Recover = Loadable(
-    lazy(() => import('views/pages/authentication/recover/recover'))
+    lazy(() => import('views/pages/authentication/recover/Recover'))
 )
 
 // ==============================|| AUTH ROUTING ||============================== //
