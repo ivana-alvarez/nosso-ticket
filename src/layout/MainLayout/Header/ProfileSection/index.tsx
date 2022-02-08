@@ -67,14 +67,14 @@ const useStyles = makeStyles((theme: Theme) => ({
             theme.palette.mode === 'dark'
                 ? theme.palette.dark.main
                 : theme.palette.primary.light,
-        '&[aria-controls="menu-list-grow"], &:hover': {
-            borderColor: '#5D299F',
-            background: `'#5D299F'!important`,
-            color: '#5D299F',
-            '& svg': {
-                stroke: '#5D299F',
-            },
-        },
+        // '&[aria-controls="menu-list-grow"], &:hover': {
+        //     borderColor: '#5D299F',
+        //     background: `'#5D299F'!important`,
+        //     color: '#5D299F',
+        //     '& svg': {
+        //         stroke: '#5D299F',
+        //     },
+        // },
     },
     profileLabel: {
         lineHeight: 0,
@@ -217,9 +217,7 @@ const ProfileSection = () => {
                 //         color="inherit"
                 //     />
                 // }
-                label={
-                    <IconSettings stroke={1.5} size="1.5rem" color="#5D299F" />
-                }
+                label={<IconSettings stroke={1.5} size="1.5rem" />}
                 variant="outlined"
                 ref={anchorRef}
                 aria-controls={open ? 'menu-list-grow' : undefined}

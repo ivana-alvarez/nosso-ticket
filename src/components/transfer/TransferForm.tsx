@@ -346,7 +346,6 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                             color="primary"
                                             onChange={handleMyAccount}
                                             checked={myAccount}
-                                            disabled={readOnly}
                                         />
                                     }
                                     label="A tarjetas asociadas a mi cuenta"

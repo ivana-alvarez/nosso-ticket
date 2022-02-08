@@ -310,7 +310,9 @@ const ProfileBank = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                             </Grid>
                         )}
                     />
+                </Grid>
 
+                <Grid container spacing={2} sx={{ marginTop: '5px' }}>
                     <Controller
                         name="type_document"
                         control={control}
@@ -319,7 +321,8 @@ const ProfileBank = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                             <Grid
                                 item
                                 xs={12}
-                                md={6}
+                                sm={12}
+                                md={2}
                                 className={classes.searchControl}
                             >
                                 <TextField
@@ -354,7 +357,8 @@ const ProfileBank = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                             <Grid
                                 item
                                 xs={12}
-                                md={6}
+                                sm={12}
+                                md={4}
                                 className={classes.searchControl}
                             >
                                 <TextField
@@ -362,6 +366,7 @@ const ProfileBank = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                     label="Documento de indentidad"
                                     size="small"
                                     {...field}
+                                    autoComplete="off"
                                     error={!!errors.document_type}
                                     helperText={errors.document_type?.message}
                                 />
@@ -386,6 +391,7 @@ const ProfileBank = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                     label="Nombre y apellido del titular de la cuenta"
                                     size="small"
                                     {...field}
+                                    autoComplete="off"
                                     error={!!errors.names}
                                     helperText={errors.names?.message}
                                 />
