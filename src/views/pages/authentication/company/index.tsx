@@ -3,10 +3,10 @@ import { makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
 
 // project imports
-// import Header from './Header';
+import Header from './Header';
 // import Feature from './Feature';
 // import Demos from './Demos';
-import Layouts from './Layouts';
+// import Layouts from './Layouts';
 // import KeyFeature from './KeyFeature';
 // import Subscribe from './Subscribe';
 import Footer from '../footer/Footer';
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     sectionWhite: {
         // marginTop:"9px",
-        paddingTop: '260px',
+        // paddingTop: '260px',
         paddingBottom: '260px',
         [theme.breakpoints.down('sm')]: {
             paddingTop: '60px'
@@ -52,7 +52,7 @@ const Products = () => {
                 <Demos />
             </div> */}
             <div className={classes.sectionWhite}>
-                <Layouts />
+                <Header />
             </div>
             {/* <div className={classes.sectionWhite}>
                 <KeyFeature />

@@ -1,9 +1,9 @@
 import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
-import { makeStyles } from '@material-ui/styles';
+// import { makeStyles } from '@material-ui/styles';
 import { useTheme } from '@material-ui/core/styles';
-import { Box, Button, Container, Grid, Link, Typography, Theme, Divider } from '@material-ui/core';
+import { Box, Button, Container, Grid, Link, Typography, Divider } from '@material-ui/core';
 
 // third party
 import { motion } from 'framer-motion';
@@ -18,46 +18,47 @@ import { gridSpacing } from 'store/constant';
 // import dashboard from 'assets/images/landing/dashboard.png';
 // import widget1 from 'assets/images/landing/widget-1.png';
 // import widget2 from 'assets/images/landing/widget-2.png';
-import home from 'assets/images/landing/Home_Mesa_de_trabajo.png';
+// import home from 'assets/images/landing/Home_Mesa_de_trabajo.png';
+import CarouselImg from './CarouselImg';
 
 // style constant
-const useStyles = makeStyles((theme: Theme) => ({
-    technoImg: {
-        width: '50px',
-        height: '50px',
-        padding: '5px',
-        background: theme.palette.mode === 'dark' ? theme.palette.dark.light : theme.palette.primary.light
-    },
-    headerMain: {
-        marginLeft:"200px",
-        width: '40%',
-        height: "auto",
-        borderRadius: '20px',
-        transform: 'scale(1.6)',
-        transformOrigin: '0 50%'
-    },
-    headerImg: {
-        maxWidth: '100%',
-        filter: 'drop-shadow(0px 0px 50px rgb(33 150 243 / 30%))'
-    },
-    btnLight: {
-        background: '#E3F2FD',
-        color: theme.palette.primary.main,
-        borderColor: '#E3F2FD',
-        boxShadow: 'none',
-        '&:hover ': {
-            background: theme.palette.primary.main,
-            borderColor: theme.palette.primary.main,
-            color: '#fff'
-        }
-    }
-}));
+// const useStyles = makeStyles((theme: Theme) => ({
+//     technoImg: {
+//         width: '50px',
+//         height: '50px',
+//         padding: '5px',
+//         background: theme.palette.mode === 'dark' ? theme.palette.dark.light : theme.palette.primary.light
+//     },
+//     headerMain: {
+//         marginLeft:"200px",
+//         width: '40%',
+//         height: "auto",
+//         borderRadius: '20px',
+//         transform: 'scale(1.6)',
+//         transformOrigin: '0 50%'
+//     },
+//     headerImg: {
+//         maxWidth: '100%',
+//         filter: 'drop-shadow(0px 0px 50px rgb(33 150 243 / 30%))'
+//     },
+//     btnLight: {
+//         background: '#E3F2FD',
+//         color: theme.palette.primary.main,
+//         borderColor: '#E3F2FD',
+//         boxShadow: 'none',
+//         '&:hover ': {
+//             background: theme.palette.primary.main,
+//             borderColor: theme.palette.primary.main,
+//             color: '#fff'
+//         }
+//     }
+// }));
 
 // ==============================|| LANDING - HEADER PAGE ||============================== //
 
 const HeaderPage = () => {
     const theme = useTheme();
-    const classes = useStyles();
+    // const classes = useStyles();
 
     return (
         <Container>
@@ -121,7 +122,7 @@ const HeaderPage = () => {
                                         lineHeight: { xs: '24px', md: '32px' }
                                     }}
                                 >
-                                    Transacciones faciles, rapidasy segurasa través de tu tarjeta
+                                    Transacciones fáciles, rápidas y segura a través de tu tarjeta
                                     <Box component="span" sx={{ ml: 2, color: theme.palette.primary.main }}>
                                         T-TICKET
                                     </Box> 
@@ -151,7 +152,7 @@ const HeaderPage = () => {
                                                 variant="text"
                                                 color="secondary"
                                             >
-                                                Consulta tu cuaenta
+                                                Consulta tu cuenta
                                             </Button>
                                         </AnimateButton>
                                     </Grid>
@@ -238,8 +239,10 @@ const HeaderPage = () => {
                     </Grid>
                 </Grid> 
                 <Grid item xs={12} md={7} sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    <Box sx={{ position: 'relative', mt: '70px' }}>
-                        <img src={home} alt="Berry" className={classes.headerMain} />
+                    <Box sx={{ position: 'relative', mb:10}}>
+
+                        <CarouselImg />
+                        {/* <img src={home} alt="Berry" className={classes.headerMain} />
                         <Box
                             sx={{
                                 position: 'absolute',
@@ -259,10 +262,10 @@ const HeaderPage = () => {
                                     delay: 0.2
                                 }}
                             >
-                                {/* <img src={widget1} alt="Berry" className={classes.headerImg} /> */}
-                            </motion.div>
-                        </Box>
-                        <Box
+                                {/* <img src={widget1} alt="Berry" className={classes.headerImg} />
+                            </motion.div> */}
+                        {/* </Box> */}
+                        {/* <Box
                             sx={{
                                 position: 'absolute',
                                 bottom: '-90px',
@@ -282,9 +285,9 @@ const HeaderPage = () => {
                                     delay: 0.4
                                 }}
                             >
-                                {/* <img src={widget2} alt="Berry" className={classes.headerImg} /> */}
+                                {/* <img src={widget2} alt="Berry" className={classes.headerImg} /> 
                             </motion.div>
-                        </Box>
+                        </Box> */}
                     </Box>
                 </Grid>
             </Grid>
