@@ -35,11 +35,8 @@ import { amounts } from '_mockApis/amounts/amounts'
 const useStyles = makeStyles((theme: Theme) => ({
     searchControl: {
         width: '100%',
-        paddingRight: '16px',
-        paddingLeft: '16px',
         '& input': {
             background: 'transparent !important',
-            paddingLeft: '5px !important',
         },
         '& .Mui-focused input': {
             boxShadow: 'none',

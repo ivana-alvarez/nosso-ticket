@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     alertIcon: {
         height: '16px',
         width: '16px',
-        marginRight: '5px',
         verticalAlign: 'text-bottom',
         marginTop: '15px',
         marginLeft: '-15px',
@@ -65,29 +64,17 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     searchControl: {
         width: '100%',
-        paddingRight: '16px',
-        paddingLeft: '16px',
         '& input': {
             background: 'transparent !important',
-            paddingLeft: '5px !important',
-            width: '300px',
         },
         '& .Mui-focused input': {
             boxShadow: 'none',
         },
-        [theme.breakpoints.down('lg')]: {
-            width: '250px',
-        },
-        [theme.breakpoints.down('md')]: {
-            width: '100%',
-            marginLeft: '4px',
-        },
     },
     ButtonControl: {
-        width: '50%',
+        width: '100%',
         '& input': {
             color: ' transparent !important',
-            marginLeft: '5px',
         },
         [theme.breakpoints.down('md')]: {
             background:
@@ -270,10 +257,7 @@ const LoginForm = (props: { login?: number }) => {
                         />
                     </Grid>
 
-                    <Box
-                        component="span"
-                        className={`${classes.spreadBox} ${classes.box}`}
-                    >
+                    <Box component="span" className="w-full text-center mt-4">
                         {/* <FormControlLabel
                             sx={{ marginTop: '10px' }}
                             style={{ marginRight: 100 }}
@@ -299,8 +283,7 @@ const LoginForm = (props: { login?: number }) => {
                             variant="body2"
                         >
                             <Button
-                                // style={{marginTop:10,}}
-                                style={{ width: 580 }}
+                                className=""
                                 // variant="contained"
                                 size="small"
                                 // type="submit"
@@ -309,10 +292,10 @@ const LoginForm = (props: { login?: number }) => {
                             </Button>
                         </Link>
                     </Box>
-                    <Grid item md={12}>
+                    <Grid item xs={12}>
                         <AnimateButton>
                             <Button
-                                style={{ width: 350 }}
+                                className="w-full"
                                 variant="contained"
                                 size="large"
                                 type="submit"
@@ -321,10 +304,10 @@ const LoginForm = (props: { login?: number }) => {
                             </Button>
                         </AnimateButton>
                     </Grid>
-                    <Grid item md={12}>
+                    <Grid item xs={12}>
                         <Button
-                            style={{ width: 350 }}
                             onClick={handleRegister}
+                            className="w-full"
                             // variant="contained"
                             size="large"
                             // type="submit"

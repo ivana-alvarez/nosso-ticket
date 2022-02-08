@@ -33,11 +33,8 @@ import TextField from '@mui/material/TextField'
 const useStyles = makeStyles((theme: Theme) => ({
     searchControl: {
         width: '100%',
-        paddingRight: '16px',
-        paddingLeft: '16px',
         '& input': {
             background: 'transparent !important',
-            paddingLeft: '5px !important',
         },
         '& .Mui-focused input': {
             boxShadow: 'none',
@@ -166,12 +163,12 @@ const ProfileBank = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     }
     const onChangeFilialCompany = (event) => {
         const name = event.target.name
-        
+
         if (name === 'phone_active') {
             setPhoneActive(!phoneActive)
             setValue(name, !phoneActive)
         }
-}
+    }
     const handlePhoneActive = () => {
         setValue('phone_active', !phoneActive, {
             shouldValidate: true,
