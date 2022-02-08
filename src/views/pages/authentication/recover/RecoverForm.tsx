@@ -53,16 +53,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     userAvatar: {
         height: '80px',
-        width: '80px',
     },
     searchControl: {
         width: '100%',
-        paddingRight: '16px',
-        paddingLeft: '16px',
         '& input': {
             background: 'transparent !important',
-            paddingLeft: '5px !important',
-            width: '300px',
         },
         '& .Mui-focused input': {
             boxShadow: 'none',
@@ -99,6 +94,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         cursor: 'pointer',
         width: '30%',
     },
+    // send: {
+    //     '&.css-tq50a2-MuiButtonBase-root-MuiButton-root:hover': {
+    //         color: 'none',
+    //     },
+    // },
 }))
 
 //types form
@@ -187,13 +187,14 @@ const RecoverForm = (props: { login?: number }, { ...others }) => {
                         </Typography>
                     </Grid>
 
-                    <Grid item md={12}>
+                    <Grid item xs={12}>
                         <AnimateButton>
                             <Button
-                                style={{ width: 375 }}
+                                className="w-full"
                                 variant="contained"
                                 size="large"
                                 type="submit"
+                                // className="send"
                             >
                                 Enviar
                             </Button>

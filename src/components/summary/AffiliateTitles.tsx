@@ -42,11 +42,8 @@ import { SUMMARY } from '../../_mockApis/summary/summary'
 const useStyles = makeStyles((theme: Theme) => ({
     searchControl: {
         width: '100%',
-        paddingRight: '16px',
-        paddingLeft: '16px',
         '& input': {
             background: 'transparent !important',
-            paddingLeft: '5px !important',
         },
         '& .Mui-focused input': {
             boxShadow: 'none',
@@ -204,7 +201,7 @@ const AffiliateTitles = () => {
                                         {summ.current_state ? (
                                             <>
                                                 <Chip
-                                                    label="Actibo"
+                                                    label="Activo"
                                                     size="small"
                                                     chipcolor="success"
                                                     sx={{ width: '96px' }}

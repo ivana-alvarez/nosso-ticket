@@ -19,12 +19,12 @@ const CreateTransfer = Loadable(
 const ViewSystem = Loadable(lazy(() => import('views/system/ViewSystem')))
 const CreateSystem = Loadable(lazy(() => import('views/system/CreateSystem')))
 
-
-const ViewSummary = Loadable(lazy(()=> import('views/summary/ViewSummary')))
+const ViewSummary = Loadable(lazy(() => import('views/summary/ViewSummary')))
 
 const ProfileForm = Loadable(lazy(() => import('views/profile/CreateProfile')))
-const PaymentManagement = Loadable(lazy(()=> import('views/payments/ViewPaymentManagement')))
-
+const PaymentManagement = Loadable(
+    lazy(() => import('views/payments/ViewPaymentManagement'))
+)
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -45,7 +45,7 @@ const MainRoutes = {
             element: <CreateCards />,
         },
         {
-            path: '/payments/list',
+            path: '/payments',
             element: <ViewPayments />,
         },
         {
@@ -70,17 +70,16 @@ const MainRoutes = {
         },
         {
             path: '/summary',
-            element:<ViewSummary />,
+            element: <ViewSummary />,
         },
         {
-
             path: '/profile',
             element: <ProfileForm />,
         },
         {
-            path:'/payment_management',
+            path: '/payment_management',
             element: <PaymentManagement />,
-        }
+        },
     ],
 }
 

@@ -1,11 +1,9 @@
-// ==============================|| SAMPLE PAGE ||============================== //
-
-import PaymentManagementIndex from "components/paymentManagement"
+import ReadPayments from 'components/payments/ReadPayments'
 
 const ViewPaymentsManagement = () => {
     return (
-        <div >
-            <PaymentManagementIndex/>
+        <div>
+            <ReadPayments />
         </div>
     )
 }

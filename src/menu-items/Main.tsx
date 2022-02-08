@@ -3,10 +3,18 @@ import { FormattedMessage } from 'react-intl'
 
 // assets
 import { IconBrandChrome } from '@tabler/icons'
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined'
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu'
+import RechargePayments from '../components/icons/RechargePayments'
+import TransferIconSide from '../components/icons/TransferIconSide'
 
 // constant
 const icons = {
     IconBrandChrome,
+    InsertChartOutlinedIcon,
+    HistoryEduIcon,
+    RechargePayments,
+    TransferIconSide,
 }
 
 // ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
@@ -20,7 +28,7 @@ const Cards = {
             title: <FormattedMessage id="Resumen" />,
             type: 'item',
             url: '/summary',
-            icon: icons.IconBrandChrome,
+            icon: icons.InsertChartOutlinedIcon,
             breadcrumbs: false,
         },
         {
@@ -28,7 +36,7 @@ const Cards = {
             title: <FormattedMessage id="Gestión de Tarjetas" />,
             type: 'collapse',
             // url: '/cards/list',
-            icon: icons.IconBrandChrome,
+            icon: icons.HistoryEduIcon,
             breadcrumbs: false,
             children: [
                 {
@@ -54,7 +62,7 @@ const Cards = {
             title: <FormattedMessage id="Pagos y Recargas" />,
             type: 'collapse',
             // url: '/payments/list',
-            icon: icons.IconBrandChrome,
+            icon: icons.RechargePayments,
             // breadcrumbs: false,
             children: [
                 {
@@ -72,7 +80,7 @@ const Cards = {
             title: <FormattedMessage id="Transferencia de Saldo" />,
             type: 'item',
             url: '/transfer/list',
-            icon: icons.IconBrandChrome,
+            icon: icons.TransferIconSide,
             breadcrumbs: false,
         },
         // {

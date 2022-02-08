@@ -1,6 +1,6 @@
 import React from 'react'
 import * as yup from 'yup'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 // import { v4 as uuidv4 } from 'uuid'
 import {
@@ -59,26 +59,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     searchControl: {
         width: '100%',
-        paddingRight: '16px',
-        paddingLeft: '16px',
         '& input': {
             background: 'transparent !important',
-            paddingLeft: '5px !important',
-            width: '300px',
         },
         '& .Mui-focused input': {
             boxShadow: 'none',
         },
         [theme.breakpoints.down('lg')]: {
-            width: '250px',
+            width: '100%',
         },
         [theme.breakpoints.down('md')]: {
             width: '100%',
-            marginLeft: '4px',
+            // marginLeft: '4px',
         },
     },
     ButtonControl: {
-        width: '50%',
         '& input': {
             color: ' transparent !important',
             marginLeft: '5px',
@@ -99,7 +94,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         zIndex: 1,
         padding: 0.5,
         cursor: 'pointer',
-        width: '30%',
+    },
+    send: {
+        '&.css-tq50a2-MuiButtonBase-root-MuiButton-root:hover': {
+            color: '#5d299f',
+        },
     },
 }))
 
@@ -126,7 +125,7 @@ const Schema = yup.object().shape({
 const UserRegisterForm = (props: { login?: number }, { ...others }) => {
     // CUSTOMS HOOKS
     const classes = useStyles()
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     // const dispatch = useDispatch()
     const {
         handleSubmit,
@@ -147,6 +146,9 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
     const handleMouseDownPassword = (event: React.SyntheticEvent) => {
         event.preventDefault()
     }
+    const handleLogin = () => {
+        navigate('/login')
+    }
 
     const onInvalid: SubmitErrorHandler<Inputs> = (data, e) => {
         console.log('onInvalied', data)
@@ -165,7 +167,7 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
-                <Grid container spacing={gridSpacing} style={{ marginTop: 10 }}>
+                <Grid container spacing={gridSpacing}>
                     <Grid
                         item
                         xs={12}
@@ -323,7 +325,7 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
                     <Grid item md={12}>
                         <AnimateButton>
                             <Button
-                                style={{ width: 375 }}
+                                className="w-full my-2"
                                 variant="contained"
                                 size="large"
                                 type="submit"
@@ -331,6 +333,17 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
                                 Enviar
                             </Button>
                         </AnimateButton>
+
+                        <Grid item md={12}>
+                            <Button
+                                onClick={handleLogin}
+                                className="w-full my-2"
+                                size="large"
+                                // type="submit"
+                            >
+                                Ya tengo cuenta
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </form>
