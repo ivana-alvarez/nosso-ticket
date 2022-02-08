@@ -15,25 +15,25 @@ const CardsActions = ({
             <div className="flex justify-around">
                 <Button variant="text" size="large" onClick={updateHandle}>
                     <div className="flex flex-col items-center">
-                        <PublishedWithChangesIcon className="w-12 h-12" />
+                        <PublishedWithChangesIcon className="w-10 h-10 mt-2" />
                         <p>Actualizar</p>
                     </div>
                 </Button>
                 <Button variant="text" size="small" onClick={rechargeHandle}>
                     <div className="flex flex-col items-center">
-                        <RecargasIcon className="w-12 h-12" />
+                        <RecargasIcon className="w-10 h-10 mt-2" />
                         <p>Recargar</p>
                     </div>
                 </Button>
                 <Button variant="text" size="small" onClick={blockHandle}>
                     <div className="flex flex-col items-center">
-                        <LockOutlinedIcon className="w-12 h-12" />
+                        <LockOutlinedIcon className="w-10 h-10 mt-2" />
                         <p>Bloquear</p>
                     </div>
                 </Button>
                 <Button variant="text" size="small" onClick={deleteHandle}>
                     <div className="flex flex-col items-center">
-                        <DeleteForeverIcon className="w-12 h-12" />
+                        <DeleteForeverIcon className="w-10 h-10 mt-2" />
                         <p>Eliminar</p>
                     </div>
                 </Button>
