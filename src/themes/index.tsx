@@ -80,7 +80,7 @@ export const theme = (customization: CustomizationStateProps) => {
             themeOption.paper = color.paper
             themeOption.backgroundDefault = color.paper
             themeOption.background = color.primaryLight
-            themeOption.darkTextPrimary = '#5D299F'
+            themeOption.darkTextPrimary = color.grey700
             themeOption.darkTextSecondary = color.grey500
             themeOption.textDark = color.grey900
             themeOption.menuSelected = color.secondaryDark

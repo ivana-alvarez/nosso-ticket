@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     profileTab: {
         '& .MuiTabs-flexContainer': {
             borderBottom: 'none',
-            color: '#5d299f',
+            // color: '#5d299f',
         },
         '& button': {
             color:
