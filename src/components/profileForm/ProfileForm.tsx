@@ -14,12 +14,16 @@ import {
     CardActions,
 } from '@material-ui/core'
 
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance'
+import VpnKeyIcon from '@mui/icons-material/VpnKey'
+
 // project imports
 import MainCard from 'ui-component/cards/MainCard'
 import { gridSpacing } from 'store/constant'
 
 // assets
-import CreditCardTwoToneIcon from '@material-ui/icons/CreditCardTwoTone'
+
 // import FleetProfile from './FleetProfile'
 import { DefaultRootStateProps } from 'types'
 import ProfileUser from './ProfileUser'
@@ -31,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     profileTab: {
         '& .MuiTabs-flexContainer': {
             borderBottom: 'none',
+            color: '#5d299f',
         },
         '& button': {
             color:
@@ -114,17 +119,17 @@ const ProfileForm = ({ fleetId, onlyView, readOnly }: CompanyProfileProps) => {
     const tabsOption = [
         {
             label: 'Perfil del usuario',
-            icon: <CreditCardTwoToneIcon sx={{ fontSize: 'large' }} />,
+            icon: <AccountCircleIcon />,
             caption: 'Configuración del perfil de usuario',
         },
         {
             label: 'Datos bancarios',
-            icon: <CreditCardTwoToneIcon />,
+            icon: <AccountBalanceIcon />,
             caption: 'Configuración de métodos de pago',
         },
         {
             label: 'Cambiar contraseña',
-            icon: <CreditCardTwoToneIcon sx={{ fontSize: 'large' }} />,
+            icon: <VpnKeyIcon />,
             caption: 'Configuración de seguridad del perfil',
         },
     ]

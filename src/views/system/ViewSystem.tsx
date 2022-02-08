@@ -11,7 +11,7 @@ import BlockCardForm from 'components/cards/BlockCardForm'
 import { useSelector } from 'react-redux'
 import { DefaultRootStateProps } from 'types'
 import { Fab, Tooltip } from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
+import AddCard from '../../components/icons/AddCard'
 import dayjs from 'dayjs'
 
 const basicData = [
@@ -97,8 +97,8 @@ const ViewSystem = () => {
             )}
             <div className="fixed right-12 bottom-12">
                 <Tooltip title="Agregar Tarjeta" placement="top">
-                    <Fab color="primary" aria-label="add" onClick={handleAdd}>
-                        <AddIcon />
+                    <Fab aria-label="add" onClick={handleAdd}>
+                        <AddCard />
                     </Fab>
                 </Tooltip>
             </div>

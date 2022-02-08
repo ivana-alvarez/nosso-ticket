@@ -18,13 +18,12 @@ import {
 import MainCard from 'ui-component/cards/MainCard'
 import { gridSpacing } from 'store/constant'
 
-
 // assets
-import PersonOutlineTwoToneIcon from '@material-ui/icons/PersonOutlineTwoTone'
-// import AltRouteIcon from '@mui/icons-material/AltRoute';
 import { DefaultRootStateProps } from 'types'
 import AffiliateTitles from './AffiliateTitles'
 import Recharge from './Recharge'
+import TituloAfiliadoIcon from '../icons/TituloAfiliadoIcon'
+import RecargaComponentIcon from '../icons/RecargaComponentIcon'
 
 // style constant
 const useStyles = makeStyles((theme: Theme) => ({
@@ -86,10 +85,10 @@ function a11yProps(index: number) {
 // interface CompanyProfileProps {
 //     companyIdParam?: string
 //     readOnly?: boolean
-//     onlyView?: boolean 
+//     onlyView?: boolean
 // }
 // const SummaryIndex = ({ companyIdParam, onlyView, readOnly  }: CompanyProfileProps) => {
-    const SummaryIndex = () => {
+const SummaryIndex = () => {
     // tabs
     function TabPanel(props: {
         children: React.ReactElement
@@ -121,20 +120,19 @@ function a11yProps(index: number) {
     const [value, setValue] = React.useState<number>(0)
 
     const handleChange = (event: React.SyntheticEvent) => {
-
-        if(value === 1) setValue(0)
-        if(value === 0) setValue(1)
+        if (value === 1) setValue(0)
+        if (value === 0) setValue(1)
     }
     const tabsOption = [
         {
             label: 'Titulos afiliados',
-            icon: <PersonOutlineTwoToneIcon />,
+            icon: <TituloAfiliadoIcon />,
             caption: 'Estado de los titulos afiliados con el usuario',
             disabled: false,
         },
         {
             label: 'Recargas',
-            icon: <PersonOutlineTwoToneIcon />,
+            icon: <RecargaComponentIcon />,
             caption: 'Estado de cuentade recargas realizadas',
             disabled: false,
         },
@@ -203,7 +201,7 @@ function a11yProps(index: number) {
                                 </Tabs>
                             </CardContent>
                         </Grid>
-                        {value === 0 && 
+                        {value === 0 && (
                             <>
                                 <Grid item xs={12} lg={8}>
                                     <CardContent className={classes.cardPanels}>
@@ -214,19 +212,18 @@ function a11yProps(index: number) {
                                     </CardContent>
                                 </Grid>
                             </>
-                        }
-                        {value === 1 &&
+                        )}
+                        {value === 1 && (
                             <>
                                 <Grid item xs={12} lg={8}>
                                     <CardContent className={classes.cardPanels}>
                                         <TabPanel value={value} index={1}>
-                                            <Recharge /> 
+                                            <Recharge />
                                         </TabPanel>
                                     </CardContent>
                                 </Grid>
                             </>
-                        }
-                        
+                        )}
                     </Grid>
                     {/* <Divider /> */}
                     {/* <CardActions>

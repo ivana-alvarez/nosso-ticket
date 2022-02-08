@@ -1,6 +1,6 @@
 import React from 'react'
 import * as yup from 'yup'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 // import { v4 as uuidv4 } from 'uuid'
 import {
@@ -70,11 +70,11 @@ const useStyles = makeStyles((theme: Theme) => ({
             boxShadow: 'none',
         },
         [theme.breakpoints.down('lg')]: {
-            width: '250px',
+            width: '100%',
         },
         [theme.breakpoints.down('md')]: {
             width: '100%',
-            marginLeft: '4px',
+            // marginLeft: '4px',
         },
     },
     ButtonControl: {
@@ -101,6 +101,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         cursor: 'pointer',
         width: '30%',
     },
+    send: {
+        '&.css-tq50a2-MuiButtonBase-root-MuiButton-root:hover': {
+            color: '#5d299f',
+        },
+    },
 }))
 
 //types form
@@ -126,7 +131,7 @@ const Schema = yup.object().shape({
 const UserRegisterForm = (props: { login?: number }, { ...others }) => {
     // CUSTOMS HOOKS
     const classes = useStyles()
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     // const dispatch = useDispatch()
     const {
         handleSubmit,
@@ -147,6 +152,9 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
     const handleMouseDownPassword = (event: React.SyntheticEvent) => {
         event.preventDefault()
     }
+    const handleLogin = () => {
+        navigate('/login')
+    }
 
     const onInvalid: SubmitErrorHandler<Inputs> = (data, e) => {
         console.log('onInvalied', data)
@@ -165,7 +173,7 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
-                <Grid container spacing={gridSpacing} style={{ marginTop: 10 }}>
+                <Grid container spacing={gridSpacing}>
                     <Grid
                         item
                         xs={12}
@@ -323,14 +331,27 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
                     <Grid item md={12}>
                         <AnimateButton>
                             <Button
-                                style={{ width: 375 }}
+                                style={{ width: 350 }}
                                 variant="contained"
                                 size="large"
                                 type="submit"
+                                className="send"
                             >
                                 Enviar
                             </Button>
                         </AnimateButton>
+
+                        <Grid item md={12}>
+                            <Button
+                                style={{ width: 350 }}
+                                onClick={handleLogin}
+                                // variant="contained"
+                                size="large"
+                                // type="submit"
+                            >
+                                Ya tengo cuenta
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
             </form>

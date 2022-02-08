@@ -99,6 +99,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         cursor: 'pointer',
         width: '30%',
     },
+    // send: {
+    //     '&.css-tq50a2-MuiButtonBase-root-MuiButton-root:hover': {
+    //         color: 'none',
+    //     },
+    // },
 }))
 
 //types form
@@ -190,10 +195,11 @@ const RecoverForm = (props: { login?: number }, { ...others }) => {
                     <Grid item md={12}>
                         <AnimateButton>
                             <Button
-                                style={{ width: 375 }}
+                                style={{ width: 350, color: 'none' }}
                                 variant="contained"
                                 size="large"
                                 type="submit"
+                                // className="send"
                             >
                                 Enviar
                             </Button>
