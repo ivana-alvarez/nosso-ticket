@@ -318,7 +318,7 @@ const LayoutsPage = () => {
                                     src={ife}
                                     alt="Berry"
                                     className={classes.layoutImgAnimate}
-                                    style={{ animationDelay: '3s', }}
+                                    style={{ animationDelay: '1.5s', }}
                                 />
                             </Box>
                         </Grid>
