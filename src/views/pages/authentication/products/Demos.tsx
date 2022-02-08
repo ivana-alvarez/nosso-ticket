@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 // material-ui
 import { makeStyles } from '@material-ui/styles';
 import { 
     // Button,
-    ButtonBase, 
+    // ButtonBase, 
     Container, 
     Grid, 
     Typography, 
@@ -64,34 +64,30 @@ const DemosPage = () => {
                                para que se adapte a tus necesidades de viaje.
                             </Typography>
                         </Grid>
-                        {/* <Grid item xs={12}>
-                            <Typography variant="body2">
-                                Berry has customized pages with Material-UI components, Apps, Forms and lots more to explore.
-                            </Typography>
-                        </Grid> */}
+                        
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
                     <Grid container justifyContent="center" spacing={gridSpacing} sx={{ textAlign: 'center' }}>
                         <Grid item md={4} sm={6}>
                             <FadeInWhenVisible>
-                                <ButtonBase component={Link} to="/dashboard/default" target="_blank">
+                                {/* <ButtonBase component={Link} to="/dashboard/default" target="_blank"> */}
                                     <img src={imgDemo1} alt="Berry Dashboard" className={classes.demoImage} />
-                                </ButtonBase>
+                                {/* </ButtonBase> */}
                             </FadeInWhenVisible>
                         </Grid>
                         <Grid item md={4} sm={6}>
                             <FadeInWhenVisible>
-                                <ButtonBase component={Link} to="/user/social-profile/posts" target="_blank">
+                                {/* <ButtonBase component={Link} to="/user/social-profile/posts" target="_blank"> */}
                                     <img src={imgDemo2} alt="Berry Social App" className={classes.demoImage} />
-                                </ButtonBase>
+                                {/* </ButtonBase> */}
                             </FadeInWhenVisible>
                         </Grid>
                         <Grid item md={4} sm={6}>
                             <FadeInWhenVisible>
-                                <ButtonBase component={Link} to="/app/mail" target="_blank">
+                                {/* <ButtonBase component={Link} to="/app/mail" target="_blank"> */}
                                     <img src={imgDemo3} alt="Berry Mail App" className={classes.demoImage} />
-                                </ButtonBase>
+                                {/* </ButtonBase> */}
                             </FadeInWhenVisible>
                         </Grid>
                     </Grid>
@@ -100,28 +96,22 @@ const DemosPage = () => {
                     <Grid container justifyContent="center" spacing={gridSpacing} sx={{ textAlign: 'center' }}>
                         <Grid item md={4} sm={6}>
                             <FadeInWhenVisible>
-                                <ButtonBase component={Link} to="/dashboard/default" target="_blank">
+                                {/* <ButtonBase component={Link} to="/dashboard/default" target="_blank"> */}
                                     <img src={imgDemo4} alt="Berry Dashboard" className={classes.demoImage} />
-                                </ButtonBase>
+                                {/* </ButtonBase> */}
                             </FadeInWhenVisible>
                         </Grid>
                         <Grid item md={4} sm={6}>
                             <FadeInWhenVisible>
-                                <ButtonBase component={Link} to="/user/social-profile/posts" target="_blank">
+                                {/* <ButtonBase component={Link} to="/user/social-profile/posts" target="_blank"> */}
                                     <img src={imgDemo5} alt="Berry Social App" className={classes.demoImage} />
-                                </ButtonBase>
+                                {/* </ButtonBase> */}
                             </FadeInWhenVisible>
                         </Grid>
                         
                     </Grid>
                 </Grid>
-                {/* <Grid item xs={12} sx={{ textAlign: 'center', mt: 3 }}>
-                    {/* <AnimateButton>
-                        <Button component={Link} to="/components/autocomplete" target="_blank" variant="outlined" size="large">
-                            Explore Components
-                        </Button>
-                    </AnimateButton>
-                </Grid> */}
+            
             </Grid>
         </Container>
     );
