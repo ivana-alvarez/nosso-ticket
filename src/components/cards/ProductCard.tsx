@@ -29,9 +29,9 @@ const ProductCard = ({ cardType, name, description, price, benefits }) => {
                 {benefits.map((benefit) => (
                     <div className="w-1/3 text-center px-2 my-2">
                         {benefit.active ? (
-                            <CheckIcon className="w-10 h-10" />
+                            <CheckIcon className="w-10 h-10 text-green-500" />
                         ) : (
-                            <CloseIcon className="w-10 h-10" />
+                            <CloseIcon className="w-10 h-10 text-red-500" />
                         )}
                         <p className="text-xs">{benefit.name}</p>
                     </div>
