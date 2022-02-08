@@ -129,7 +129,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="m-7">
-                            <AuthCardWrapper sx={{ marginTop: '110px' }}>
+                            <AuthCardWrapper sx={{ marginTop: '110px' }}> 
                                 <Grid
                                     container
                                     spacing={2}

@@ -16,10 +16,87 @@ const Register = Loadable(
 const Recover = Loadable(
     lazy(() => import('views/pages/authentication/recover/Recover'))
 )
+const Landing = Loadable(
+    lazy(() => import('views/pages/authentication/landing/index'))
+)
+const Products = Loadable(
+    lazy(() => import('views/pages/authentication/products/index'))
+)
+const Red =Loadable(
+    lazy(()=> import('views/pages/authentication/Red/index'))
+)
+const Company = Loadable(
+    lazy(() => import('views/pages/authentication/company/index'))
+)
+
 
 // ==============================|| AUTH ROUTING ||============================== //
 
 const LoginRoutes = [
+    {
+        path: '/',
+        element: <MinimalLayout />,
+        children: [
+            {
+                path: '/',
+                element: (
+                    <NavMotion>
+                        {/* //  <GuestGuard> */}
+                            <Landing />
+                        {/* // </GuestGuard>  */}
+                    </NavMotion> 
+                ),
+            },
+        ],
+    },
+    {
+        path: 'products',
+        element: <MinimalLayout />,
+        children: [
+            {
+                path: '/products',
+                element: (
+                    <NavMotion>
+                        {/* //  <GuestGuard> */}
+                            <Products />
+                        {/* // </GuestGuard>  */}
+                    </NavMotion> 
+                ),
+            },
+        ],
+    },
+    {
+        path: 'company',
+        element: <MinimalLayout />,
+        children: [
+            {
+                path: '/company',
+                element: (
+                    <NavMotion>
+                        {/* //  <GuestGuard> */}
+                            <Company />
+                        {/* // </GuestGuard>  */}
+                    </NavMotion> 
+                ),
+            },
+        ],
+    },
+    {
+        path: 'red',
+        element: <MinimalLayout />,
+        children: [
+            {
+                path: '/red',
+                element: (
+                    <NavMotion>
+                        {/* //  <GuestGuard> */}
+                            <Red />
+                        {/* // </GuestGuard>  */}
+                    </NavMotion> 
+                ),
+            },
+        ],
+    },
     {
         path: 'login',
         element: <MinimalLayout />,
