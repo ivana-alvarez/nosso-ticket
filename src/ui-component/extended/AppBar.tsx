@@ -22,11 +22,15 @@ import {
 } from '@material-ui/core';
 
 // project imports
-import Logo from 'ui-component/Logo';
+// import Logo from 'ui-component/Logo';
+import LogoGobDark from 'components/icons/LogoGobDark'
+import LogoGobLight from 'components/icons/LogoGobLight'
 
 // assets
 import { IconBook, IconCreditCard, IconDashboard, IconHome2 } from '@tabler/icons';
 import MenuIcon from '@material-ui/icons/Menu';
+import { DefaultRootStateProps } from 'types';
+import { useSelector } from 'react-redux';
 
 // elevation scroll
 export interface ElevationScrollProps {
@@ -65,6 +69,9 @@ const AppBar = ({ ...others }) => {
         }
         setDrawerToggle(open);
     };
+    const themeState = useSelector(
+        (state: DefaultRootStateProps) => state.customization.navType
+    )
 
     return (
         <ElevationScroll {...others}>
@@ -72,26 +79,44 @@ const AppBar = ({ ...others }) => {
                 <Container>
                     <Toolbar>
                         <Typography component="div" sx={{ flexGrow: 1, textAlign: 'left' }}>
-                            <Logo />
+                            {/* <Logo /> */}
+                            <div className="flex justify-between w-full">
+                            <div className="mx-4 w-80">
+                                {themeState === 'dark' ? (
+                                    <LogoGobDark className="w-full" />
+                                ) : (
+                                    <LogoGobLight className="w-full" />
+                                )}
+                            </div>
+                        </div>
                         </Typography>
                         <Stack direction="row" sx={{ display: { xs: 'none', sm: 'block' } }} spacing={2}>
-                            <Button color="inherit" component={Link} href="#" target="_blank">
-                                Home
+                            <Button color="inherit" component={Link} href="/products">
+                                Productos
                             </Button>
-                            <Button color="inherit" component={RouterLink} to="/login" target="_blank">
-                                Dashboard
+                            <Button color="inherit" component={RouterLink} to="/company" >
+                                Empresa
                             </Button>
-                            <Button color="inherit" component={Link} href="https://codedthemes.gitbook.io/berry" target="_blank">
-                                Documentation
+                            <Button color="inherit" component={RouterLink} to="/red">
+                                Red
                             </Button>
                             <Button
                                 component={Link}
-                                href="https://material-ui.com/store/items/berry-react-material-admin/"
+                                href="/login"
+                                disableElevation
+                                variant="outlined"
+                                color="secondary"
+                            >
+                                Consulta tu cuaenta
+                            </Button>
+                            <Button
+                                component={Link}
+                                href="/register"
                                 disableElevation
                                 variant="contained"
                                 color="secondary"
                             >
-                                Purchase Now
+                                Crear tu cuenta 
                             </Button>
                         </Stack>
                         <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
