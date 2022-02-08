@@ -7,6 +7,7 @@ import {
 import { MenuItem, TextField } from '@material-ui/core'
 import AlertDialog from 'components/AlertDialog'
 import Card1 from 'components/icons/Card1'
+import { amounts } from '_mockApis/amounts/amounts'
 
 const typesCompany = [
     {
@@ -61,12 +62,12 @@ const RechargeCardForm = ({ open, setOpen }) => {
                                         // helperText={errors.company_type?.message}
                                         // disabled={readOnly}
                                     >
-                                        {typesCompany.map((option) => (
+                                        {amounts.map((option) => (
                                             <MenuItem
                                                 key={option.id}
                                                 value={option.id}
                                             >
-                                                {option.name}
+                                                {option.monto}
                                             </MenuItem>
                                         ))}
                                     </TextField>

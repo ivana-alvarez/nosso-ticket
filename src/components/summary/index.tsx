@@ -22,8 +22,8 @@ import { gridSpacing } from 'store/constant'
 import { DefaultRootStateProps } from 'types'
 import AffiliateTitles from './AffiliateTitles'
 import Recharge from './Recharge'
-import TituloAfiliadoIcon from '../icons/TituloAfiliadoIcon'
-import RecargaComponentIcon from '../icons/RecargaComponentIcon'
+import tituloAfiliado from '../icons/tituloAfiliado.png'
+import recarga from '../icons/recarga.png'
 
 // style constant
 const useStyles = makeStyles((theme: Theme) => ({
@@ -126,13 +126,25 @@ const SummaryIndex = () => {
     const tabsOption = [
         {
             label: 'Titulos afiliados',
-            icon: <TituloAfiliadoIcon />,
+            icon: (
+                <img
+                    src={tituloAfiliado}
+                    alt="afiliado"
+                    style={{ width: '30px', marginRight: '5px' }}
+                />
+            ),
             caption: 'Estado de los titulos afiliados con el usuario',
             disabled: false,
         },
         {
             label: 'Recargas',
-            icon: <RecargaComponentIcon />,
+            icon: (
+                <img
+                    src={recarga}
+                    alt="recarga"
+                    style={{ width: '60px', marginRight: '5px' }}
+                />
+            ),
             caption: 'Estado de cuentade recargas realizadas',
             disabled: false,
         },
