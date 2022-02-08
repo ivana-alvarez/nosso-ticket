@@ -18,16 +18,22 @@ import {
     Stack,
     Toolbar,
     Typography,
-    useScrollTrigger
+    useScrollTrigger,
+    ButtonBase
 } from '@material-ui/core';
 
 // project imports
 // import Logo from 'ui-component/Logo';
 import LogoGobDark from 'components/icons/LogoGobDark'
 import LogoGobLight from 'components/icons/LogoGobLight'
+import CompanyIcon from 'components/icons/CompanyIcon'
+import ProductsIcon from 'components/icons/ProductsIcon'
+import RedIcon from 'components/icons/RedIcon'
+import CheckAccountIcon from 'components/icons/CheckAccountIcon'
+import CreateAccountIcon from 'components/icons/CreateAccountIcon'
 
 // assets
-import { IconBook, IconCreditCard, IconDashboard, IconHome2 } from '@tabler/icons';
+// import { IconCreditCard} from '@tabler/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import { DefaultRootStateProps } from 'types';
 import { useSelector } from 'react-redux';
@@ -80,17 +86,19 @@ const AppBar = ({ ...others }) => {
                     <Toolbar>
                         <Typography component="div" sx={{ flexGrow: 1, textAlign: 'left' }}>
                             {/* <Logo /> */}
-                            <div className="flex justify-between w-full">
-                            <div className="mx-4 w-80">
-                                {themeState === 'dark' ? (
-                                    <LogoGobDark className="w-full" />
-                                ) : (
-                                    <LogoGobLight className="w-full" />
-                                )}
-                            </div>
-                        </div>
+                            <ButtonBase component={RouterLink} to="/">
+                                <div className="flex justify-between w-full">
+                                    <div className="mx-4 w-80">
+                                        {themeState === 'dark' ? (
+                                            <LogoGobDark className="w-full" />
+                                        ) : (
+                                            <LogoGobLight className="w-full" />
+                                        )}
+                                    </div>
+                                </div>
+                            </ButtonBase>
                         </Typography>
-                        <Stack direction="row" sx={{ display: { xs: 'none', sm: 'block' } }} spacing={2}>
+                        <Stack direction="row" sx={{ display: { xs: 'none', sm: 'none' , md:'none'  , lg:'block'} }} spacing={2}>
                             <Button color="inherit" component={Link} href="/products">
                                 Productos
                             </Button>
@@ -107,7 +115,7 @@ const AppBar = ({ ...others }) => {
                                 variant="outlined"
                                 color="secondary"
                             >
-                                Consulta tu cuaenta
+                                Consulta tu cuenta
                             </Button>
                             <Button
                                 component={Link}
@@ -119,7 +127,7 @@ const AppBar = ({ ...others }) => {
                                 Crear tu cuenta 
                             </Button>
                         </Stack>
-                        <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                        <Box sx={{ display: { sm: 'block' , md:'block' , lg:'none' } }}>
                             <IconButton color="inherit" onClick={drawerToggler(true)}>
                                 <MenuIcon />
                             </IconButton>
@@ -133,44 +141,53 @@ const AppBar = ({ ...others }) => {
                                     onKeyDown={drawerToggler(false)}
                                 >
                                     <List>
-                                        <Link style={{ textDecoration: 'none' }} href="#" target="_blank">
+                                        <Link style={{ textDecoration: 'none' }} href="/products">
                                             <ListItemButton component="a">
                                                 <ListItemIcon>
-                                                    <IconHome2 />
+                                                    <ProductsIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Home" />
+                                                <ListItemText primary="Productos" />
                                             </ListItemButton>
                                         </Link>
-                                        <Link style={{ textDecoration: 'none' }} href="/login" target="_blank">
+                                        <Link style={{ textDecoration: 'none' }} href="/company">
                                             <ListItemButton component="a">
                                                 <ListItemIcon>
-                                                    <IconDashboard />
+                                                    <CompanyIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Dashboard" />
-                                            </ListItemButton>
-                                        </Link>
-                                        <Link
-                                            style={{ textDecoration: 'none' }}
-                                            href="https://codedthemes.gitbook.io/berry"
-                                            target="_blank"
-                                        >
-                                            <ListItemButton component="a">
-                                                <ListItemIcon>
-                                                    <IconBook />
-                                                </ListItemIcon>
-                                                <ListItemText primary="Documentation" />
+                                                <ListItemText primary="Empresa" />
                                             </ListItemButton>
                                         </Link>
                                         <Link
                                             style={{ textDecoration: 'none' }}
-                                            href="https://material-ui.com/store/items/berry-react-material-admin/"
-                                            target="_blank"
+                                            href="/red"
                                         >
                                             <ListItemButton component="a">
                                                 <ListItemIcon>
-                                                    <IconCreditCard />
+                                                    <RedIcon />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Purchase Now" />
+                                                <ListItemText primary="Red" />
+                                            </ListItemButton>
+                                        </Link>
+                                        <Link
+                                            style={{ textDecoration: 'none' }}
+                                            href="/login"
+                                        >
+                                            <ListItemButton component="a">
+                                                <ListItemIcon>
+                                                    <CheckAccountIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Consulta tu cuenta" />
+                                            </ListItemButton>
+                                        </Link>
+                                        <Link
+                                            style={{ textDecoration: 'none' }}
+                                            href="/register"
+                                        >
+                                            <ListItemButton component="a">
+                                                <ListItemIcon>
+                                                    <CreateAccountIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Crea tu cuenta" />
                                             </ListItemButton>
                                         </Link>
                                     </List>
