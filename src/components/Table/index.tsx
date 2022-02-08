@@ -221,7 +221,7 @@ const TableCustom = ({
                 </Table>
             </TableContainer>
             {handleCreate !== undefined && addIconTooltip ? (
-                <div className="fixed right-4 bottom-10">
+                <div className="fixed right-14 bottom-14">
                     <Tooltip title={addIconTooltip} placement="top">
                         <Fab
                             color="primary"

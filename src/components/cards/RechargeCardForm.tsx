@@ -39,13 +39,13 @@ const RechargeCardForm = ({ open, setOpen }) => {
                 acceptButtonText="Aceptar"
             >
                 <div className="flex flex-wrap">
-                    <div className="w-full lg:w-1/2 px-4">
+                    <div className="w-full lg:w-1/2 p-2">
                         <div className="flex justify-center">
                             <Card1 className="max-h-48 w-full" />
                         </div>
                         <p className="text-center my-4">Tarjeta RSC</p>
                     </div>
-                    <div className="w-full lg:w-1/2 px-4">
+                    <div className="w-full lg:w-1/2 p-2">
                         <div className="my4">
                             <Controller
                                 name="company_type"

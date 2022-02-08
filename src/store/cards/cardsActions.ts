@@ -39,7 +39,7 @@ export const getCardsRequest = () => {
     }
 }
 
-export const createCardsRequest = (cardsData: TCardsProps) => {
+export const createCardsRequest = (cardsData: any) => {
     return async (dispatch) => {
         try {
             // console.log('cardsData', cardsData)

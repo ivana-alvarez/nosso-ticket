@@ -59,12 +59,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     searchControl: {
         width: '100%',
-        paddingRight: '16px',
-        paddingLeft: '16px',
         '& input': {
             background: 'transparent !important',
-            paddingLeft: '5px !important',
-            width: '300px',
         },
         '& .Mui-focused input': {
             boxShadow: 'none',
@@ -78,7 +74,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
     ButtonControl: {
-        width: '50%',
         '& input': {
             color: ' transparent !important',
             marginLeft: '5px',
@@ -99,7 +94,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         zIndex: 1,
         padding: 0.5,
         cursor: 'pointer',
-        width: '30%',
     },
     send: {
         '&.css-tq50a2-MuiButtonBase-root-MuiButton-root:hover': {
@@ -331,11 +325,10 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
                     <Grid item md={12}>
                         <AnimateButton>
                             <Button
-                                style={{ width: 350 }}
+                                className="w-full my-2"
                                 variant="contained"
                                 size="large"
                                 type="submit"
-                                className="send"
                             >
                                 Enviar
                             </Button>
@@ -343,9 +336,8 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
 
                         <Grid item md={12}>
                             <Button
-                                style={{ width: 350 }}
                                 onClick={handleLogin}
-                                // variant="contained"
+                                className="w-full my-2"
                                 size="large"
                                 // type="submit"
                             >
