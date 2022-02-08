@@ -7,6 +7,7 @@ import {
 import { MenuItem, TextField } from '@material-ui/core'
 import AlertDialog from 'components/AlertDialog'
 import Card1 from 'components/icons/Card1'
+import { amounts } from '_mockApis/amounts/amounts'
 
 const typesCompany = [
     {
@@ -38,13 +39,13 @@ const RechargeCardForm = ({ open, setOpen }) => {
                 acceptButtonText="Aceptar"
             >
                 <div className="flex flex-wrap">
-                    <div className="w-full lg:w-1/2 px-4">
+                    <div className="w-full lg:w-1/2 p-2">
                         <div className="flex justify-center">
                             <Card1 className="max-h-48 w-full" />
                         </div>
                         <p className="text-center my-4">Tarjeta RSC</p>
                     </div>
-                    <div className="w-full lg:w-1/2 px-4">
+                    <div className="w-full lg:w-1/2 p-2">
                         <div className="my4">
                             <Controller
                                 name="company_type"
@@ -61,12 +62,12 @@ const RechargeCardForm = ({ open, setOpen }) => {
                                         // helperText={errors.company_type?.message}
                                         // disabled={readOnly}
                                     >
-                                        {typesCompany.map((option) => (
+                                        {amounts.map((option) => (
                                             <MenuItem
                                                 key={option.id}
                                                 value={option.id}
                                             >
-                                                {option.name}
+                                                {option.monto}
                                             </MenuItem>
                                         ))}
                                     </TextField>

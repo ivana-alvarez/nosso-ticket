@@ -12,7 +12,7 @@ import AuthWrapper1 from '../AuthWrapper1'
 import AuthCardWrapper from '../AuthCardWrapper'
 // import FirebaseLogin from '../login/FirebaseLogin'
 // import LoginForm from '../login/loginForm'
-import BackgroundPattern1 from 'ui-component/cards/BackgroundPattern1'
+import BackgroundPattern2 from 'ui-component/cards/BackgroundPattern2'
 // import cintillo from '../../../../assets/images/cintillo.png'
 
 // import AuthSlider from 'ui-component/cards/AuthSlider'
@@ -23,7 +23,7 @@ import { DefaultRootStateProps } from 'types'
 // import collage from 'assets/images/auth/collage.jpg'
 // import login_dark from 'assets/images/auth/login_dark.png'
 // import login_light from 'assets/images/auth/login_light.png'
-import login_light_dark from 'assets/images/auth/login-01.png'
+import login_light_dark from 'assets/images/auth/login-02.png'
 // import AuthPurpleCard from 'assets/images/auth/auth-purple-card.svg'
 import LogoLight from 'components/icons/LogoLight'
 import LogoDark from 'components/icons/LogoDark'
@@ -94,7 +94,6 @@ const Register = () => {
         (state: DefaultRootStateProps) => state.customization.navType
     )
 
-
     return (
         <>
             <AuthWrapper1 className="relative">
@@ -132,7 +131,6 @@ const Register = () => {
                             </div>
                         </div>
                         <div className="m-7">
-                        
                             <AuthCardWrapper sx={{ marginTop: '110px' }}>
                                 <Grid
                                     container
@@ -203,10 +201,7 @@ const Register = () => {
                                                     }
                                                 >
                                                     <Typography
-                                                        color={
-                                                            theme.palette
-                                                                .secondary.main
-                                                        }
+                                                        color="textPrimary"
                                                         gutterBottom
                                                         variant={
                                                             matchDownSM
@@ -214,14 +209,15 @@ const Register = () => {
                                                                 : 'h2'
                                                         }
                                                     >
-                                                         Hola, bienvenido
+                                                        Hola, bienvenido
                                                     </Typography>
                                                     <Typography
                                                         color="textPrimary"
                                                         gutterBottom
                                                         variant="h4"
                                                     >
-                                                       Registre sus datos para crear su usuario  
+                                                        Registre sus datos para
+                                                        crear su usuario
                                                     </Typography>
                                                 </Stack>
                                             </Grid>
@@ -234,7 +230,6 @@ const Register = () => {
                                     </Grid>
                                 </Grid>
                             </AuthCardWrapper>
-                       
                         </div>
                     </Grid>
                     <Grid
@@ -247,7 +242,7 @@ const Register = () => {
                             display: { xs: 'none', md: 'block' },
                         }}
                     >
-                        <BackgroundPattern1>
+                        <BackgroundPattern2>
                             <Grid
                                 item
                                 container
@@ -297,7 +292,7 @@ const Register = () => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </BackgroundPattern1>
+                        </BackgroundPattern2>
                     </Grid>
                 </Grid>
             </AuthWrapper1>

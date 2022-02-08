@@ -48,21 +48,11 @@ import { PAYMENTMANAGEMENT } from '../../_mockApis/payment_management/paymentMan
 const useStyles = makeStyles((theme: Theme) => ({
     searchControl: {
         width: '100%',
-        paddingRight: '16px',
-        paddingLeft: '16px',
         '& input': {
             background: 'transparent !important',
-            paddingLeft: '5px !important',
         },
         '& .Mui-focused input': {
             boxShadow: 'none',
-        },
-        [theme.breakpoints.down('lg')]: {
-            width: '250px',
-        },
-        [theme.breakpoints.down('md')]: {
-            width: '100%',
-            marginLeft: '4px',
         },
     },
 }))

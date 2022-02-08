@@ -12,7 +12,7 @@ import AuthWrapper1 from '../AuthWrapper1'
 import AuthCardWrapper from '../AuthCardWrapper'
 // import FirebaseLogin from '../login/FirebaseLogin'
 // import LoginForm from '../login/loginForm'
-import BackgroundPattern1 from 'ui-component/cards/BackgroundPattern1'
+import BackgroundPattern2 from 'ui-component/cards/BackgroundPattern2'
 // import cintillo from '../../../../assets/images/cintillo.png'
 
 // import AuthSlider from 'ui-component/cards/AuthSlider'
@@ -200,10 +200,7 @@ const Recover = () => {
                                                     }
                                                 >
                                                     <Typography
-                                                        color={
-                                                            theme.palette
-                                                                .secondary.main
-                                                        }
+                                                        color="textPrimary"
                                                         gutterBottom
                                                         variant={
                                                             matchDownSM
@@ -246,7 +243,7 @@ const Recover = () => {
                             display: { xs: 'none', md: 'block' },
                         }}
                     >
-                        <BackgroundPattern1>
+                        <BackgroundPattern2>
                             <Grid
                                 item
                                 container
@@ -296,7 +293,7 @@ const Recover = () => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </BackgroundPattern1>
+                        </BackgroundPattern2>
                     </Grid>
                 </Grid>
             </AuthWrapper1>
