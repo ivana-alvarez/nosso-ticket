@@ -8,9 +8,9 @@ import TableCustom from '../Table/index'
 // import SelectColumnFilter from "components/Table/Filters/SelectColumnFilter";
 // import { IconButton } from '@material-ui/core'
 // import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 // import { DefaultRootStateProps } from 'types/index'
-import { getCardsRequest } from 'store/cards/cardsActions'
+// import { getCardsRequest } from 'store/cards/cardsActions'
 
 import { RECHARGE } from '_mockApis/summary/recharge'
 
@@ -50,7 +50,7 @@ const Recharge = () => {
     // States
     const [rowsInitial, setRowsInitial] = React.useState<Array<any>>([])
     // Customs Hooks
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const navigate = useNavigate()
     // const permissions = useSelector(
     //     (state: DefaultRootStateProps) => state.login?.user?.content?.permissions
@@ -94,7 +94,7 @@ const Recharge = () => {
     }
 
     React.useEffect(() => {
-        dispatch(getCardsRequest())
+        // dispatch(getCardsRequest())
     }, [])
 
     //EFFECTS
@@ -115,9 +115,7 @@ const Recharge = () => {
                 equipment,
                 reference,
                 amount,
-                status:  status
-                    ? handleChip(true)
-                    : handleChip(false),
+                status: status ? handleChip(true) : handleChip(false),
             })
         )
         setRowsInitial(rows)
@@ -130,7 +128,7 @@ const Recharge = () => {
                 data={rowsInitial}
                 title="Gestión de Tarjetas"
                 addIconTooltip="Crear Tarjeta"
-                handleCreate={ handleCreate}
+                handleCreate={handleCreate}
             />
         </div>
     )

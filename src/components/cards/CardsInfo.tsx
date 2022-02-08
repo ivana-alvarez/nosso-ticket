@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 interface CardsInfoProps {
     card_status?: number
     card_money?: string
@@ -33,13 +35,17 @@ const CardsInfo = ({
                 {init_time ? (
                     <div className="flex my-4">
                         <p className="w-1/2">Fecha de Venta</p>
-                        <p className="w-1/2">{init_time}</p>
+                        <p className="w-1/2">
+                            {dayjs(init_time).format('DD/MM/YYYY')}
+                        </p>
                     </div>
                 ) : null}
                 {issue_time ? (
                     <div className="flex my-4">
                         <p className="w-1/2">Fecha de Expiración</p>
-                        <p className="w-1/2">{issue_time}</p>
+                        <p className="w-1/2">
+                            {dayjs(issue_time).format('DD/MM/YYYY')}
+                        </p>
                     </div>
                 ) : null}
                 {card_type ? (
