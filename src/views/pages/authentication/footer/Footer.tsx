@@ -1,16 +1,16 @@
 // material-ui
-import { makeStyles } from '@material-ui/styles';
-import { useTheme } from '@material-ui/core/styles';
-import { 
-    Container, 
-    Grid, 
-    // Link, 
-    // Typography, 
-    Theme 
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles'
+// import { useTheme } from '@material-ui/core/styles'
+import {
+    Container,
+    Grid,
+    // Link,
+    // Typography,
+    Theme,
+} from '@material-ui/core'
 
 // project imports
-import { gridSpacing } from 'store/constant';
+import { gridSpacing } from 'store/constant'
 
 // assets
 // import FacebookIcon from '@material-ui/icons/Facebook';
@@ -19,21 +19,20 @@ import { gridSpacing } from 'store/constant';
 // import FadeInWhenVisible from './Animation';
 // import AnimateButton from 'ui-component/extended/AnimateButton';
 // import logoDark from 'assets/images/logo-white.svg';
-import Cintillo_3 from 'components/icons/Cintillo_3';
-import Cintillo_4 from 'components/icons/Cintillo_4';
+import Cintillo_3 from 'components/icons/Cintillo_3'
+import Cintillo_4 from 'components/icons/Cintillo_4'
 
 // style constant
 const useStyles = makeStyles((theme: Theme) => ({
     footer: {
-        padding: '20px ',
         color: '#fff',
-        height: "100px",
-        marginTop:"19px",
+        height: '70px',
+        marginTop: '19px',
         // marginBottom:0,
-        background: "#5D299F" , // theme.palette.secondary.main,
+        background: '#29529f', // theme.palette.secondary.main,
         [theme.breakpoints.down('sm')]: {
-            textAlign: 'center'
-        }
+            textAlign: 'center',
+        },
     },
     footerLink: {
         color: '#b89797',
@@ -43,88 +42,40 @@ const useStyles = makeStyles((theme: Theme) => ({
         opacity: '0.8',
         '& svg': {
             fontsize: '18px',
-            marginRight: '8px'
+            marginRight: '8px',
         },
         '&:hover': {
-            opacity: '1'
-        }
+            opacity: '1',
+        },
     },
     footerSub: {
         padding: '20px 0',
         color: '#fff',
-        background: "#FBFAFF", // theme.palette.secondary.dark,
+        background: '#FBFAFF', // theme.palette.secondary.dark,
         [theme.breakpoints.down('sm')]: {
-            textAlign: 'center'
-        }
-    }
-}));
+            textAlign: 'center',
+        },
+    },
+}))
 // ==============================|| LANDING - FOOTER PAGE ||============================== //
 
 const FooterPage = () => {
-    const theme = useTheme();
-    const classes = useStyles();
+    // const theme = useTheme()
+    const classes = useStyles()
     return (
         <>
             <div className={classes.footer}>
-                <Container>
-                    <Grid container alignItems="center" spacing={gridSpacing}>
-                    <Grid item xs={12} sm={4}>
-                                         {/* <img src={Cintillo_3} alt="Berry" width="100" /> */}
-                                        <Cintillo_4 />
-                                </Grid>
-                        <Grid item xs={12} sm={8}>
-                            <Grid
-                                container
-                                alignItems="center"
-                                spacing={2}
-                                sx={{ justifyContent: 'flex-end', [theme.breakpoints.down('sm')]: { justifyContent: 'center' } }}
-                            >
-
-                                
-                                <Grid item xs={12} sm={4}>
-                                        {/* <img src={Cintillo_3} alt="Berry" width="100" /> */}
-                                        <Cintillo_3 />
-                                </Grid>
-                                {/* <Grid item>
-                                    {/* <Link
-                                        href="https://blog.berrydashboard.io/"
-                                        target="_blank"
-                                        className={classes.footerLink}
-                                        underline="hover"
-                                    >
-                                        <InstagramIcon />
-                                        Blog
-                                    </Link> 
-                                     
-                                    <Grid item xs={12} sm={4}>
-                                        <img src={logoDark} alt="Berry" width="100" />
-                                    </Grid>
-                        
-                                </Grid>
-                                <Grid item>
-                                    <Link
-                                        href="https://www.facebook.com/codedthemes"
-                                        target="_blank"
-                                        className={classes.footerLink}
-                                        underline="hover"
-                                    >
-                                        <FacebookIcon />
-                                        Facebook
-                                    </Link>
-                                </Grid>
-                                <Grid item>
-                                    <Link
-                                        href="https://twitter.com/codedthemes"
-                                        target="_blank"
-                                        className={classes.footerLink}
-                                        underline="hover"
-                                    >
-                                        <TwitterIcon />
-                                        Twitter
-                                    </Link>
-                                </Grid> */}
-                            </Grid>
-                        </Grid>
+                <Container className="h-full">
+                    <Grid
+                        spacing={gridSpacing}
+                        className="flex justify-between items-center h-full"
+                    >
+                        <div className="px-2">
+                            <Cintillo_4 />
+                        </div>
+                        <div className="px-2">
+                            <Cintillo_3 />
+                        </div>
                     </Grid>
                 </Container>
             </div>
@@ -136,7 +87,7 @@ const FooterPage = () => {
                 </Container>
             </div> */}
         </>
-    );
-};
+    )
+}
 
-export default FooterPage;
+export default FooterPage

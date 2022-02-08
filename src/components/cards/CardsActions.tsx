@@ -13,27 +13,47 @@ const CardsActions = ({
     return (
         <>
             <div className="flex justify-around">
-                <Button variant="text" size="large" onClick={updateHandle}>
+                <Button
+                    variant="text"
+                    size="large"
+                    onClick={updateHandle}
+                    className="hover:bg-hover rounded-full w-1/4"
+                >
                     <div className="flex flex-col items-center">
-                        <PublishedWithChangesIcon className="w-10 h-10 mt-2" />
+                        <PublishedWithChangesIcon className="w-8 h-8 mt-3" />
                         <p>Actualizar</p>
                     </div>
                 </Button>
-                <Button variant="text" size="small" onClick={rechargeHandle}>
+                <Button
+                    variant="text"
+                    size="small"
+                    onClick={rechargeHandle}
+                    className="hover:bg-hover rounded-full w-1/4"
+                >
                     <div className="flex flex-col items-center">
-                        <RecargasIcon className="w-10 h-10 mt-2" />
+                        <RecargasIcon className="w-8 h-8 mt-3" />
                         <p>Recargar</p>
                     </div>
                 </Button>
-                <Button variant="text" size="small" onClick={blockHandle}>
+                <Button
+                    variant="text"
+                    size="small"
+                    onClick={blockHandle}
+                    className="hover:bg-hover rounded-full w-1/4"
+                >
                     <div className="flex flex-col items-center">
-                        <LockOutlinedIcon className="w-10 h-10 mt-2" />
+                        <LockOutlinedIcon className="w-8 h-8 mt-3" />
                         <p>Bloquear</p>
                     </div>
                 </Button>
-                <Button variant="text" size="small" onClick={deleteHandle}>
+                <Button
+                    variant="text"
+                    size="small"
+                    onClick={deleteHandle}
+                    className="hover:bg-hover rounded-full w-1/4"
+                >
                     <div className="flex flex-col items-center">
-                        <DeleteForeverIcon className="w-10 h-10 mt-2" />
+                        <DeleteForeverIcon className="w-8 h-8 mt-3" />
                         <p>Eliminar</p>
                     </div>
                 </Button>

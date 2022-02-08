@@ -130,7 +130,12 @@ const SummaryIndex = () => {
                 <img
                     src={tituloAfiliado}
                     alt="afiliado"
-                    style={{ width: '30px', marginRight: '5px' }}
+                    style={{
+                        width: '40px',
+                        marginRight: '5px',
+                        height: '40px',
+                        color: 'white',
+                    }}
                 />
             ),
             caption: 'Estado de los titulos afiliados con el usuario',
@@ -142,7 +147,11 @@ const SummaryIndex = () => {
                 <img
                     src={recarga}
                     alt="recarga"
-                    style={{ width: '60px', marginRight: '5px' }}
+                    style={{
+                        width: '40px',
+                        marginRight: '5px',
+                        height: '40px',
+                    }}
                 />
             ),
             caption: 'Estado de cuentade recargas realizadas',
