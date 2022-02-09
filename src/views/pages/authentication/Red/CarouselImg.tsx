@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
+// import Box from '@material-ui/core/Box';
 import Box from '@mui/material/Box';
 // import MobileStepper from '@mui/material/MobileStepper';
 // import Paper from '@mui/material/Paper';
@@ -7,7 +8,8 @@ import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
 // import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 // import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-// import home from 'assets/images/landing/Home_Mesa_de_trabajo.png';
+import home from '../../../../assets/images/landing/LOGOS_METROS_BLANCOS_Barinas.png';
+
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 
@@ -20,25 +22,28 @@ const images = [
       
   // },
   {
+    index:0,
     label: 'San Francisco – Oakland Bay Bridge, United States',
-    imgPath:
-      'https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60',
+    imgPath: home,
   },
-  {
-    label: 'Bird',  
-    imgPath:
-      'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
-  },
-  {
-    label: 'Bali, Indonesia',
-    imgPath:
-      'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
-  },
-  {
-    label: 'Goč, Serbia',
-    imgPath:
-      'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
-  },
+  // {
+  //   index:1,
+  //   label: 'Bird',  
+  //   imgPath:
+  //     'https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60',
+  // },
+  // {
+  //   index:2,
+  //   label: 'Bali, Indonesia',
+  //   imgPath:
+  //     'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80',
+  // },
+  // {
+  //   index:3,
+  //   label: 'Goč, Serbia',
+  //   imgPath:
+  //     'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
+  // },
 ];
 
 const CarouselImg = () => {
@@ -83,8 +88,8 @@ const CarouselImg = () => {
             
         //   }}
       >
-        {images.map((step, index) => (
-          <div key={step.label}>
+        {images.map(({ imgPath , label , index}) => (
+          <div key={label}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
@@ -96,8 +101,8 @@ const CarouselImg = () => {
                   overflow: 'hidden',
                   width: '100%',
                 }}
-                src={step.imgPath}
-                alt={step.label}
+                src={imgPath}
+                alt={label}
               />
             ) : null}
           </div>
