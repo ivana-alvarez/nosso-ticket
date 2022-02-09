@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import Chip from 'ui-component/extended/Chip'
 import TableCustom from '../Table/index'
 // import VisibilityTwoToneIcon from '@material-ui/icons/VisibilityTwoTone'
@@ -51,7 +51,7 @@ const Recharge = () => {
     const [rowsInitial, setRowsInitial] = React.useState<Array<any>>([])
     // Customs Hooks
     // const dispatch = useDispatch()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     // const permissions = useSelector(
     //     (state: DefaultRootStateProps) => state.login?.user?.content?.permissions
     // )
@@ -70,10 +70,10 @@ const Recharge = () => {
     //     navigate(`/categoria-de-tarjetas/editar/${id}-view`)
     // }
 
-    const handleCreate = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault()
-        navigate(`/categoria-de-tarjetas/crear`)
-    }
+    // const handleCreate = (e: React.MouseEvent<HTMLElement>) => {
+    //     e.preventDefault()
+    //     navigate(`/categoria-de-tarjetas/crear`)
+    // }
 
     const handleChip = (active) => {
         return active ? (
@@ -119,7 +119,7 @@ const Recharge = () => {
             })
         )
         setRowsInitial(rows)
-    }, [RECHARGE])
+    }, [])
 
     return (
         <div>
@@ -128,7 +128,7 @@ const Recharge = () => {
                 data={rowsInitial}
                 title="Gestión de Tarjetas"
                 addIconTooltip="Crear Tarjeta"
-                handleCreate={handleCreate}
+                // handleCreate={handleCreate}
             />
         </div>
     )

@@ -31,6 +31,7 @@ import { cardsData } from '../../_mockApis/cards/cardsData'
 
 import TextField from '@mui/material/TextField'
 import { amounts } from '_mockApis/amounts/amounts'
+import TransferAdd from './TransferAdd'
 
 const useStyles = makeStyles((theme: Theme) => ({
     searchControl: {
@@ -111,6 +112,14 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     const [otherAccount, setOtherAccount] = React.useState<boolean>()
     const [equalOtherAccount, setEqualOtherAccount] =
         React.useState<boolean>(false)
+
+    const [open, setOpen] = React.useState<boolean>(false)
+    const [modal, setModal] = React.useState<string>('')
+
+    const handleTransfer = () => {
+        setOpen(true)
+        setModal('transfer')
+    }
 
     const handleAbleToEdit = () => {
         setReadOnlyState(!readOnlyState)
@@ -585,6 +594,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                             size="medium"
                                             type="submit"
                                             className="mt-2"
+                                            onClick={handleTransfer}
                                         >
                                             Transferir
                                         </Button>
@@ -593,6 +603,13 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                             )}
                         </Grid>
                     </Grid>
+
+                    {modal === 'transfer' ? (
+                        <TransferAdd open={open} setOpen={setOpen} />
+                    ) : null}
+                    {/* {modal === 'add' ? (
+                        <AddCardForm open={open} setOpen={setOpen} />
+                    ) : null} */}
                 </CardActions>
             </form>
         </>

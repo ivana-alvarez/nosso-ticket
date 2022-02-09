@@ -31,7 +31,7 @@ export default function AlertDialog({
     return (
         <>
             <Dialog
-                maxWidth="md"
+                maxWidth="sm"
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
