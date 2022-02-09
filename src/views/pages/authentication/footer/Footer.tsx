@@ -19,8 +19,8 @@ import { gridSpacing } from 'store/constant'
 // import FadeInWhenVisible from './Animation';
 // import AnimateButton from 'ui-component/extended/AnimateButton';
 // import logoDark from 'assets/images/logo-white.svg';
-import Cintillo_3 from 'components/icons/Cintillo_3'
-import Cintillo_4 from 'components/icons/Cintillo_4'
+import Cintillo3 from 'components/icons/Cintillo_3'
+import Cintillo4 from 'components/icons/Cintillo_4'
 
 // style constant
 const useStyles = makeStyles((theme: Theme) => ({
@@ -71,10 +71,10 @@ const FooterPage = () => {
                         className="flex justify-between items-center h-full"
                     >
                         <div className="px-2">
-                            <Cintillo_4 />
+                            <Cintillo4 />
                         </div>
                         <div className="px-2">
-                            <Cintillo_3 />
+                            <Cintillo3 />
                         </div>
                     </Grid>
                 </Container>
