@@ -10,7 +10,7 @@ import Box from '@mui/material/Box'
 
 import metroccs from '../../../../assets/images/landing/metroccs.png'
 // import transaragua from '../../../../assets/images/landing/transaragua.png'
-import valencia from '../../../../assets/images/landing/valencia.png'
+import valenciablanco from '../../../../assets/images/landing/valenciablanco.png'
 import ife from '../../../../assets/images/landing/ife.png'
 import barinas from '../../../../assets/images/landing/barinas.png'
 import SwipeableViews from 'react-swipeable-views'
@@ -27,7 +27,7 @@ const images = [
     {
         index: 1,
         label: 'metro de valencia',
-        imgPath: valencia,
+        imgPath: valenciablanco,
     },
     {
         index: 2,
