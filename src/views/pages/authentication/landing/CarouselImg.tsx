@@ -11,35 +11,13 @@ import Box from '@mui/material/Box'
 import metroccs from '../../../../assets/images/landing/metroccs.png'
 // import transaragua from '../../../../assets/images/landing/transaragua.png'
 import valenciablanco from '../../../../assets/images/landing/valenciablanco.png'
+import valencia from '../../../../assets/images/landing/valencia.png'
 import ife from '../../../../assets/images/landing/ife.png'
 import barinas from '../../../../assets/images/landing/barinas.png'
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay } from 'react-swipeable-views-utils'
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
-
-const images = [
-    {
-        index: 0,
-        label: 'metro de caracas',
-        imgPath: metroccs,
-    },
-    {
-        index: 1,
-        label: 'metro de valencia',
-        imgPath: valenciablanco,
-    },
-    {
-        index: 2,
-        label: 'sistema ferrroviario',
-        imgPath: ife,
-    },
-    {
-        index: 3,
-        label: 'bus barinas',
-        imgPath: barinas,
-    },
-]
 
 const CarouselImg = () => {
     const theme = useTheme()
@@ -57,6 +35,29 @@ const CarouselImg = () => {
     const handleStepChange = (step: number) => {
         setActiveStep(step)
     }
+
+    const images = [
+        {
+            index: 0,
+            label: 'metro de caracas',
+            imgPath: metroccs,
+        },
+        {
+            index: 1,
+            label: 'metro de valencia',
+            imgPath: theme.palette.mode === 'dark' ? valenciablanco : valencia,
+        },
+        {
+            index: 2,
+            label: 'sistema ferrroviario',
+            imgPath: ife,
+        },
+        {
+            index: 3,
+            label: 'bus barinas',
+            imgPath: barinas,
+        },
+    ]
 
     return (
         <Box sx={{ maxWidth: 750, flexGrow: 1 }}>
