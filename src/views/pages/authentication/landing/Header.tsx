@@ -79,6 +79,7 @@ const HeaderPage = () => {
                 justifyContent="space-between"
                 spacing={gridSpacing}
                 sx={{
+                    flexDirection: 'row-reverse',
                     mt: '80px',
                     mb: '80px',
                     [theme.breakpoints.down('sm')]: {
@@ -87,6 +88,57 @@ const HeaderPage = () => {
                     },
                 }}
             >
+                <Grid item xs={12} md={6}>
+                    <Box sx={{ position: 'relative' }}>
+                        <CarouselImg />
+                        {/* <img src={home} alt="Berry" className={classes.headerMain} />
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                top: '-110px',
+                                right: '-170px',
+                                width: '290px',
+                                animation: '10s slideY linear infinite'
+                            }}
+                        >
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    type: 'spring',
+                                    stiffness: 150,
+                                    damping: 30,
+                                    delay: 0.2
+                                }}
+                            >
+                                {/* <img src={widget1} alt="Berry" className={classes.headerImg} />
+                            </motion.div> */}
+                        {/* </Box> */}
+                        {/* <Box
+                            sx={{
+                                position: 'absolute',
+                                bottom: '-90px',
+                                left: '300px',
+                                width: '280px',
+                                animation: '10s slideY linear infinite',
+                                animationDelay: '2s'
+                            }}
+                        >
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    type: 'spring',
+                                    stiffness: 150,
+                                    damping: 30,
+                                    delay: 0.4
+                                }}
+                            >
+                                {/* <img src={widget2} alt="Berry" className={classes.headerImg} /> 
+                            </motion.div>
+                        </Box> */}
+                    </Box>
+                </Grid>
                 <Grid item xs={12} md={6}>
                     <Grid
                         container
@@ -294,62 +346,6 @@ const HeaderPage = () => {
                             </motion.div>
                         </Grid>*/}
                     </Grid>
-                </Grid>
-                <Grid
-                    item
-                    xs={12}
-                    md={6}
-                    sx={{ display: { xs: 'none', md: 'flex' } }}
-                >
-                    <Box sx={{ position: 'relative' }}>
-                        <CarouselImg />
-                        {/* <img src={home} alt="Berry" className={classes.headerMain} />
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                top: '-110px',
-                                right: '-170px',
-                                width: '290px',
-                                animation: '10s slideY linear infinite'
-                            }}
-                        >
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{
-                                    type: 'spring',
-                                    stiffness: 150,
-                                    damping: 30,
-                                    delay: 0.2
-                                }}
-                            >
-                                {/* <img src={widget1} alt="Berry" className={classes.headerImg} />
-                            </motion.div> */}
-                        {/* </Box> */}
-                        {/* <Box
-                            sx={{
-                                position: 'absolute',
-                                bottom: '-90px',
-                                left: '300px',
-                                width: '280px',
-                                animation: '10s slideY linear infinite',
-                                animationDelay: '2s'
-                            }}
-                        >
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{
-                                    type: 'spring',
-                                    stiffness: 150,
-                                    damping: 30,
-                                    delay: 0.4
-                                }}
-                            >
-                                {/* <img src={widget2} alt="Berry" className={classes.headerImg} /> 
-                            </motion.div>
-                        </Box> */}
-                    </Box>
                 </Grid>
             </Grid>
 

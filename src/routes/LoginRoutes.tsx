@@ -22,13 +22,10 @@ const Landing = Loadable(
 const Products = Loadable(
     lazy(() => import('views/pages/authentication/products/index'))
 )
-const Red =Loadable(
-    lazy(()=> import('views/pages/authentication/Red/index'))
-)
+const Red = Loadable(lazy(() => import('views/pages/authentication/Red/index')))
 const Company = Loadable(
     lazy(() => import('views/pages/authentication/company/index'))
 )
-
 
 // ==============================|| AUTH ROUTING ||============================== //
 
@@ -42,9 +39,9 @@ const LoginRoutes = [
                 element: (
                     <NavMotion>
                         {/* //  <GuestGuard> */}
-                            <Landing />
+                        <Landing />
                         {/* // </GuestGuard>  */}
-                    </NavMotion> 
+                    </NavMotion>
                 ),
             },
         ],
@@ -58,9 +55,9 @@ const LoginRoutes = [
                 element: (
                     <NavMotion>
                         {/* //  <GuestGuard> */}
-                            <Products />
+                        <Products />
                         {/* // </GuestGuard>  */}
-                    </NavMotion> 
+                    </NavMotion>
                 ),
             },
         ],
@@ -74,9 +71,9 @@ const LoginRoutes = [
                 element: (
                     <NavMotion>
                         {/* //  <GuestGuard> */}
-                            <Company />
+                        <Company />
                         {/* // </GuestGuard>  */}
-                    </NavMotion> 
+                    </NavMotion>
                 ),
             },
         ],
@@ -90,9 +87,9 @@ const LoginRoutes = [
                 element: (
                     <NavMotion>
                         {/* //  <GuestGuard> */}
-                            <Red />
+                        <Red />
                         {/* // </GuestGuard>  */}
-                    </NavMotion> 
+                    </NavMotion>
                 ),
             },
         ],

@@ -62,9 +62,9 @@ const CarouselImg = () => {
     return (
         <Box
             sx={{
-                maxWidth: 750,
+                maxWidth: 380,
                 flexGrow: 1,
-                marginLeft: '60px',
+                margin: 'auto',
             }}
         >
             {/* <Paper
@@ -98,12 +98,12 @@ const CarouselImg = () => {
                                 component="img"
                                 sx={{
                                     top: 10,
-                                    height: 250,
+                                    width: '100%',
                                     display: 'flex',
                                     // maxWidth: 500,
                                     overflow: 'hidden',
                                     // width: '100%',
-                                    justifyContent: 'center',
+                                    justifyContent: 'end',
                                     justifyItems: 'center',
                                 }}
                                 src={imgPath}

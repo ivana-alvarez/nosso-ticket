@@ -1,25 +1,33 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom'
 
 // material-ui
-import { makeStyles } from '@material-ui/styles';
-import { useTheme } from '@material-ui/core/styles';
-import { Box, Button, Container, Grid, Typography, Theme, Divider} from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles'
+import { useTheme } from '@material-ui/core/styles'
+import {
+    Box,
+    Button,
+    Container,
+    Grid,
+    Typography,
+    Theme,
+    Divider,
+} from '@material-ui/core'
 
 // third party
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
 // project imports
 // project imports
 // import Avatar from 'ui-component/extended/Avatar';
-import AnimateButton from 'ui-component/extended/AnimateButton';
-import { gridSpacing } from 'store/constant';
+import AnimateButton from 'ui-component/extended/AnimateButton'
+import { gridSpacing } from 'store/constant'
 
 // assets
 // import dashboard from 'assets/images/landing/dashboard.png';
 // import widget1 from 'assets/images/landing/widget-1.png';
 // import widget2 from 'assets/images/landing/widget-2.png';
 // import mapRed from 'assets/images/landing/Mapa_red_Mesa_de_trabajo.png';
-import mapRed from 'assets/images/landing/IMAGEN_PARA_RED_NEW.png';
+import mapRed from 'assets/images/landing/IMAGEN_PARA_RED_NEW.png'
 // import CarouselImg from './CarouselImg';
 
 // style constant
@@ -28,20 +36,19 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '50px',
         height: '50px',
         // padding: '5px',
-        background: theme.palette.mode === 'dark' ? theme.palette.dark.light : theme.palette.primary.light
+        background:
+            theme.palette.mode === 'dark'
+                ? theme.palette.dark.light
+                : theme.palette.primary.light,
     },
     headerMain: {
         // marginLeft:"200px",
-        width: '60%',
-        height: '100%',
         // left: "900%",
         borderRadius: '20px',
-        transform: 'scale(1.6)',
-        transformOrigin: '0 50%'
     },
     headerImg: {
         maxWidth: '100%',
-        filter: 'drop-shadow(0px 0px 50px rgb(33 150 243 / 30%))'
+        filter: 'drop-shadow(0px 0px 50px rgb(33 150 243 / 30%))',
     },
     btnLight: {
         background: '#E3F2FD',
@@ -51,16 +58,16 @@ const useStyles = makeStyles((theme: Theme) => ({
         '&:hover ': {
             background: theme.palette.primary.main,
             borderColor: theme.palette.primary.main,
-            color: '#fff'
-        }
-    }
-}));
+            color: '#fff',
+        },
+    },
+}))
 
 // ==============================|| LANDING - HEADER PAGE ||============================== //
 
 const HeaderPage = () => {
-    const theme = useTheme();
-    const classes = useStyles();
+    const theme = useTheme()
+    const classes = useStyles()
 
     return (
         <Container>
@@ -69,13 +76,83 @@ const HeaderPage = () => {
                 alignItems="center"
                 justifyContent="space-between"
                 spacing={gridSpacing}
-                sx={{ mt: '150px', mb: '80px', [theme.breakpoints.down('sm')]: { mt: { xs: '116px', sm: '32px' }, mb: '20px' } }}
+                sx={{
+                    flexDirection: 'row-reverse',
+                    mt: '150px',
+                    mb: '80px',
+                    [theme.breakpoints.down('sm')]: {
+                        mt: { xs: '116px', sm: '32px' },
+                        mb: '20px',
+                    },
+                }}
             >
+                <Grid item xs={12} md={7}>
+                    <Box sx={{ position: 'relative' }}>
+                        {/* <CarouselImg /> */}
+                        <img
+                            src={mapRed}
+                            alt="map"
+                            className={classes.headerMain}
+                        />
+                        {/*
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                top: '-110px',
+                                right: '-170px',
+                                width: '290px',
+                                animation: '10s slideY linear infinite'
+                            }}
+                        >
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    type: 'spring',
+                                    stiffness: 150,
+                                    damping: 30,
+                                    delay: 0.2
+                                }}
+                            >
+                                {/* <img src={widget1} alt="Berry" className={classes.headerImg} /> 
+                            </motion.div>
+                        </Box>
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                bottom: '-90px',
+                                left: '300px',
+                                width: '280px',
+                                animation: '10s slideY linear infinite',
+                                animationDelay: '2s'
+                            }}
+                        >
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{
+                                    type: 'spring',
+                                    stiffness: 150,
+                                    damping: 30,
+                                    delay: 0.4
+                                }}
+                            >
+                                {/* <img src={widget2} alt="Berry" className={classes.headerImg} />
+                            </motion.div>
+                        </Box>*/}
+                    </Box>
+                </Grid>
                 <Grid item xs={12} md={5}>
                     <Grid
                         container
                         spacing={gridSpacing}
-                        sx={{ pr: '80px', [theme.breakpoints.down('md')]: { pr: '0px', textAlign: 'center' } }}
+                        sx={{
+                            pr: '80px',
+                            [theme.breakpoints.down('md')]: {
+                                pr: '0px',
+                                textAlign: 'center',
+                            },
+                        }}
                     >
                         <Grid item xs={12}>
                             <motion.div
@@ -84,21 +161,28 @@ const HeaderPage = () => {
                                 transition={{
                                     type: 'spring',
                                     stiffness: 150,
-                                    damping: 30
+                                    damping: 30,
                                 }}
                             >
                                 <Typography
                                     variant="h1"
                                     sx={{
-                                        fontSize: { xs: '36px', sm: '48px', md: '64px' },
+                                        fontSize: {
+                                            xs: '36px',
+                                            sm: '48px',
+                                            md: '64px',
+                                        },
                                         fontWeight: '900',
-                                        lineHeight: { xs: '42px', sm: '56px', md: '80px' }
+                                        lineHeight: {
+                                            xs: '42px',
+                                            sm: '56px',
+                                            md: '80px',
+                                        },
                                     }}
                                 >
                                     ¡Todos tus viajes con tan solo una tarjeta!
-                                   
                                 </Typography>
-                                <Divider  />
+                                <Divider />
                             </motion.div>
                         </Grid>
                         <Grid item xs={12}>
@@ -109,7 +193,7 @@ const HeaderPage = () => {
                                     type: 'spring',
                                     stiffness: 150,
                                     damping: 30,
-                                    delay: 0.2
+                                    delay: 0.2,
                                 }}
                             >
                                 <Typography
@@ -117,13 +201,23 @@ const HeaderPage = () => {
                                     component="div"
                                     color="inherit"
                                     sx={{
-                                        fontSize: { xs: '1rem', md: '1.125rem' },
+                                        fontSize: {
+                                            xs: '1rem',
+                                            md: '1.125rem',
+                                        },
                                         fontWeight: '400',
-                                        lineHeight: { xs: '24px', md: '32px' }
+                                        lineHeight: { xs: '24px', md: '32px' },
                                     }}
                                 >
-                                    Conoce todas las rutas donde podrás utilizar tu tarjeta 
-                                    <Box component="span" sx={{ ml: 2, color: theme.palette.primary.main }}>
+                                    Conoce todas las rutas donde podrás utilizar
+                                    tu tarjeta
+                                    <Box
+                                        component="span"
+                                        sx={{
+                                            ml: 2,
+                                            color: theme.palette.primary.main,
+                                        }}
+                                    >
                                         T-TICKET.
                                     </Box>
                                 </Typography>
@@ -137,10 +231,19 @@ const HeaderPage = () => {
                                     type: 'spring',
                                     stiffness: 150,
                                     damping: 30,
-                                    delay: 0.4
+                                    delay: 0.4,
                                 }}
                             >
-                                <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'flex-start' } }}>
+                                <Grid
+                                    container
+                                    spacing={2}
+                                    sx={{
+                                        justifyContent: {
+                                            xs: 'center',
+                                            md: 'flex-start',
+                                        },
+                                    }}
+                                >
                                     <Grid item>
                                         <AnimateButton>
                                             <Button
@@ -167,7 +270,7 @@ const HeaderPage = () => {
                                 </Grid>
                             </motion.div>
                         </Grid>
-                        
+
                         {/* <Grid item xs={12}>
                             <motion.div
                                 initial={{ opacity: 0, translateY: 550 }}
@@ -235,61 +338,9 @@ const HeaderPage = () => {
                         </Grid> */}
                     </Grid>
                 </Grid>
-                <Grid item  xs={12} md={7} sx={{  display: { xs: 'none', md: 'flex' } }}>
-                    <Box sx={{ position: 'relative'}}  >
-                        {/* <CarouselImg /> */}
-                        <img src={mapRed} alt="Berry" className={classes.headerMain  } />
-                        {/*
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                top: '-110px',
-                                right: '-170px',
-                                width: '290px',
-                                animation: '10s slideY linear infinite'
-                            }}
-                        >
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{
-                                    type: 'spring',
-                                    stiffness: 150,
-                                    damping: 30,
-                                    delay: 0.2
-                                }}
-                            >
-                                {/* <img src={widget1} alt="Berry" className={classes.headerImg} /> 
-                            </motion.div>
-                        </Box>
-                        <Box
-                            sx={{
-                                position: 'absolute',
-                                bottom: '-90px',
-                                left: '300px',
-                                width: '280px',
-                                animation: '10s slideY linear infinite',
-                                animationDelay: '2s'
-                            }}
-                        >
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{
-                                    type: 'spring',
-                                    stiffness: 150,
-                                    damping: 30,
-                                    delay: 0.4
-                                }}
-                            >
-                                {/* <img src={widget2} alt="Berry" className={classes.headerImg} />
-                            </motion.div>
-                        </Box>*/}
-                    </Box> 
-                </Grid>
             </Grid>
         </Container>
-    );
-};
+    )
+}
 
-export default HeaderPage;
+export default HeaderPage
