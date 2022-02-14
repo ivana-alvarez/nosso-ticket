@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: '#fff',
         height: '70px',
         marginTop: '19px',
-        // marginBottom:0,
+        // marginBottom: 0,
+
         background: '#29529f', // theme.palette.secondary.main,
         [theme.breakpoints.down('sm')]: {
             textAlign: 'center',

@@ -12,7 +12,7 @@ import AuthWrapper1 from '../AuthWrapper1'
 import AuthCardWrapper from '../AuthCardWrapper'
 // import FirebaseLogin from '../login/FirebaseLogin'
 import LoginForm from '../login/loginForm'
-import BackgroundPattern2 from 'ui-component/cards/BackgroundPattern2'
+import BackgroundPattern1 from 'ui-component/cards/BackgroundPattern1'
 // import cintillo from '../../../../assets/images/cintillo.png'
 
 // import AuthSlider from 'ui-component/cards/AuthSlider'
@@ -129,7 +129,7 @@ const Login = () => {
                             </div>
                         </div>
                         <div className="m-7">
-                            <AuthCardWrapper sx={{ marginTop: '110px' }}> 
+                            <AuthCardWrapper sx={{ marginTop: '110px' }}>
                                 <Grid
                                     container
                                     spacing={2}
@@ -241,7 +241,7 @@ const Login = () => {
                             display: { xs: 'none', md: 'block' },
                         }}
                     >
-                        <BackgroundPattern2>
+                        <BackgroundPattern1>
                             <Grid
                                 item
                                 container
@@ -254,7 +254,7 @@ const Login = () => {
                                     <img
                                         src={login_light_dark}
                                         alt="fondo"
-                                        className="h-screen w-screen -mt-24"
+                                        className="h-screen w-screen "
                                     />
                                     {/* {themeState === 'dark' ? (
                                             <img
@@ -291,7 +291,7 @@ const Login = () => {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                        </BackgroundPattern2>
+                        </BackgroundPattern1>
                     </Grid>
                 </Grid>
             </AuthWrapper1>
