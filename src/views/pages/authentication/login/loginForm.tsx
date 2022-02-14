@@ -119,8 +119,8 @@ const Schema = yup.object().shape({
     password: yup.string().max(255).required('Password is required'),
 })
 const initialValues = {
-    username: 'user4',
-    password: 'user4',
+    username: 'user',
+    password: 'user',
 }
 
 // ==============================|| login PROFILE FORM ||============================== //

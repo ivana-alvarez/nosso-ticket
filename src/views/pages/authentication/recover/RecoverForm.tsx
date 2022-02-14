@@ -1,6 +1,6 @@
 // import React from 'react'
 import * as yup from 'yup'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 // import { v4 as uuidv4 } from 'uuid'
 import {
@@ -119,7 +119,7 @@ const Schema = yup.object().shape({
 const RecoverForm = (props: { login?: number }, { ...others }) => {
     // CUSTOMS HOOKS
     const classes = useStyles()
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     // const dispatch = useDispatch()
     const {
         handleSubmit,
@@ -144,6 +144,10 @@ const RecoverForm = (props: { login?: number }, { ...others }) => {
         const { email } = data
         console.log(email)
         window.location.reload()
+    }
+
+    const handleLogin = () => {
+        navigate('/login')
     }
 
     return (
@@ -195,6 +199,7 @@ const RecoverForm = (props: { login?: number }, { ...others }) => {
                                 size="large"
                                 type="submit"
                                 // className="send"
+                                onClick={handleLogin}
                             >
                                 Enviar
                             </Button>

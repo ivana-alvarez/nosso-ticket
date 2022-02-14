@@ -1,25 +1,35 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom'
 
 // material-ui
 // import { makeStyles } from '@material-ui/styles';
-import { useTheme } from '@material-ui/core/styles';
-import { Box, Button, Container, Grid, Link, Typography, Divider } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles'
+import {
+    Box,
+    Button,
+    Container,
+    Grid,
+    Link,
+    Typography,
+    Divider,
+} from '@material-ui/core'
 
 // third party
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
 // project imports
 // project imports
 // import Avatar from 'ui-component/extended/Avatar';
-import AnimateButton from 'ui-component/extended/AnimateButton';
-import { gridSpacing } from 'store/constant';
+import AnimateButton from 'ui-component/extended/AnimateButton'
+import { gridSpacing } from 'store/constant'
 
 // assets
 // import dashboard from 'assets/images/landing/dashboard.png';
 // import widget1 from 'assets/images/landing/widget-1.png';
 // import widget2 from 'assets/images/landing/widget-2.png';
 // import home from 'assets/images/landing/Home_Mesa_de_trabajo.png';
-import CarouselImg from './CarouselImg';
+import CarouselImg from './CarouselImg'
+// import IconNumberCard from 'ui-component/cards/IconNumberCard'
+// import AccountCircleTwoTone from '@material-ui/icons/AccountCircleTwoTone'
 
 // style constant
 // const useStyles = makeStyles((theme: Theme) => ({
@@ -57,23 +67,37 @@ import CarouselImg from './CarouselImg';
 // ==============================|| LANDING - HEADER PAGE ||============================== //
 
 const HeaderPage = () => {
-    const theme = useTheme();
+    const theme = useTheme()
     // const classes = useStyles();
 
     return (
         <Container>
             <Grid
+                display="flex"
                 container
                 alignItems="center"
                 justifyContent="space-between"
                 spacing={gridSpacing}
-                sx={{ mt: '150px', mb: '80px', [theme.breakpoints.down('sm')]: { mt: { xs: '116px', sm: '32px' }, mb: '20px' } }}
+                sx={{
+                    mt: '80px',
+                    mb: '80px',
+                    [theme.breakpoints.down('sm')]: {
+                        mt: { xs: '116px', sm: '32px' },
+                        mb: '20px',
+                    },
+                }}
             >
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={6}>
                     <Grid
                         container
                         spacing={gridSpacing}
-                        sx={{ pr: '80px', [theme.breakpoints.down('md')]: { pr: '0px', textAlign: 'center' } }}
+                        sx={{
+                            pr: '80px',
+                            [theme.breakpoints.down('md')]: {
+                                pr: '0px',
+                                textAlign: 'center',
+                            },
+                        }}
                     >
                         <Grid item xs={12}>
                             <motion.div
@@ -82,22 +106,36 @@ const HeaderPage = () => {
                                 transition={{
                                     type: 'spring',
                                     stiffness: 150,
-                                    damping: 30
+                                    damping: 30,
                                 }}
                             >
                                 <Typography
                                     variant="h1"
                                     sx={{
-                                        fontSize: { xs: '36px', sm: '48px', md: '64px' },
+                                        fontSize: {
+                                            xs: '36px',
+                                            sm: '48px',
+                                            md: '64px',
+                                        },
                                         fontWeight: '900',
-                                        lineHeight: { xs: '42px', sm: '56px', md: '80px' }
+                                        lineHeight: {
+                                            xs: '42px',
+                                            sm: '56px',
+                                            md: '80px',
+                                        },
                                     }}
                                 >
                                     ¡Somos la solución para tus
-                                    <Box component="span" sx={{ ml: 2, color: theme.palette.primary.main }}>
+                                    <Box
+                                        component="span"
+                                        sx={{
+                                            ml: 2,
+                                            color: theme.palette.primary.main,
+                                        }}
+                                    >
                                         Pagos de Transporte!
                                     </Box>
-                                    <Divider  />
+                                    <Divider />
                                 </Typography>
                             </motion.div>
                         </Grid>
@@ -109,7 +147,7 @@ const HeaderPage = () => {
                                     type: 'spring',
                                     stiffness: 150,
                                     damping: 30,
-                                    delay: 0.2
+                                    delay: 0.2,
                                 }}
                             >
                                 <Typography
@@ -117,20 +155,30 @@ const HeaderPage = () => {
                                     component="div"
                                     color="inherit"
                                     sx={{
-                                        fontSize: { xs: '1rem', md: '1.125rem' },
+                                        fontSize: {
+                                            xs: '1rem',
+                                            md: '1.125rem',
+                                        },
                                         fontWeight: '400',
-                                        lineHeight: { xs: '24px', md: '32px' }
+                                        lineHeight: { xs: '24px', md: '32px' },
                                     }}
                                 >
-                                    Transacciones fáciles, rápidas y segura a través de tu tarjeta
-                                    <Box component="span" sx={{ ml: 2, color: theme.palette.primary.main }}>
-                                        T-TICKET
-                                    </Box> 
+                                    Transacciones fáciles, rápidas y segura a
+                                    través de tu tarjeta
+                                    <Box
+                                        component="span"
+                                        sx={{
+                                            ml: 2,
+                                            color: theme.palette.primary.main,
+                                        }}
+                                    >
+                                        <br /> {'T-TICKET'}
+                                    </Box>
                                     {/* Berry is React based admin template which helps you to build faster and beautiful web applications. */}
                                 </Typography>
                             </motion.div>
                         </Grid>
-                        <Grid item xs={12}  sx={{ my: 3.25 }}>
+                        <Grid item xs={12} sx={{ my: 3.25 }}>
                             <motion.div
                                 initial={{ opacity: 0, translateY: 550 }}
                                 animate={{ opacity: 1, translateY: 0 }}
@@ -138,10 +186,19 @@ const HeaderPage = () => {
                                     type: 'spring',
                                     stiffness: 150,
                                     damping: 30,
-                                    delay: 0.4
+                                    delay: 0.4,
                                 }}
                             >
-                                <Grid container spacing={2} sx={{ justifyContent: { xs: 'center', md: 'flex-start' } }}>
+                                <Grid
+                                    container
+                                    spacing={2}
+                                    sx={{
+                                        justifyContent: {
+                                            xs: 'center',
+                                            md: 'flex-start',
+                                        },
+                                    }}
+                                >
                                     <Grid item>
                                         <AnimateButton>
                                             <Button
@@ -164,13 +221,13 @@ const HeaderPage = () => {
                                             size="large"
                                             variant="contained"
                                         >
-                                            Crear tu cuenta 
+                                            Crear tu cuenta
                                         </Button>
                                     </Grid>
                                 </Grid>
                             </motion.div>
                         </Grid>
-                       
+
                         {/* <Grid item xs={12}>
                             <motion.div
                                 initial={{ opacity: 0, translateY: 550 }}
@@ -237,10 +294,14 @@ const HeaderPage = () => {
                             </motion.div>
                         </Grid>*/}
                     </Grid>
-                </Grid> 
-                <Grid item xs={12} md={7} sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    <Box sx={{ position: 'relative', mb:10}}>
-
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    sx={{ display: { xs: 'none', md: 'flex' } }}
+                >
+                    <Box sx={{ position: 'relative' }}>
                         <CarouselImg />
                         {/* <img src={home} alt="Berry" className={classes.headerMain} />
                         <Box
@@ -291,8 +352,26 @@ const HeaderPage = () => {
                     </Box>
                 </Grid>
             </Grid>
-        </Container>
-    );
-};
 
-export default HeaderPage;
+            {/* <Grid
+                item
+                xs={12}
+                md={4}
+                sx={{
+                    // display: { xs: 'none', sm: 'flex' },
+                    marginLeft: '1000px',
+                    // justifyContent: 'flex-end',
+                }}
+            >
+                <IconNumberCard
+                    title="Usuarios"
+                    primary="1000"
+                    color={theme.palette.primary.dark}
+                    iconPrimary={AccountCircleTwoTone}
+                />
+            </Grid> */}
+        </Container>
+    )
+}
+
+export default HeaderPage

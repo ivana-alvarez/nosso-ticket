@@ -60,7 +60,13 @@ const CarouselImg = () => {
     ]
 
     return (
-        <Box sx={{ maxWidth: 750, flexGrow: 1 }}>
+        <Box
+            sx={{
+                maxWidth: 750,
+                flexGrow: 1,
+                marginLeft: '60px',
+            }}
+        >
             {/* <Paper
         square
         elevation={0}
@@ -79,10 +85,11 @@ const CarouselImg = () => {
                 index={activeStep}
                 onChangeIndex={handleStepChange}
                 enableMouseEvents
-                // sx={{
-                //     marginTop:10,
-
-                //   }}
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
             >
                 {images.map(({ imgPath, label, index }) => (
                     <div key={label}>
@@ -91,11 +98,13 @@ const CarouselImg = () => {
                                 component="img"
                                 sx={{
                                     top: 10,
-                                    height: 400,
-                                    display: 'block',
-                                    maxWidth: 900,
+                                    height: 250,
+                                    display: 'flex',
+                                    // maxWidth: 500,
                                     overflow: 'hidden',
-                                    width: '100%',
+                                    // width: '100%',
+                                    justifyContent: 'center',
+                                    justifyItems: 'center',
                                 }}
                                 src={imgPath}
                                 alt={label}
