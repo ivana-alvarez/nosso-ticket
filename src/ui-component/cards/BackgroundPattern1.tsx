@@ -24,7 +24,7 @@ const BackgroundPattern1 = ({
                 minHeight: '100vh',
                 bgcolor:
                     theme.palette.mode === 'dark'
-                        ? theme.palette.dark.dark
+                        ? theme.palette.background.default
                         : '#e3f2fd',
                 backgroundImage:
                     theme.palette.mode === 'dark'
