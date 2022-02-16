@@ -3,7 +3,7 @@
 // material-ui
 // import { makeStyles } from '@material-ui/styles';
 import { useTheme } from '@material-ui/core/styles'
-import { Box, Container, Grid, Typography, Divider } from '@material-ui/core'
+import { Box, Container, Grid, Typography } from '@material-ui/core'
 
 // third party
 import { motion } from 'framer-motion'
@@ -21,6 +21,7 @@ import { gridSpacing } from 'store/constant'
 // import home from 'assets/images/landing/Home_Mesa_de_trabajo.png';
 // import CarouselImg from './CarouselImg';
 import CompanyImg from 'assets/images/landing/Imagen_para_empresas_Mesa_de_trabajo.png'
+import { useNavigate } from 'react-router'
 
 // style constant
 // const useStyles = makeStyles((theme: Theme) => ({
@@ -60,6 +61,11 @@ import CompanyImg from 'assets/images/landing/Imagen_para_empresas_Mesa_de_traba
 const HeaderPage = () => {
     const theme = useTheme()
     // const classes = useStyles();
+    const navigate = useNavigate()
+
+    const handleLogin = () => {
+        navigate('/login')
+    }
 
     return (
         <Container>
@@ -69,7 +75,7 @@ const HeaderPage = () => {
                 justifyContent="space-between"
                 spacing={gridSpacing}
                 sx={{
-                    mt: '150px',
+                    mt: '10px',
                     [theme.breakpoints.down('sm')]: {
                         mt: { xs: '116px', sm: '32px' },
                         mb: '20px',
@@ -77,7 +83,7 @@ const HeaderPage = () => {
                 }}
             >
                 {/* <Grid item xs={12} md={7} sx={{ display: { xs: 'none', md: 'flex' } }}> */}
-                <Box sx={{ position: 'relative', mb: 10 }}>
+                <Box sx={{ position: 'relative', mb: 2 }}>
                     <img src={CompanyImg} alt="company" className="w-auto" />
                 </Box>
                 {/* </Grid> */}
@@ -94,23 +100,44 @@ const HeaderPage = () => {
                     }}
                 >
                     <Typography
-                        variant="h1"
+                        variant="h4"
                         sx={{
-                            marginTop: 1,
+                            // marginTop: 1,
                             fontSize: { xs: '36px', sm: '48px', md: '64px' },
                             fontWeight: '900',
                             lineHeight: { xs: '42px', sm: '56px', md: '80px' },
+                            display: 'flex',
+                            justifyContent: 'center',
                         }}
                     >
-                        ¡Pasaje seguro sin importar donde estes!
-                        {/* <Box component="span" sx={{ ml: 2, color: theme.palette.primary.main }}>
-                                        TODOS LOS SISTEMAS!
-                                    </Box> */}
-                        <Divider />
+                        ¡Vive una nueva experiencia,
+                        <Typography
+                            // component="span"
+                            sx={{
+                                ml: 2,
+                                color: theme.palette.primary.main,
+                                fontSize: {
+                                    xs: '36px',
+                                    sm: '48px',
+                                    md: '64px',
+                                },
+                                fontWeight: '900',
+                                lineHeight: {
+                                    xs: '42px',
+                                    sm: '56px',
+                                    md: '80px',
+                                },
+                                textTransform: 'none',
+                            }}
+                            onClick={handleLogin}
+                            className="cursor-pointer hover:text-sky-500 "
+                        >
+                            unete!
+                        </Typography>
                     </Typography>
                 </motion.div>
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <motion.div
                     initial={{ opacity: 0, translateY: 550 }}
                     animate={{ opacity: 1, translateY: 0 }}
@@ -156,6 +183,101 @@ const HeaderPage = () => {
                         }
                     </Typography>
                 </motion.div>
+            </Grid>*/}
+
+            <Grid
+                container
+                xs={12}
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    marginTop: '25px',
+                }}
+            >
+                <Grid
+                    item
+                    className="border-8 rounded-full w-56 h-56 border-amber-500 mt-2 animate-pulse "
+                >
+                    <Box
+                        sx={{
+                            fontWeight: 'bold',
+                            fontSize: '40px',
+                            textAlign: 'center',
+                            my: '30px',
+                        }}
+                    >
+                        5
+                        <br />
+                        <br />
+                        <Typography
+                            sx={{
+                                fontSize: {
+                                    xs: '24px',
+                                    sm: '24px',
+                                    md: '32px',
+                                },
+                            }}
+                        >
+                            Sistemas asociados
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid
+                    item
+                    className="border-8 rounded-full w-56 h-56 border-blue-700 mt-2 animate-pulse"
+                >
+                    <Box
+                        sx={{
+                            fontWeight: 'bold',
+                            fontSize: '40px',
+                            textAlign: 'center',
+                            my: '30px',
+                        }}
+                    >
+                        2M
+                        <br />
+                        <br />
+                        <Typography
+                            sx={{
+                                fontSize: {
+                                    xs: '24px',
+                                    sm: '24px',
+                                    md: '32px',
+                                },
+                            }}
+                        >
+                            Usuarios diarios
+                        </Typography>
+                    </Box>
+                </Grid>
+                <Grid
+                    item
+                    className="border-8 rounded-full w-56 h-56 border-red-700 mt-2 animate-pulse"
+                >
+                    <Box
+                        sx={{
+                            fontWeight: 'bold',
+                            fontSize: '40px',
+                            textAlign: 'center',
+                            my: '30px',
+                        }}
+                    >
+                        +80 M
+                        <br />
+                        <br />
+                        <Typography
+                            sx={{
+                                fontSize: {
+                                    xs: '24px',
+                                    sm: '24px',
+                                    md: '32px',
+                                },
+                            }}
+                        >
+                            Kilometros recorridos
+                        </Typography>
+                    </Box>
+                </Grid>
             </Grid>
         </Container>
     )

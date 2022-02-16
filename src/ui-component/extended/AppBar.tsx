@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { ReactElement } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
 // material-ui
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles'
 import {
     AppBar as MuiAppBar,
     Box,
@@ -19,8 +19,8 @@ import {
     Toolbar,
     Typography,
     useScrollTrigger,
-    ButtonBase
-} from '@material-ui/core';
+    ButtonBase,
+} from '@material-ui/core'
 
 // project imports
 // import Logo from 'ui-component/Logo';
@@ -34,24 +34,27 @@ import CreateAccountIcon from 'components/icons/CreateAccountIcon'
 
 // assets
 // import { IconCreditCard} from '@tabler/icons';
-import MenuIcon from '@material-ui/icons/Menu';
-import { DefaultRootStateProps } from 'types';
-import { useSelector } from 'react-redux';
+import MenuIcon from '@material-ui/icons/Menu'
+import { DefaultRootStateProps } from 'types'
+import { useSelector } from 'react-redux'
 
 // elevation scroll
 export interface ElevationScrollProps {
-    children: ReactElement;
-    window?: Window | Node;
+    children: ReactElement
+    window?: Window | Node
 }
 function ElevationScroll(props: ElevationScrollProps) {
-    const { children, window } = props;
-    const theme = useTheme();
+    const { children, window } = props
+    const theme = useTheme()
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
-        target: window!
-    });
-    const darkBorder = theme.palette.mode === 'dark' ? theme.palette.dark.dark : theme.palette.grey[200];
+        target: window!,
+    })
+    const darkBorder =
+        theme.palette.mode === 'dark'
+            ? theme.palette.dark.dark
+            : theme.palette.grey[200]
 
     return React.cloneElement(children, {
         elevation: trigger ? 2 : 0,
@@ -59,22 +62,25 @@ function ElevationScroll(props: ElevationScrollProps) {
             backgroundColor: theme.palette.background.default,
             borderBottom: trigger ? 'none' : '1px solid',
             borderColor: trigger ? '' : darkBorder,
-            color: theme.palette.text.dark
-        }
-    });
+            color: theme.palette.text.dark,
+        },
+    })
 }
 
 // ==============================|| MINIMAL LAYOUT APP BAR ||============================== //
 
 const AppBar = ({ ...others }) => {
-    const [drawerToggle, setDrawerToggle] = React.useState<boolean>(false);
+    const [drawerToggle, setDrawerToggle] = React.useState<boolean>(false)
     /** Method called on multiple components with different event types */
     const drawerToggler = (open: boolean) => (event: any) => {
-        if (event.type! === 'keydown' && (event.key! === 'Tab' || event.key! === 'Shift')) {
-            return;
+        if (
+            event.type! === 'keydown' &&
+            (event.key! === 'Tab' || event.key! === 'Shift')
+        ) {
+            return
         }
-        setDrawerToggle(open);
-    };
+        setDrawerToggle(open)
+    }
     const themeState = useSelector(
         (state: DefaultRootStateProps) => state.customization.navType
     )
@@ -84,7 +90,10 @@ const AppBar = ({ ...others }) => {
             <MuiAppBar>
                 <Container>
                     <Toolbar>
-                        <Typography component="div" sx={{ flexGrow: 1, textAlign: 'left' }}>
+                        <Typography
+                            component="div"
+                            sx={{ flexGrow: 1, textAlign: 'left' }}
+                        >
                             {/* <Logo /> */}
                             <ButtonBase component={RouterLink} to="/">
                                 <div className="flex justify-between w-full">
@@ -98,14 +107,37 @@ const AppBar = ({ ...others }) => {
                                 </div>
                             </ButtonBase>
                         </Typography>
-                        <Stack direction="row" sx={{ display: { xs: 'none', sm: 'none' , md:'none'  , lg:'block'} }} spacing={2}>
-                            <Button color="inherit" component={Link} href="/products">
+                        <Stack
+                            direction="row"
+                            sx={{
+                                display: {
+                                    xs: 'none',
+                                    sm: 'none',
+                                    md: 'none',
+                                    lg: 'block',
+                                },
+                            }}
+                            spacing={2}
+                        >
+                            <Button
+                                color="inherit"
+                                component={Link}
+                                href="/products"
+                            >
                                 Productos
                             </Button>
-                            <Button color="inherit" component={RouterLink} to="/company" >
+                            <Button
+                                color="inherit"
+                                component={RouterLink}
+                                to="/company"
+                            >
                                 Empresa
                             </Button>
-                            <Button color="inherit" component={RouterLink} to="/red">
+                            <Button
+                                color="inherit"
+                                component={RouterLink}
+                                to="/red"
+                            >
                                 Red
                             </Button>
                             <Button
@@ -114,6 +146,7 @@ const AppBar = ({ ...others }) => {
                                 disableElevation
                                 variant="outlined"
                                 color="secondary"
+                                sx={{ textTransform: 'none' }}
                             >
                                 Consulta tu cuenta
                             </Button>
@@ -123,25 +156,44 @@ const AppBar = ({ ...others }) => {
                                 disableElevation
                                 variant="contained"
                                 color="secondary"
+                                sx={{ textTransform: 'none' }}
                             >
-                                Crear tu cuenta 
+                                Crea tu cuenta
                             </Button>
                         </Stack>
-                        <Box sx={{ display: { sm: 'block' , md:'block' , lg:'none' } }}>
-                            <IconButton color="inherit" onClick={drawerToggler(true)}>
+                        <Box
+                            sx={{
+                                display: {
+                                    sm: 'block',
+                                    md: 'block',
+                                    lg: 'none',
+                                },
+                            }}
+                        >
+                            <IconButton
+                                color="inherit"
+                                onClick={drawerToggler(true)}
+                            >
                                 <MenuIcon />
                             </IconButton>
-                            <Drawer anchor="top" open={drawerToggle} onClose={drawerToggler(false)}>
+                            <Drawer
+                                anchor="top"
+                                open={drawerToggle}
+                                onClose={drawerToggler(false)}
+                            >
                                 <Box
                                     sx={{
-                                        width: 'auto'
+                                        width: 'auto',
                                     }}
                                     role="presentation"
                                     onClick={drawerToggler(false)}
                                     onKeyDown={drawerToggler(false)}
                                 >
                                     <List>
-                                        <Link style={{ textDecoration: 'none' }} href="/products">
+                                        <Link
+                                            style={{ textDecoration: 'none' }}
+                                            href="/products"
+                                        >
                                             <ListItemButton component="a">
                                                 <ListItemIcon>
                                                     <ProductsIcon />
@@ -149,7 +201,10 @@ const AppBar = ({ ...others }) => {
                                                 <ListItemText primary="Productos" />
                                             </ListItemButton>
                                         </Link>
-                                        <Link style={{ textDecoration: 'none' }} href="/company">
+                                        <Link
+                                            style={{ textDecoration: 'none' }}
+                                            href="/company"
+                                        >
                                             <ListItemButton component="a">
                                                 <ListItemIcon>
                                                     <CompanyIcon />
@@ -198,7 +253,7 @@ const AppBar = ({ ...others }) => {
                 </Container>
             </MuiAppBar>
         </ElevationScroll>
-    );
-};
+    )
+}
 
-export default AppBar;
+export default AppBar

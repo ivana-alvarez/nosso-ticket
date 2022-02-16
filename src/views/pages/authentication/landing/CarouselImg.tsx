@@ -9,11 +9,12 @@ import Box from '@mui/material/Box'
 // import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 import metroccs from '../../../../assets/images/landing/metroccs.png'
-// import transaragua from '../../../../assets/images/landing/transaragua.png'
+import home1 from '../../../../assets/images/landing/home1.png'
 import valenciablanco from '../../../../assets/images/landing/valenciablanco.png'
 import valencia from '../../../../assets/images/landing/valencia.png'
 import ife from '../../../../assets/images/landing/ife.png'
 import barinas from '../../../../assets/images/landing/barinas.png'
+import home6 from '../../../../assets/images/landing/home6.png'
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay } from 'react-swipeable-views-utils'
 
@@ -39,23 +40,33 @@ const CarouselImg = () => {
     const images = [
         {
             index: 0,
+            label: 'tarjeta punto',
+            imgPath: home1,
+        },
+        {
+            index: 1,
             label: 'metro de caracas',
             imgPath: metroccs,
         },
         {
-            index: 1,
+            index: 2,
             label: 'metro de valencia',
             imgPath: theme.palette.mode === 'dark' ? valenciablanco : valencia,
         },
         {
-            index: 2,
+            index: 3,
             label: 'sistema ferrroviario',
             imgPath: ife,
         },
         {
-            index: 3,
+            index: 4,
             label: 'bus barinas',
             imgPath: barinas,
+        },
+        {
+            index: 5,
+            label: 'tarjeta movil',
+            imgPath: home6,
         },
     ]
 

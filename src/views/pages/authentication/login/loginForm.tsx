@@ -277,7 +277,11 @@ const LoginForm = (props: { login?: number }) => {
                         /> */}
 
                         <Link
-                            style={{ marginTop: 10 }}
+                            style={{
+                                marginTop: 10,
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                            }}
                             underline="none"
                             onClick={handleRecover}
                             variant="body2"
@@ -287,6 +291,9 @@ const LoginForm = (props: { login?: number }) => {
                                 // variant="contained"
                                 size="small"
                                 // type="submit"
+                                sx={{
+                                    textTransform: 'none',
+                                }}
                             >
                                 ¿Olvidaste tu contraseña?
                             </Button>

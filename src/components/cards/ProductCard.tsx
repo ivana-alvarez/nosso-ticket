@@ -2,7 +2,8 @@
 
 import { Button, Grid, Stack, Typography } from '@material-ui/core'
 import MainCard from 'ui-component/cards/MainCard'
-import ShoppingCartTwoToneIcon from '@material-ui/icons/ShoppingCartTwoTone'
+import LocalOfferIcon from '@mui/icons-material/LocalOffer'
+
 import Card1 from 'components/icons/Card1'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close'
@@ -78,7 +79,7 @@ const ProductCard = ({ cardType, name, description, price, benefits }) => {
                         sx={{ minWidth: 0 }}
                         // onClick={addCart}
                     >
-                        <ShoppingCartTwoToneIcon fontSize="small" />
+                        <LocalOfferIcon fontSize="small" />
                     </Button>
                 </Stack>
             </Grid>
