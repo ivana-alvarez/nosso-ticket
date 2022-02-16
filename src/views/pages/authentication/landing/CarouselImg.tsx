@@ -40,7 +40,7 @@ const CarouselImg = () => {
     const images = [
         {
             index: 0,
-            label: 'tarjeta punto',
+            label: 'lector de tarjeta',
             imgPath: home1,
         },
         {
@@ -55,7 +55,7 @@ const CarouselImg = () => {
         },
         {
             index: 3,
-            label: 'sistema ferrroviario',
+            label: 'sistema ferroviario',
             imgPath: ife,
         },
         {
@@ -73,24 +73,11 @@ const CarouselImg = () => {
     return (
         <Box
             sx={{
-                maxWidth: 380,
+                maxWidth: 500,
                 flexGrow: 1,
                 margin: 'auto',
             }}
         >
-            {/* <Paper
-        square
-        elevation={0}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          height: 50,
-          pl: 2,
-          bgcolor: 'background.default',
-        }}
-      >
-        <Typography>{images[activeStep].label}</Typography>
-      </Paper> */}
             <AutoPlaySwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={activeStep}
@@ -124,35 +111,6 @@ const CarouselImg = () => {
                     </div>
                 ))}
             </AutoPlaySwipeableViews>
-            {/* </Box><MobileStepper 
-         steps={maxSteps} 
-         position="static" 
-         activeStep={activeStep}
-            nextButton={ 
-           <Button
-             size="small"
-             onClick={handleNext}
-             disabled={activeStep === maxSteps - 1}
-           >
-             Next
-             {theme.direction === 'rtl' ? (
-               <KeyboardArrowLeft />
-             ) : (
-               <KeyboardArrowRight />
-             )}
-           </Button>
-         }
-         backButton={
-           <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-             {theme.direction === 'rtl' ? (
-               <KeyboardArrowRight />
-             ) : (
-               <KeyboardArrowLeft />
-             )}
-             Back
-           </Button>
-         }
-      />*/}
         </Box>
     )
 }
