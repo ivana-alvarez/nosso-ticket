@@ -203,7 +203,7 @@ const HeaderPage = () => {
                             fontWeight: 'bold',
                             fontSize: '40px',
                             textAlign: 'center',
-                            my: '30px',
+                            my: '40px',
                         }}
                     >
                         5
@@ -231,7 +231,7 @@ const HeaderPage = () => {
                             fontWeight: 'bold',
                             fontSize: '40px',
                             textAlign: 'center',
-                            my: '30px',
+                            my: '40px',
                         }}
                     >
                         2M
@@ -259,7 +259,7 @@ const HeaderPage = () => {
                             fontWeight: 'bold',
                             fontSize: '40px',
                             textAlign: 'center',
-                            my: '30px',
+                            my: '40px',
                         }}
                     >
                         +80 M
