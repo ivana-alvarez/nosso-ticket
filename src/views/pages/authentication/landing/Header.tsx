@@ -215,7 +215,7 @@ const HeaderPage = () => {
                                         lineHeight: { xs: '24px', md: '32px' },
                                     }}
                                 >
-                                    Transacciones fáciles, rápidas y segura a
+                                    Transacciones fáciles, rápidas y seguras a
                                     través de tu tarjeta
                                     <Box
                                         component="span"

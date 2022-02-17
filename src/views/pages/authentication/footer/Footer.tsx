@@ -19,8 +19,8 @@ import { gridSpacing } from 'store/constant'
 // import FadeInWhenVisible from './Animation';
 // import AnimateButton from 'ui-component/extended/AnimateButton';
 // import logoDark from 'assets/images/logo-white.svg';
-import Cintillo3 from 'components/icons/Cintillo_3'
-import Cintillo4 from 'components/icons/Cintillo_4'
+import Years200 from 'components/icons/Cintillo_3'
+import gmtvBlanco from 'components/icons/gmtvblanco.png'
 
 // style constant
 const useStyles = makeStyles((theme: Theme) => ({
@@ -71,11 +71,14 @@ const FooterPage = () => {
                         spacing={gridSpacing}
                         className="flex justify-between items-center h-full"
                     >
-                        <div className="px-2">
-                            <Cintillo4 />
+                        <div className="px-2 w-28">
+                            <img
+                                src={gmtvBlanco}
+                                alt="gran mision transporte"
+                            />
                         </div>
                         <div className="px-2">
-                            <Cintillo3 />
+                            <Years200 />
                         </div>
                     </Grid>
                 </Container>
