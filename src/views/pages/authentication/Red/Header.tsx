@@ -1,7 +1,7 @@
 import { Link as RouterLink } from 'react-router-dom'
 
 // material-ui
-import { makeStyles } from '@material-ui/styles'
+// import { makeStyles } from '@material-ui/styles'
 import { useTheme } from '@material-ui/core/styles'
 import {
     Box,
@@ -9,7 +9,6 @@ import {
     Container,
     Grid,
     Typography,
-    Theme,
     Divider,
 } from '@material-ui/core'
 
@@ -21,53 +20,54 @@ import { motion } from 'framer-motion'
 // import Avatar from 'ui-component/extended/Avatar';
 import AnimateButton from 'ui-component/extended/AnimateButton'
 import { gridSpacing } from 'store/constant'
+import CarouselRed from './CarouselRed'
 
 // assets
 // import dashboard from 'assets/images/landing/dashboard.png';
 // import widget1 from 'assets/images/landing/widget-1.png';
 // import widget2 from 'assets/images/landing/widget-2.png';
 // import mapRed from 'assets/images/landing/Mapa_red_Mesa_de_trabajo.png';
-import mapRed from 'assets/images/landing/IMAGEN_PARA_RED_NEW.png'
+
 // import CarouselImg from './CarouselImg';
 
 // style constant
-const useStyles = makeStyles((theme: Theme) => ({
-    technoImg: {
-        width: '50px',
-        height: '50px',
-        // padding: '5px',
-        background:
-            theme.palette.mode === 'dark'
-                ? theme.palette.dark.light
-                : theme.palette.primary.light,
-    },
-    headerMain: {
-        // marginLeft:"200px",
-        // left: "900%",
-        borderRadius: '20px',
-    },
-    headerImg: {
-        maxWidth: '100%',
-        filter: 'drop-shadow(0px 0px 50px rgb(33 150 243 / 30%))',
-    },
-    btnLight: {
-        background: '#E3F2FD',
-        color: theme.palette.primary.main,
-        borderColor: '#E3F2FD',
-        boxShadow: 'none',
-        '&:hover ': {
-            background: theme.palette.primary.main,
-            borderColor: theme.palette.primary.main,
-            color: '#fff',
-        },
-    },
-}))
+// const useStyles = makeStyles((theme: Theme) => ({
+//     technoImg: {
+//         width: '50px',
+//         height: '50px',
+//         // padding: '5px',
+//         background:
+//             theme.palette.mode === 'dark'
+//                 ? theme.palette.dark.light
+//                 : theme.palette.primary.light,
+//     },
+//     headerMain: {
+//         // marginLeft:"200px",
+//         // left: "900%",
+//         borderRadius: '20px',
+//     },
+//     headerImg: {
+//         maxWidth: '100%',
+//         filter: 'drop-shadow(0px 0px 50px rgb(33 150 243 / 30%))',
+//     },
+//     btnLight: {
+//         background: '#E3F2FD',
+//         color: theme.palette.primary.main,
+//         borderColor: '#E3F2FD',
+//         boxShadow: 'none',
+//         '&:hover ': {
+//             background: theme.palette.primary.main,
+//             borderColor: theme.palette.primary.main,
+//             color: '#fff',
+//         },
+//     },
+// }))
 
 // ==============================|| LANDING - HEADER PAGE ||============================== //
 
 const HeaderPage = () => {
     const theme = useTheme()
-    const classes = useStyles()
+    // const classes = useStyles()
 
     return (
         <Container>
@@ -88,12 +88,12 @@ const HeaderPage = () => {
             >
                 <Grid item xs={12} md={7}>
                     <Box sx={{ position: 'relative' }}>
-                        {/* <CarouselImg /> */}
-                        <img
+                        <CarouselRed />
+                        {/* <img
                             src={mapRed}
                             alt="map"
                             className={classes.headerMain}
-                        />
+                        /> */}
                         {/*
                         <Box
                             sx={{

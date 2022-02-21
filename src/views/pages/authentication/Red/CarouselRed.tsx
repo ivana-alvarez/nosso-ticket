@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useTheme } from '@mui/material/styles'
+// import Box from '@material-ui/core/Box';
 import Box from '@mui/material/Box'
 // import MobileStepper from '@mui/material/MobileStepper';
 // import Paper from '@mui/material/Paper';
@@ -8,17 +9,56 @@ import Box from '@mui/material/Box'
 // import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 // import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
-import metroccs from '../../../../assets/images/landing/metroccs.png'
-import home01 from '../../../../assets/images/landing/home01.png'
-import valenciablanco from '../../../../assets/images/landing/valenciablanco.png'
-import valencia from '../../../../assets/images/landing/valencia.png'
-import ife from '../../../../assets/images/landing/ife.png'
-import barinas from '../../../../assets/images/landing/barinas.png'
-import home06 from '../../../../assets/images/landing/home06.png'
+// import mapRed from 'assets/images/landing/IMAGEN_PARA_RED_NEW.png'
+import red1 from 'assets/images/landing/red1.png'
+import red2 from 'assets/images/landing/red2.png'
+import red3 from 'assets/images/landing/red3.png'
+import red4 from 'assets/images/landing/red4.png'
+import red5 from 'assets/images/landing/red5.png'
+import red6 from 'assets/images/landing/red6.png'
+
 import SwipeableViews from 'react-swipeable-views'
 import { autoPlay } from 'react-swipeable-views-utils'
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews)
+
+const images = [
+    // {
+    //     index: 0,
+    //     label: 'mapa de red',
+    //     imgPath: mapRed,
+    // },
+    {
+        index: 1,
+        label: 'metro valencia',
+        imgPath: red1,
+    },
+    {
+        index: 2,
+        label: 'tren valencia',
+        imgPath: red2,
+    },
+    {
+        index: 3,
+        label: 'via valencia',
+        imgPath: red3,
+    },
+    {
+        index: 4,
+        label: 'autobus valencia',
+        imgPath: red4,
+    },
+    {
+        index: 5,
+        label: 'pasillo valencia',
+        imgPath: red5,
+    },
+    {
+        index: 6,
+        label: 'vista aerea ',
+        imgPath: red6,
+    },
+]
 
 const CarouselImg = () => {
     const theme = useTheme()
@@ -37,47 +77,8 @@ const CarouselImg = () => {
         setActiveStep(step)
     }
 
-    const images = [
-        {
-            index: 0,
-            label: 'lector de tarjeta',
-            imgPath: home06,
-        },
-        {
-            index: 1,
-            label: 'metro de caracas',
-            imgPath: metroccs,
-        },
-        {
-            index: 2,
-            label: 'metro de valencia',
-            imgPath: theme.palette.mode === 'dark' ? valenciablanco : valencia,
-        },
-        {
-            index: 3,
-            label: 'sistema ferroviario',
-            imgPath: ife,
-        },
-        {
-            index: 4,
-            label: 'bus barinas',
-            imgPath: barinas,
-        },
-        {
-            index: 5,
-            label: 'tarjeta movil',
-            imgPath: home01,
-        },
-    ]
-
     return (
-        <Box
-            sx={{
-                maxWidth: 530,
-                flexGrow: 1,
-                margin: 'auto',
-            }}
-        >
+        <Box sx={{ maxWidth: 560, flexGrow: 1, margin: 'auto' }}>
             <AutoPlaySwipeableViews
                 axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={activeStep}
@@ -96,7 +97,7 @@ const CarouselImg = () => {
                                 component="img"
                                 sx={{
                                     top: 10,
-                                    width: '100%',
+
                                     display: 'flex',
                                     // maxWidth: 500,
                                     overflow: 'hidden',
