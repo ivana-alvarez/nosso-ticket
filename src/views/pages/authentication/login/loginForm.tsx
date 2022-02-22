@@ -42,9 +42,11 @@ import { gridSpacing } from 'store/constant'
 
 //Icons
 // import { DefaultRootStateProps, TCardsProps } from 'types'
-import { getLoginRequest } from 'store/login/loginActions'
+import { loginRequest } from 'store/login/loginActions'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Visibility from '@material-ui/icons/Visibility'
+import { useMutation } from '@apollo/client'
+import { LOGIN } from 'graphql/Mutations'
 // import path from 'path'
 
 // CONSTANTS
@@ -119,13 +121,15 @@ const Schema = yup.object().shape({
     password: yup.string().max(255).required('Password is required'),
 })
 const initialValues = {
-    username: 'user',
-    password: 'user',
+    username: 'dino@dino.raw',
+    password: 'dinojefe8000',
 }
 
 // ==============================|| login PROFILE FORM ||============================== //
 
 const LoginForm = (props: { login?: number }) => {
+    //MUTATION
+    const [userLogin, { loading }] = useMutation(LOGIN)
     // CUSTOMS HOOKS
     const classes = useStyles()
     const dispatch = useDispatch()
@@ -149,9 +153,6 @@ const LoginForm = (props: { login?: number }) => {
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword)
     }
-    // const handleLink = () => {
-    //     history.push('/register')
-    // }
 
     const handleMouseDownPassword = (event: React.SyntheticEvent) => {
         event.preventDefault()
@@ -164,101 +165,115 @@ const LoginForm = (props: { login?: number }) => {
         navigate('/recover')
     }
     const onInvalid: SubmitErrorHandler<Inputs> = (data, e) => {
-        console.log('onInvalied', data)
+        console.log('onInvalid', data)
         if (!data.username || !data.password) return
         return data
     }
-    const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-        const { username, password } = data
-        dispatch(
-            getLoginRequest({
-                username,
-                password,
+    const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+        try {
+            const response = await userLogin({
+                variables: {
+                    data: {
+                        email: data.username,
+                        password: data.password,
+                    },
+                },
             })
-        )
+            dispatch(loginRequest(response.data.login))
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
-                <Grid container spacing={gridSpacing}>
-                    <Grid
-                        item
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        className={classes.searchControl}
-                    >
-                        <Controller
-                            name="username"
-                            control={control}
-                            defaultValue={items.username || ''}
-                            // defaultValue= {''}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    fullWidth
-                                    label="Usuario"
-                                    size="small"
-                                    autoComplete="off"
-                                    error={!!errors.username}
-                                    helperText={errors.username?.message}
-                                    disabled={false}
-                                />
-                            )}
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        // sx={{ padding: '1%'}}
-                        className={classes.searchControl}
-                    >
-                        <Controller
-                            name="password"
-                            control={control}
-                            defaultValue={items.password || ''}
-                            // defaultValue={''}
-                            render={({ field }) => (
-                                <TextField
-                                    {...field}
-                                    fullWidth
-                                    label="Contraseña"
-                                    size="small"
-                                    autoComplete="off"
-                                    error={!!errors.password}
-                                    helperText={errors.password?.message}
-                                    disabled={false}
-                                    type={showPassword ? 'text' : 'password'}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={
-                                                    handleClickShowPassword
-                                                }
-                                                onMouseDown={
-                                                    handleMouseDownPassword
-                                                }
-                                                edge="end"
-                                            >
-                                                {showPassword ? (
-                                                    <Visibility />
-                                                ) : (
-                                                    <VisibilityOff />
-                                                )}
-                                            </IconButton>
-                                        ),
-                                    }}
-                                />
-                            )}
-                        />
-                    </Grid>
+            {loading ? (
+                'Cargando'
+            ) : (
+                <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
+                    <Grid container spacing={gridSpacing}>
+                        <Grid
+                            item
+                            xs={12}
+                            sm={12}
+                            md={12}
+                            className={classes.searchControl}
+                        >
+                            <Controller
+                                name="username"
+                                control={control}
+                                defaultValue={items.username || ''}
+                                // defaultValue= {''}
+                                render={({ field }) => (
+                                    <TextField
+                                        {...field}
+                                        fullWidth
+                                        label="Usuario"
+                                        size="small"
+                                        autoComplete="off"
+                                        error={!!errors.username}
+                                        helperText={errors.username?.message}
+                                        disabled={false}
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid
+                            item
+                            xs={12}
+                            sm={12}
+                            md={12}
+                            // sx={{ padding: '1%'}}
+                            className={classes.searchControl}
+                        >
+                            <Controller
+                                name="password"
+                                control={control}
+                                defaultValue={items.password || ''}
+                                // defaultValue={''}
+                                render={({ field }) => (
+                                    <TextField
+                                        {...field}
+                                        fullWidth
+                                        label="Contraseña"
+                                        size="small"
+                                        autoComplete="off"
+                                        error={!!errors.password}
+                                        helperText={errors.password?.message}
+                                        disabled={false}
+                                        type={
+                                            showPassword ? 'text' : 'password'
+                                        }
+                                        InputProps={{
+                                            endAdornment: (
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={
+                                                        handleClickShowPassword
+                                                    }
+                                                    onMouseDown={
+                                                        handleMouseDownPassword
+                                                    }
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? (
+                                                        <Visibility />
+                                                    ) : (
+                                                        <VisibilityOff />
+                                                    )}
+                                                </IconButton>
+                                            ),
+                                        }}
+                                    />
+                                )}
+                            />
+                        </Grid>
 
-                    <Box component="span" className="w-full text-center mt-4">
-                        {/* <FormControlLabel
+                        <Box
+                            component="span"
+                            className="w-full text-center mt-4"
+                        >
+                            {/* <FormControlLabel
                             sx={{ marginTop: '10px' }}
                             style={{ marginRight: 100 }}
                             control={
@@ -276,54 +291,55 @@ const LoginForm = (props: { login?: number }) => {
                             label={'Remember me'}
                         /> */}
 
-                        <Link
-                            style={{
-                                marginTop: 10,
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                            }}
-                            underline="none"
-                            onClick={handleRecover}
-                            variant="body2"
-                        >
-                            <Button
-                                className=""
-                                // variant="contained"
-                                size="small"
-                                // type="submit"
-                                sx={{
-                                    textTransform: 'none',
+                            <Link
+                                style={{
+                                    marginTop: 10,
+                                    display: 'flex',
+                                    justifyContent: 'flex-end',
                                 }}
+                                underline="none"
+                                onClick={handleRecover}
+                                variant="body2"
                             >
-                                ¿Olvidaste tu contraseña?
-                            </Button>
-                        </Link>
-                    </Box>
-                    <Grid item xs={12}>
-                        <AnimateButton>
+                                <Button
+                                    className=""
+                                    // variant="contained"
+                                    size="small"
+                                    // type="submit"
+                                    sx={{
+                                        textTransform: 'none',
+                                    }}
+                                >
+                                    ¿Olvidaste tu contraseña?
+                                </Button>
+                            </Link>
+                        </Box>
+                        <Grid item xs={12}>
+                            <AnimateButton>
+                                <Button
+                                    className="w-full"
+                                    variant="contained"
+                                    size="large"
+                                    type="submit"
+                                >
+                                    Iniciar sesión
+                                </Button>
+                            </AnimateButton>
+                        </Grid>
+                        <Grid item xs={12}>
                             <Button
+                                onClick={handleRegister}
                                 className="w-full"
-                                variant="contained"
+                                // variant="contained"
                                 size="large"
-                                type="submit"
+                                // type="submit"
                             >
-                                Iniciar sesión
+                                Crear usuario
                             </Button>
-                        </AnimateButton>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                        <Button
-                            onClick={handleRegister}
-                            className="w-full"
-                            // variant="contained"
-                            size="large"
-                            // type="submit"
-                        >
-                            Crear usuario
-                        </Button>
-                    </Grid>
-                </Grid>
-            </form>
+                </form>
+            )}
         </>
     )
 }

@@ -23,7 +23,7 @@ import { DefaultRootStateProps } from 'types'
 import AffiliateTitles from './AffiliateTitles'
 import Recharge from './Recharge'
 import tituloAfiliado from '../icons/tituloAfiliado.png'
-import recarga from '../icons/recarga.png'
+import recargaIcon from '../icons/recargaIcon.png'
 
 // style constant
 const useStyles = makeStyles((theme: Theme) => ({
@@ -145,7 +145,7 @@ const SummaryIndex = () => {
             label: 'Recargas',
             icon: (
                 <img
-                    src={recarga}
+                    src={recargaIcon}
                     alt="recarga"
                     style={{
                         width: '40px',
