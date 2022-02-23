@@ -36,6 +36,8 @@ import AnimateButton from 'ui-component/extended/AnimateButton'
 import { gridSpacing } from 'store/constant'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import { useMutation } from '@apollo/client'
+import { CREATE_USER } from 'graphql/Mutations'
 
 //Icons
 // import { DefaultRootStateProps, TCardsProps } from 'types'
@@ -123,6 +125,8 @@ const Schema = yup.object().shape({
 // ==============================|| login PROFILE FORM ||============================== //
 
 const UserRegisterForm = (props: { login?: number }, { ...others }) => {
+    // MUTATION
+    const [createUser, { loading }] = useMutation(CREATE_USER)
     // CUSTOMS HOOKS
     const classes = useStyles()
     const navigate = useNavigate()
@@ -155,17 +159,32 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
         // if (!data.username || !data.password) return
         return data
     }
-    const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-        const { email, name, last_name, identification, passwordR } = data
-        console.log(email)
-        console.log(name)
-        console.log(last_name)
-        console.log(identification)
-        console.log(passwordR) // window.location.reload();
+    const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+        // const { email, name, last_name, identification, passwordR } = data
+        try {
+            const response = await createUser({
+                variables: {
+                    data: {
+                        email: data.email,
+                        name: data.name,
+                        lastname: data.last_name,
+                        docNum: data.identification,
+                        password: data.passwordR,
+                        role: '6213b265ac9fd645e565fcd7',
+                        docCode: 'V',
+                    },
+                },
+            })
+            console.log(response)
+            navigate('/login')
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
         <>
+            {loading ? 'cargando' : null}
             <form onSubmit={handleSubmit(onSubmit, onInvalid)}>
                 <Grid container spacing={gridSpacing}>
                     <Grid
@@ -184,7 +203,7 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
                                 <TextField
                                     {...field}
                                     fullWidth
-                                    label="Correo   "
+                                    label="Correo"
                                     size="small"
                                     autoComplete="off"
                                     error={!!errors.email}

@@ -12,6 +12,7 @@ import '_mockApis'
 import * as serviceWorker from 'serviceWorker'
 import App from 'App'
 import { store, persister } from 'store'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 // style + assets
 import 'assets/scss/style.scss'
@@ -19,14 +20,21 @@ import 'styles/globals.css'
 
 // ==============================|| REACT DOM RENDER  ||============================== //
 
+const client = new ApolloClient({
+    uri: 'http://192.168.0.107:3002/graphql',
+    cache: new InMemoryCache(),
+})
+
 ReactDOM.render(
-    <Provider store={store}>
-        <PersistGate loading={null} persistor={persister}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </PersistGate>
-    </Provider>,
+    <ApolloProvider client={client}>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persister}>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </PersistGate>
+        </Provider>
+    </ApolloProvider>,
     document.getElementById('root')
 )
 

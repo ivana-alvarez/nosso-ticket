@@ -1,13 +1,17 @@
 import { AnyAction } from 'redux'
 import { initialLoginContextProps } from 'types'
 
+const isLogged = (): boolean =>
+    localStorage.getItem('isLoggedIn') !== null &&
+    localStorage.getItem('isLoggedIn') !== undefined
+        ? true
+        : false
+
 const initialState: initialLoginContextProps = {
-    isLoggedIn: Boolean(window.localStorage.getItem('isLoggedIn'))
-        ? Boolean(window.localStorage.getItem('isLoggedIn'))
-        : false,
+    isLoggedIn: isLogged(),
     // isLoggedIn: false,
     isInitialized: false,
-    user: null,
+    user: isLogged() ? JSON.parse(localStorage.getItem('user') || '') : null,
 }
 
 export interface AccountReducerActionProps {
@@ -19,13 +23,17 @@ const loginReducer = (state = initialState, action: AnyAction) => {
     switch (action.type) {
         case 'LOGIN_REQUEST':
             localStorage.setItem('isLoggedIn', 'true')
+            localStorage.setItem('user', JSON.stringify(action.info))
             return {
                 isLoggedIn: true,
                 user: action.info,
+
                 //content: action.info.content ? action.info.content : null
             }
+
         case 'LOGOUT_REQUEST':
             localStorage.removeItem('isLoggedIn')
+            localStorage.removeItem('user')
             return {
                 ...state,
                 user: action.info
