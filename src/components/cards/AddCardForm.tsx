@@ -13,8 +13,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import React from 'react'
 import AddCard from '../../components/icons/AddCard'
-import { useDispatch } from 'react-redux'
-import { createCardsRequest } from 'store/cards/cardsActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { SNACKBAR_OPEN } from 'store/actions'
+import { DefaultRootStateProps } from 'types'
+import { useMutation } from '@apollo/client'
+import { CREATE_CARD } from 'graphql/Mutations'
+import { CardRegional } from 'types/types'
 
 const useStyles = makeStyles((theme: Theme) => ({
     alertIcon: {
@@ -60,7 +64,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 const SchemaSearch = yup.object().shape({
-    search: yup.string().required('Este campo es obligatorio'),
+    search: yup
+        .string()
+        .min(16, 'Debe tener 16 dígitos')
+        .required('Este campo es obligatorio'),
 })
 const Schema = yup.object().shape({
     name: yup.string().required('Este campo es obligatorio'),
@@ -73,7 +80,7 @@ const RechargeCardForm = ({ open, setOpen }) => {
         handleSubmit,
         control,
         formState: { errors },
-        setValue,
+        // setValue,
         // getValues,
     } = useForm({
         resolver: yupResolver(Schema),
@@ -82,62 +89,79 @@ const RechargeCardForm = ({ open, setOpen }) => {
         resolver: yupResolver(SchemaSearch),
     })
     const dispatch = useDispatch()
+    const login = useSelector((state: DefaultRootStateProps) => state.login)
+    //mutation
+    const [addCard, { loading }] = useMutation(CREATE_CARD)
+    const [cardData, setCardData] = React.useState<CardRegional[] | any>([])
 
     const [validCode, setValidCode] = React.useState(false)
-    const [data, setData] = React.useState<any>({
-        card_money: '',
-        init_time: '',
-        issue_time: '',
-    })
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         setValidCode(true)
-        setData({
-            card_no: data.search,
-            card_money: 120,
-            init_time: '2022-01-24T12:24:42.903092',
-            issue_time: '2022-01-24T12:24:42.903092',
-        })
+        try {
+            const response = await addCard({
+                variables: {
+                    data: {
+                        card_no: data.search,
+                        include_transits: false,
+                    },
+                    id: login.user._id,
+                },
+            })
+            setCardData(response.data.createCard)
+        } catch (error) {
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Error de conexión',
+                anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                variant: 'alert',
+                alertSeverity: 'error',
+            })
+            console.log(error)
+        }
     }
 
     const handleAccept = (data) => {
         console.log('accept', data)
-        dispatch(
-            createCardsRequest({
-                card_description: 'Tarjeta TSC',
-                card_no: '1001020002985261',
-                dept_no: 25,
-                card_serial: 'CC681AEF',
-                card_type: 0,
-                card_status: 1,
-                order_no: 6746,
-                init_time: '2022-01-24T12:24:42.903092',
-                opcard_no: '2543',
-                issue_time: '2022-01-24T13:33:29',
-                cash_serial: 10,
-                bt_time: '2022-02-05T00:25:13',
-                last_supply_time: '2022-01-24T13:33:29',
-                last_riding_time: '2022-02-03T17:28:20',
-                ss_times: 1,
-                supply_money: '500000.00',
-                paid: '100000.00',
-                card_money: '400000.00',
-                card_deposit: '0.00',
-                name1: 'YELMARY',
-                name2: '',
-                surname1: 'HERNANDEZ',
-                surname2: 'VELASQUEZ',
-                id_no: 'V20698370',
-            })
-        )
+        // dispatch(
+        //     createCardsRequest({
+        //         card_description: 'Tarjeta TSC',
+        //         card_no: '1001020002985261',
+        //         dept_no: 25,
+        //         card_serial: 'CC681AEF',
+        //         card_type: 0,
+        //         card_status: 1,
+        //         order_no: 6746,
+        //         init_time: '2022-01-24T12:24:42.903092',
+        //         opcard_no: '2543',
+        //         issue_time: '2022-01-24T13:33:29',
+        //         cash_serial: 10,
+        //         bt_time: '2022-02-05T00:25:13',
+        //         last_supply_time: '2022-01-24T13:33:29',
+        //         last_riding_time: '2022-02-03T17:28:20',
+        //         ss_times: 1,
+        //         supply_money: '500000.00',
+        //         paid: '100000.00',
+        //         card_money: '400000.00',
+        //         card_deposit: '0.00',
+        //         name1: 'YELMARY',
+        //         name2: '',
+        //         surname1: 'HERNANDEZ',
+        //         surname2: 'VELASQUEZ',
+        //         id_no: 'V20698370',
+        //     })
+        // )
         setOpen(false)
-        searchForm.setValue('search', '')
-        setValue('name', '')
+        setCardData('')
+        // searchForm.setValue('search', '')
+        // setValue('name', '')
         setValidCode(false)
-        setData({})
+        // setData({})
     }
     return (
         <>
+            {loading ? 'cargando' : null}
             <form>
                 <AlertDialog
                     open={open}
@@ -197,9 +221,9 @@ const RechargeCardForm = ({ open, setOpen }) => {
                                     </Button>
                                 </form>
                                 <CardsInfo
-                                    card_money={data?.card_money}
-                                    init_time={data?.init_time}
-                                    issue_time={data?.issue_time}
+                                    card_money={cardData?.card_money}
+                                    init_time={cardData?.init_time}
+                                    issue_time={cardData?.issue_time}
                                 />
                             </div>
                         </div>
