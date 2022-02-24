@@ -57,7 +57,6 @@ const ViewSystem = () => {
     useEffect(() => {
         if (userCards?.length >= 1 && userCards !== undefined) {
             setCanRender(true)
-            console.log(userCards)
         }
     }, [userCards])
 

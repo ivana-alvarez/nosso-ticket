@@ -25,12 +25,17 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import AnimateButton from 'ui-component/extended/AnimateButton'
-import ErrorTwoToneIcon from '@material-ui/icons/ErrorTwoTone'
-import UploadTwoToneIcon from '@material-ui/icons/UploadTwoTone'
-import Avatar from 'ui-component/extended/Avatar'
+// import ErrorTwoToneIcon from '@material-ui/icons/ErrorTwoTone'
+// import UploadTwoToneIcon from '@material-ui/icons/UploadTwoTone'
+// import Avatar from 'ui-component/extended/Avatar'
 // import { gridSpacing } from 'store/constant'
 
 import TextField from '@mui/material/TextField'
+import { useDispatch, useSelector } from 'react-redux'
+import { DefaultRootStateProps } from 'types'
+import { useMutation } from '@apollo/client'
+import { UPDATE_USER } from 'graphql/Mutations'
+import { SNACKBAR_OPEN } from 'store/actions'
 
 const useStyles = makeStyles((theme: Theme) => ({
     alertIcon: {
@@ -93,7 +98,7 @@ const Schema = yup.object().shape({
     email: yup.string().required('Este campo es obligatorio'),
     number_phone: yup.string().required('Este campo es obligatorio'),
     type_document: yup.string().required('Este campo es obligatorio'),
-    number_document: yup.number().required('Este campo es obligatorio'),
+    number_document: yup.string().required('Este campo es obligatorio'),
     used_title: yup.boolean(),
     balance_title: yup.boolean(),
 })
@@ -106,6 +111,10 @@ interface FleetProfileProps {
 
 const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     const classes = useStyles()
+    const dispatch = useDispatch()
+    const login = useSelector((state: DefaultRootStateProps) => state.login)
+    //mutation
+    const [updateUser, { loading }] = useMutation(UPDATE_USER)
 
     const {
         handleSubmit,
@@ -122,13 +131,10 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
 
     const [editable, setEditable] = React.useState<boolean>(false)
 
-    // const [fleetData] = React.useState<FleetDataProps | undefined>(
-    //     fleets?.find((fleet) => fleet.id === fleetId)
-    // )
-
     const [usedTitle, setUsedTitle] = React.useState<boolean>(true)
 
     const [balanceTitle, setBalanceTitle] = React.useState<boolean>(true)
+    // const [dataUser, setDataUser] = React.useState<any>([])
 
     const handleSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name
@@ -163,14 +169,6 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         },
     ]
 
-    // const handleChangeManfucturDeate = (newValue: Date | null) => {
-    //     setManfucturDeate(newValue)
-    //     if (newValue)
-    //         setValue('manfucture_date', newValue, { shouldValidate: true })
-    //     if (newValue === null)
-    //         setValue('manfucture_date', null, { shouldValidate: true })
-    // }
-
     const handleAbleToEdit = () => {
         setReadOnlyState(!readOnlyState)
         setEditable(!editable)
@@ -181,88 +179,41 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         setEditable(!editable)
         //     setValue('transportation_mean', fleetData?.transportation_mean, {
         //         shouldValidate: true,
-        //     })
-        //     setValue('unit_id', fleetData?.unit_id, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('capacity', fleetData?.capacity, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('make', fleetData?.make, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('model', fleetData?.model, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('plate', fleetData?.plate, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('vin', fleetData?.vin, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('manfucture_date', fleetData?.manfucture_date, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('fuel_type', fleetData?.fuel_type, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('tank_capacity', fleetData?.tank_capacity, {
-        //         shouldValidate: true,
-        //     })
     }
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        //     const {
-        //         unit_id,
-        //         transportation_mean,
-        //         plate,
-        //         // vin,
-        //         make,
-        //         model,
-        //         capacity,
-        //         fuel_type,
-        //         tank_capacity,
-        //         company_code,
-        //         // manfucture_date,
-        //     } = data
-        //     if (!editable) {
-        //         dispatch(
-        //             createFleetRequest({
-        //                 unit_id,
-        //                 transportation_mean,
-        //                 plate,
-        //                 make,
-        //                 model,
-        //                 capacity,
-        //                 fuel_type,
-        //                 tank_capacity,
-        //                 company_code,
-        //             })
-        //         )
-        //         navigate(`/gestion-flota/listar`)
-        //     }
-        //     if (editable) {
-        //         dispatch(
-        //             updateFleetRequest({
-        //                 id: fleetId,
-        //                 unit_id,
-        //                 transportation_mean,
-        //                 plate,
-        //                 make,
-        //                 model,
-        //                 capacity,
-        //                 fuel_type,
-        //                 tank_capacity,
-        //                 company_code,
-        //             })
-        //         )
-        //         navigate('/gestion-flota/listar')
-        //     }
-        // }
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        try {
+            const resolve = await updateUser({
+                variables: {
+                    data: {
+                        _id: login.user._id,
+                        docCode: data.type_document,
+                        docNum: data.number_document,
+                        email: data.email,
+                        lastname: data.last_name,
+                        name: data.name,
+                        password: '1234',
+                    },
+                },
+            })
+            console.log(resolve.data.updateUser)
+            // setDataUser('')
+        } catch (error) {
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Error de conexión',
+                anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                variant: 'alert',
+                alertSeverity: 'error',
+            })
+            console.log(error)
+        }
     }
 
     return (
         <>
+            {loading ? 'cargando' : null}
             <Grid item xs={12}>
                 <Typography variant="h4">Datos de usuario</Typography>
             </Grid>
@@ -273,14 +224,14 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                     alignItems="center"
                     sx={{ marginTop: '5px' }}
                 >
-                    <Grid item>
+                    {/* <Grid item>
                         <Avatar
                             alt="logo de la empresa"
                             className={classes.userAvatar}
                         />
-                    </Grid>
+                    </Grid> */}
                     <Grid item sm zeroMinWidth>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <label htmlFor="containedButtonFile">
                                 <input
                                     accept="image/*"
@@ -298,9 +249,9 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                     Cargar Imagen
                                 </Button>
                             </label>
-                        </Grid>
+                        </Grid> */}
 
-                        <Grid item xs={12} sx={{ marginLeft: '17px' }}>
+                        {/* <Grid item xs={12} sx={{ marginLeft: '17px' }}>
                             <Typography variant="caption">
                                 <ErrorTwoToneIcon
                                     className={classes.alertIcon}
@@ -308,7 +259,7 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                 El tamaño de la imagen no debe pesar mas de
                                 125kb max.
                             </Typography>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     {!onlyView && readOnly ? (
                         <Grid item>
