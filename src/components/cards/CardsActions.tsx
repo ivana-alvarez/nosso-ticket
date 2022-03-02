@@ -9,6 +9,7 @@ const CardsActions = ({
     rechargeHandle,
     blockHandle,
     deleteHandle,
+    cardId,
 }) => {
     return (
         <>
@@ -51,6 +52,7 @@ const CardsActions = ({
                     size="small"
                     onClick={deleteHandle}
                     className="hover:bg-hover rounded-full w-1/4"
+                    data-id={cardId}
                 >
                     <div className="flex flex-col items-center">
                         <DeleteForeverIcon className="w-8 h-8 mt-3" />

@@ -26,12 +26,17 @@ import {
 import { makeStyles } from '@material-ui/styles'
 import AnimateButton from 'ui-component/extended/AnimateButton'
 // import { BANKS } from 'store/constant'
-import { cardsData } from '../../_mockApis/cards/cardsData'
+
 // import { gridSpacing } from 'store/constant'
 
 import TextField from '@mui/material/TextField'
 import { amounts } from '_mockApis/amounts/amounts'
 import TransferAdd from './TransferAdd'
+import { CardRegional } from 'types/types'
+import { ApolloError, useQuery } from '@apollo/client'
+import { USER_CARD } from 'graphql/Querys'
+import { useSelector } from 'react-redux'
+import { DefaultRootStateProps } from 'types'
 
 const useStyles = makeStyles((theme: Theme) => ({
     searchControl: {
@@ -82,6 +87,21 @@ interface FleetProfileProps {
     readOnly?: boolean
     onlyView?: boolean
 }
+const getCards = (userId: string): Promise<CardRegional[]> => {
+    return new Promise((resolve, reject) => {
+        const { data, loading, error } = useQuery(USER_CARD, {
+            onError: (err: ApolloError) => reject(err),
+            fetchPolicy: 'network-only',
+            variables: { user: userId },
+        })
+        if (error) {
+            reject(error)
+        }
+        if (!loading) {
+            resolve(data.UsersCards)
+        }
+    })
+}
 
 const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     const classes = useStyles()
@@ -95,15 +115,27 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         resolver: yupResolver(Schema),
     })
 
+    const login = useSelector((state: DefaultRootStateProps) => state.login)
+    // Puede renderizar?
+    const [canRender, setCanRender] = React.useState<boolean>(false)
+    const [userCards, setUserCards] = React.useState<CardRegional[] | any>([])
+
+    // Llamo las tarjetas
+    getCards(login.user._id)
+        .then((data: CardRegional[]) => setUserCards(data))
+        .catch(() => setUserCards(undefined))
+
+    React.useEffect(() => {
+        if (userCards?.length >= 1 && userCards !== undefined) {
+            setCanRender(true)
+        }
+    }, [userCards])
+
     const [readOnlyState, setReadOnlyState] = React.useState<
         boolean | undefined
     >(readOnly)
 
     const [editable, setEditable] = React.useState<boolean>(false)
-
-    // const [fleetData] = React.useState<FleetDataProps | undefined>(
-    //     fleets?.find((fleet) => fleet.id === fleetId)
-    // )
 
     const [myAccount, setMyAccount] = React.useState<boolean>()
     // !!companyData?.filial_company
@@ -129,36 +161,6 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     const handleCancelEdit = () => {
         setReadOnlyState(!readOnlyState)
         setEditable(!editable)
-        //     setValue('transportation_mean', fleetData?.transportation_mean, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('unit_id', fleetData?.unit_id, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('capacity', fleetData?.capacity, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('make', fleetData?.make, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('model', fleetData?.model, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('plate', fleetData?.plate, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('vin', fleetData?.vin, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('manfucture_date', fleetData?.manfucture_date, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('fuel_type', fleetData?.fuel_type, {
-        //         shouldValidate: true,
-        //     })
-        //     setValue('tank_capacity', fleetData?.tank_capacity, {
-        //         shouldValidate: true,
-        //     })
     }
     // const onChangeToCard = (event) => {
     //     const name = event.target.name
@@ -219,53 +221,6 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         console.log(data)
-        //     const {
-        //         unit_id,
-        //         transportation_mean,
-        //         plate,
-        //         // vin,
-        //         make,
-        //         model,
-        //         capacity,
-        //         fuel_type,
-        //         tank_capacity,
-        //         company_code,
-        //         // manfucture_date,
-        //     } = data
-        //     if (!editable) {
-        //         dispatch(
-        //             createFleetRequest({
-        //                 unit_id,
-        //                 transportation_mean,
-        //                 plate,
-        //                 make,
-        //                 model,
-        //                 capacity,
-        //                 fuel_type,
-        //                 tank_capacity,
-        //                 company_code,
-        //             })
-        //         )
-        //         navigate(`/gestion-flota/listar`)
-        //     }
-        //     if (editable) {
-        //         dispatch(
-        //             updateFleetRequest({
-        //                 id: fleetId,
-        //                 unit_id,
-        //                 transportation_mean,
-        //                 plate,
-        //                 make,
-        //                 model,
-        //                 capacity,
-        //                 fuel_type,
-        //                 tank_capacity,
-        //                 company_code,
-        //             })
-        //         )
-        //         navigate('/gestion-flota/listar')
-        //     }
-        // }
     }
 
     return (
@@ -281,7 +236,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                     }}
                 >
                     <Typography variant="h4">
-                        Tranferencia entre títulos de transporte
+                        Transferencia entre títulos de transporte
                     </Typography>
                     {!onlyView && readOnlyState ? (
                         <Grid item sx={{ marginRight: '16px' }}>
@@ -297,268 +252,272 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                         </Grid>
                     ) : null}
                 </Grid>
+                {canRender && (
+                    <Grid container spacing={2} sx={{ marginTop: '5px' }}>
+                        <Grid item xs={12} md={6}>
+                            <Typography variant="h6">
+                                Seleccione la tarjeta desde la cual transferirá
+                                saldo
+                            </Typography>
+                        </Grid>
 
-                <Grid container spacing={2} sx={{ marginTop: '5px' }}>
-                    <Grid item xs={12} md={6}>
-                        <Typography variant="h6">
-                            Seleccione la tarjeta desde la cual transferirá
-                            saldo
-                        </Typography>
-                    </Grid>
-
-                    <Controller
-                        name="from_card"
-                        control={control}
-                        // defaultValue={fleetData?.plate}
-                        render={({ field }) => (
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <TextField
-                                    select
-                                    fullWidth
-                                    label="Tarjetas asociadas"
-                                    size="small"
-                                    autoComplete="off"
-                                    {...field}
-                                    disabled={readOnly}
-                                    error={!!errors.from_card}
-                                    helperText={errors.from_card?.message}
+                        <Controller
+                            name="from_card"
+                            control={control}
+                            // defaultValue={fleetData?.plate}
+                            render={({ field }) => (
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
                                 >
-                                    {cardsData.map((option) => (
-                                        <MenuItem
-                                            key={option.card_serial}
-                                            value={option.card_serial}
-                                        >
-                                            {option.card_description}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </Grid>
-                        )}
-                    />
-
-                    <Grid item xs={12} md={6}>
-                        <Controller
-                            name="card_my_account"
-                            control={control}
-                            render={({ field }) => (
-                                <FormControlLabel
-                                    {...field}
-                                    value="top"
-                                    name="card_my_account"
-                                    control={
-                                        <Switch
-                                            color="primary"
-                                            onChange={handleMyAccount}
-                                            checked={myAccount}
-                                        />
-                                    }
-                                    label="A tarjetas asociadas a mi cuenta"
-                                    labelPlacement="start"
-                                />
+                                    <TextField
+                                        select
+                                        fullWidth
+                                        label="Tarjetas asociadas"
+                                        size="small"
+                                        autoComplete="off"
+                                        {...field}
+                                        disabled={readOnly}
+                                        error={!!errors.from_card}
+                                        helperText={errors.from_card?.message}
+                                    >
+                                        {userCards.map((option) => (
+                                            <MenuItem
+                                                key={option._id}
+                                                value={option._id}
+                                            >
+                                                {option.card_no}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Grid>
                             )}
                         />
+
+                        <Grid item xs={12} md={6}>
+                            <Controller
+                                name="card_my_account"
+                                control={control}
+                                render={({ field }) => (
+                                    <FormControlLabel
+                                        {...field}
+                                        value="top"
+                                        name="card_my_account"
+                                        control={
+                                            <Switch
+                                                color="primary"
+                                                onChange={handleMyAccount}
+                                                checked={myAccount}
+                                            />
+                                        }
+                                        label="A tarjetas asociadas a mi cuenta"
+                                        labelPlacement="start"
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                            <Controller
+                                name="card_other_account"
+                                control={control}
+                                render={({ field }) => (
+                                    <FormControlLabel
+                                        {...field}
+                                        value="top"
+                                        name="card_other_account"
+                                        control={
+                                            <Switch
+                                                color="primary"
+                                                onChange={handleOtherAccount}
+                                                checked={otherAccount}
+                                                disabled={readOnly}
+                                            />
+                                        }
+                                        label="A tarjetas asociadas a otras cuentas"
+                                        labelPlacement="start"
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        {myAccount ? (
+                            <>
+                                <Grid item xs={12} md={6}>
+                                    <Typography variant="h6">
+                                        Seleccione la tarjeta a transferir saldo
+                                    </Typography>
+                                </Grid>
+
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
+                                >
+                                    <Controller
+                                        name="to_card"
+                                        control={control}
+                                        // defaultValue={companyData?.filial_company}
+                                        render={({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                select
+                                                fullWidth
+                                                label="Tarjetas asociadas"
+                                                size="small"
+                                                autoComplete="off"
+                                                // onChange={onChangeToCard}
+                                                error={!!errors.to_card}
+                                                helperText={
+                                                    errors.to_card?.message
+                                                }
+                                                disabled={readOnly}
+                                            >
+                                                {userCards.map((option) => (
+                                                    <MenuItem
+                                                        key={option._id}
+                                                        value={option._id}
+                                                    >
+                                                        {option.card_no}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12} md={6}>
+                                    <Typography variant="h6">
+                                        Monto a transferir
+                                    </Typography>
+                                </Grid>
+
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
+                                >
+                                    <Controller
+                                        name="amount_transfer"
+                                        control={control}
+                                        // defaultValue={companyData?.filial_company}
+                                        render={({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                select
+                                                fullWidth
+                                                label="Monto a transferir"
+                                                size="small"
+                                                autoComplete="off"
+                                                // onChange={onChangeToCard}
+                                                error={!!errors.amount_transfer}
+                                                helperText={
+                                                    errors.amount_transfer
+                                                        ?.message
+                                                }
+                                                disabled={readOnly}
+                                            >
+                                                {amounts.map((option) => (
+                                                    <MenuItem
+                                                        key={option.id}
+                                                        value={option.id}
+                                                    >
+                                                        {option.monto}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        )}
+                                    />
+                                </Grid>
+                            </>
+                        ) : null}
+
+                        {otherAccount ? (
+                            <>
+                                <Grid item xs={12} md={6}>
+                                    <Typography variant="h6">
+                                        Introduzca el código de la tarjeta a
+                                        transferir saldo
+                                    </Typography>
+                                </Grid>
+
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
+                                >
+                                    <Controller
+                                        name="code_card"
+                                        control={control}
+                                        // defaultValue={companyData?.filial_company}
+                                        render={({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                fullWidth
+                                                label="Código de tarjeta"
+                                                size="small"
+                                                autoComplete="off"
+                                                // onChange={onChangeFromCard}
+                                                error={!!errors.code_card}
+                                                helperText={
+                                                    errors.code_card?.message
+                                                }
+                                                disabled={readOnly}
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+
+                                <Grid item xs={12} md={6}>
+                                    <Typography variant="h6">
+                                        Monto a transferir
+                                    </Typography>
+                                </Grid>
+
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
+                                >
+                                    <Controller
+                                        name="to2_card"
+                                        control={control}
+                                        // defaultValue={companyData?.filial_company}
+                                        render={({ field }) => (
+                                            <TextField
+                                                {...field}
+                                                select
+                                                fullWidth
+                                                label="Montos posibles a transferir"
+                                                size="small"
+                                                autoComplete="off"
+                                                // onChange={onChangeFromCard}
+                                                error={!!errors.to2_card}
+                                                helperText={
+                                                    errors.to2_card?.message
+                                                }
+                                                disabled={readOnly}
+                                            >
+                                                {amounts.map((option) => (
+                                                    <MenuItem
+                                                        key={option.id}
+                                                        value={option.id}
+                                                    >
+                                                        {option.monto}
+                                                    </MenuItem>
+                                                ))}
+                                            </TextField>
+                                        )}
+                                    />
+                                </Grid>
+                            </>
+                        ) : null}
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                        <Controller
-                            name="card_other_account"
-                            control={control}
-                            render={({ field }) => (
-                                <FormControlLabel
-                                    {...field}
-                                    value="top"
-                                    name="card_other_account"
-                                    control={
-                                        <Switch
-                                            color="primary"
-                                            onChange={handleOtherAccount}
-                                            checked={otherAccount}
-                                            disabled={readOnly}
-                                        />
-                                    }
-                                    label="A tarjetas asociadas a otras cuentas"
-                                    labelPlacement="start"
-                                />
-                            )}
-                        />
-                    </Grid>
-                    {myAccount ? (
-                        <>
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="h6">
-                                    Seleccione la tarjeta a transferir saldo
-                                </Typography>
-                            </Grid>
-
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <Controller
-                                    name="to_card"
-                                    control={control}
-                                    // defaultValue={companyData?.filial_company}
-                                    render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            select
-                                            fullWidth
-                                            label="Tarjetas asociadas"
-                                            size="small"
-                                            autoComplete="off"
-                                            // onChange={onChangeToCard}
-                                            error={!!errors.to_card}
-                                            helperText={errors.to_card?.message}
-                                            disabled={readOnly}
-                                        >
-                                            {cardsData.map((option) => (
-                                                <MenuItem
-                                                    key={option.card_serial}
-                                                    value={option.card_serial}
-                                                >
-                                                    {option.card_description}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="h6">
-                                    Monto a transferir
-                                </Typography>
-                            </Grid>
-
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <Controller
-                                    name="amount_transfer"
-                                    control={control}
-                                    // defaultValue={companyData?.filial_company}
-                                    render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            select
-                                            fullWidth
-                                            label="Monto a transferir"
-                                            size="small"
-                                            autoComplete="off"
-                                            // onChange={onChangeToCard}
-                                            error={!!errors.amount_transfer}
-                                            helperText={
-                                                errors.amount_transfer?.message
-                                            }
-                                            disabled={readOnly}
-                                        >
-                                            {amounts.map((option) => (
-                                                <MenuItem
-                                                    key={option.id}
-                                                    value={option.id}
-                                                >
-                                                    {option.monto}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                    )}
-                                />
-                            </Grid>
-                        </>
-                    ) : null}
-
-                    {otherAccount ? (
-                        <>
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="h6">
-                                    Introduzca el código de la tarjeta a
-                                    transferir saldo
-                                </Typography>
-                            </Grid>
-
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <Controller
-                                    name="code_card"
-                                    control={control}
-                                    // defaultValue={companyData?.filial_company}
-                                    render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            fullWidth
-                                            label="Código de tarjeta"
-                                            size="small"
-                                            autoComplete="off"
-                                            // onChange={onChangeFromCard}
-                                            error={!!errors.code_card}
-                                            helperText={
-                                                errors.code_card?.message
-                                            }
-                                            disabled={readOnly}
-                                        />
-                                    )}
-                                />
-                            </Grid>
-
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="h6">
-                                    Monto a transferir
-                                </Typography>
-                            </Grid>
-
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <Controller
-                                    name="to2_card"
-                                    control={control}
-                                    // defaultValue={companyData?.filial_company}
-                                    render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            select
-                                            fullWidth
-                                            label="Montos posibles a transferir"
-                                            size="small"
-                                            autoComplete="off"
-                                            // onChange={onChangeFromCard}
-                                            error={!!errors.to2_card}
-                                            helperText={
-                                                errors.to2_card?.message
-                                            }
-                                            disabled={readOnly}
-                                        >
-                                            {amounts.map((option) => (
-                                                <MenuItem
-                                                    key={option.id}
-                                                    value={option.id}
-                                                >
-                                                    {option.monto}
-                                                </MenuItem>
-                                            ))}
-                                        </TextField>
-                                    )}
-                                />
-                            </Grid>
-                        </>
-                    ) : null}
-                </Grid>
+                )}
                 <CardActions>
                     <Grid container justifyContent="flex-end" spacing={0}>
                         <Grid item>

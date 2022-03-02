@@ -75,3 +75,15 @@ export const UPDATE_USER = gql`
         }
     }
 `
+
+export const REMOVE_CARD = gql`
+    mutation removeCard($id: String!) {
+        removeCard(id: $id) {
+            _id
+            serial
+            user {
+                _id
+            }
+        }
+    }
+`

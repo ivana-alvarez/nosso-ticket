@@ -48,6 +48,7 @@ const ViewSystem = () => {
     // Puede renderizar?
     const [canRender, setCanRender] = useState<boolean>(false)
     const [userCards, setUserCards] = React.useState<CardRegional[] | any>([])
+    const [selectedCardId, setSelectedCardId] = React.useState('')
 
     // Llamo las tarjetas
     getCards(login.user._id)
@@ -74,7 +75,8 @@ const ViewSystem = () => {
         setOpen(true)
         setModal('block')
     }
-    const deleteHandle = () => {
+    const deleteHandle = (e) => {
+        setSelectedCardId(e.currentTarget.dataset.id)
         setOpen(true)
         setModal('remove')
     }
@@ -105,6 +107,7 @@ const ViewSystem = () => {
                                             rechargeHandle={rechargeHandle}
                                             blockHandle={blockHandle}
                                             deleteHandle={deleteHandle}
+                                            cardId={data._id}
                                         />
                                         <CardsInfo
                                             card_status={data.card_status}
@@ -121,32 +124,31 @@ const ViewSystem = () => {
                             </SubCard>
                         </div>
                     ))}
-
-                    <div className="fixed right-12 bottom-12">
-                        <Tooltip title="Agregar Tarjeta" placement="top">
-                            <Fab
-                                aria-label="add"
-                                onClick={handleAdd}
-                                color="primary"
-                            >
-                                <AddIcon />
-                            </Fab>
-                        </Tooltip>
-                    </div>
-                    {modal === 'recharge' ? (
-                        <RechargeCardForm open={open} setOpen={setOpen} />
-                    ) : null}
-                    {modal === 'add' ? (
-                        <AddCardForm open={open} setOpen={setOpen} />
-                    ) : null}
-                    {modal === 'block' ? (
-                        <BlockCardForm open={open} setOpen={setOpen} />
-                    ) : null}
-                    {modal === 'remove' ? (
-                        <RemoveCardForm open={open} setOpen={setOpen} />
-                    ) : null}
                 </div>
             )}
+            <div className="fixed right-12 bottom-12">
+                <Tooltip title="Agregar Tarjeta" placement="top">
+                    <Fab aria-label="add" onClick={handleAdd} color="primary">
+                        <AddIcon />
+                    </Fab>
+                </Tooltip>
+            </div>
+            {modal === 'recharge' ? (
+                <RechargeCardForm open={open} setOpen={setOpen} />
+            ) : null}
+            {modal === 'add' ? (
+                <AddCardForm open={open} setOpen={setOpen} />
+            ) : null}
+            {modal === 'block' ? (
+                <BlockCardForm open={open} setOpen={setOpen} />
+            ) : null}
+            {modal === 'remove' ? (
+                <RemoveCardForm
+                    open={open}
+                    setOpen={setOpen}
+                    selectedCardId={selectedCardId}
+                />
+            ) : null}
         </>
     )
 }
