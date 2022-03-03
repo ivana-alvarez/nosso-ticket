@@ -98,7 +98,7 @@ const ViewSystem = () => {
                                             <Card1 className="max-h-48" />
                                         </div>
                                         <p className="text-center my-4">
-                                            {'Tarjeta TSC'}
+                                            {data.card_alias}
                                         </p>
                                     </div>
                                     <div className="w-full lg:w-2/3">

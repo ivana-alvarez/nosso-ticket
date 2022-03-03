@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const SchemaSearch = yup.object().shape({
     search: yup
         .string()
-        .min(16, 'Debe tener 16 dígitos')
+        .max(8, 'Debe tener 8 dígitos')
         .required('Este campo es obligatorio'),
 })
 const Schema = yup.object().shape({
@@ -105,10 +105,11 @@ const RechargeCardForm = ({ open, setOpen }) => {
             const response = await addCard({
                 variables: {
                     data: {
-                        card_no: data.search,
+                        card_serial: data.search,
+                        card_alias: cardName,
                         include_transits: false,
                     },
-                    id: login.user._id,
+                    user: login.user._id,
                 },
             })
             setCardData(response.data.createCard)
@@ -129,11 +130,11 @@ const RechargeCardForm = ({ open, setOpen }) => {
         const { name } = data
         console.log('accept', name)
         setCardName(name)
-        setCardName('')
         console.log(cardName)
 
         setOpen(false)
         setCardData('')
+        setCardName('')
         // searchForm.setValue('search', '')
         // setValue('name', '')
         setValidCode(false)

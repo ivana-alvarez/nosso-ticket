@@ -6,6 +6,7 @@ export type CardRegional = {
     card_no?: string
     card_serial?: string
     card_status?: number
+    card_alias?: string
     card_type?: number
     cash_serial?: number
     dept_no?: number

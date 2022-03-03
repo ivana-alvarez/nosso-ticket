@@ -24,6 +24,7 @@ const loginReducer = (state = initialState, action: AnyAction) => {
         case 'LOGIN_REQUEST':
             localStorage.setItem('isLoggedIn', 'true')
             localStorage.setItem('user', JSON.stringify(action.info))
+            localStorage.setItem('token', action.info?._token)
             return {
                 isLoggedIn: true,
                 user: action.info,
@@ -34,6 +35,7 @@ const loginReducer = (state = initialState, action: AnyAction) => {
         case 'LOGOUT_REQUEST':
             localStorage.removeItem('isLoggedIn')
             localStorage.removeItem('user')
+            localStorage.removeItem('token')
             return {
                 ...state,
                 user: action.info
