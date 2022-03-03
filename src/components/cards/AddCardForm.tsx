@@ -20,6 +20,8 @@ import { useMutation } from '@apollo/client'
 import { CREATE_CARD } from 'graphql/Mutations'
 import { CardRegional } from 'types/types'
 
+// import { createCardsRequest } from 'store/cards/cardsActions'
+
 const useStyles = makeStyles((theme: Theme) => ({
     alertIcon: {
         height: '16px',
@@ -93,6 +95,7 @@ const RechargeCardForm = ({ open, setOpen }) => {
     //mutation
     const [addCard, { loading }] = useMutation(CREATE_CARD)
     const [cardData, setCardData] = React.useState<CardRegional[] | any>([])
+    const [cardName, setCardName] = React.useState<any>('')
 
     const [validCode, setValidCode] = React.useState(false)
 
@@ -123,35 +126,12 @@ const RechargeCardForm = ({ open, setOpen }) => {
     }
 
     const handleAccept = (data) => {
-        console.log('accept', data)
-        // dispatch(
-        //     createCardsRequest({
-        //         card_description: 'Tarjeta TSC',
-        //         card_no: '1001020002985261',
-        //         dept_no: 25,
-        //         card_serial: 'CC681AEF',
-        //         card_type: 0,
-        //         card_status: 1,
-        //         order_no: 6746,
-        //         init_time: '2022-01-24T12:24:42.903092',
-        //         opcard_no: '2543',
-        //         issue_time: '2022-01-24T13:33:29',
-        //         cash_serial: 10,
-        //         bt_time: '2022-02-05T00:25:13',
-        //         last_supply_time: '2022-01-24T13:33:29',
-        //         last_riding_time: '2022-02-03T17:28:20',
-        //         ss_times: 1,
-        //         supply_money: '500000.00',
-        //         paid: '100000.00',
-        //         card_money: '400000.00',
-        //         card_deposit: '0.00',
-        //         name1: 'YELMARY',
-        //         name2: '',
-        //         surname1: 'HERNANDEZ',
-        //         surname2: 'VELASQUEZ',
-        //         id_no: 'V20698370',
-        //     })
-        // )
+        const { name } = data
+        console.log('accept', name)
+        setCardName(name)
+        setCardName('')
+        console.log(cardName)
+
         setOpen(false)
         setCardData('')
         // searchForm.setValue('search', '')

@@ -12,17 +12,44 @@ import '_mockApis'
 import * as serviceWorker from 'serviceWorker'
 import App from 'App'
 import { store, persister } from 'store'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import {
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider,
+    createHttpLink,
+} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 
 // style + assets
 import 'assets/scss/style.scss'
 import 'styles/globals.css'
 
 // ==============================|| REACT DOM RENDER  ||============================== //
+const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    let token: string | null = null
+    if (
+        localStorage.getItem('token') !== undefined &&
+        localStorage.getItem('token') !== null
+    ) {
+        token = localStorage.getItem('token')
+    }
+    // return the headers to the context so httpLink can read them
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : null,
+        },
+    }
+})
 
 const client = new ApolloClient({
-    uri: 'http://192.168.0.107:3002/graphql',
-    cache: new InMemoryCache(),
+    link: authLink.concat(
+        createHttpLink({ uri: 'http://192.168.0.107:3002/graphql' })
+    ),
+    cache: new InMemoryCache({
+        addTypename: false,
+    }),
 })
 
 ReactDOM.render(

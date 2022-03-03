@@ -1,6 +1,7 @@
 import { SNACKBAR_OPEN } from 'store/actions'
 // import { axiosRequest } from 'store/axios'
 import { TCardsProps } from 'types/index'
+import { CardRegional } from 'types/types'
 
 export const listCards = (payload) => ({
     type: 'LIST_CARDS',
@@ -39,11 +40,11 @@ export const getCardsRequest = () => {
     }
 }
 
-export const createCardsRequest = (cardsData: any) => {
+export const createCardsRequest = (cardsData: CardRegional) => {
     return async (dispatch) => {
         try {
             // console.log('cardsData', cardsData)
-            // const { data } = await axiosRequest(
+            // const { data } = await axiosRequest
             //     'post',
             //     'card_category/create/',
             //     cardsData

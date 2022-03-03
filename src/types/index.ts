@@ -494,6 +494,7 @@ export interface DefaultRootStateProps {
     profile: UserProps
     node: Array<nodeProps>
     nodeType: Array<nodeTypeProps>
+    cardRegional: Array<TCardsProps>
 }
 
 export interface ColorProps {

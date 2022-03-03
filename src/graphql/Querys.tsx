@@ -9,6 +9,7 @@ export const USER_CARD = gql`
             init_time
             issue_time
             card_type
+            card_no
             user {
                 _id
                 name
