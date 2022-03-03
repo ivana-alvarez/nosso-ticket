@@ -17,6 +17,7 @@ const RemoveCardForm = ({ open, setOpen, selectedCardId }) => {
                     id: selectedCardId,
                 },
             })
+            setOpen(false)
             console.log(response.data.removeCard)
         } catch (error) {
             dispatch({
@@ -27,6 +28,7 @@ const RemoveCardForm = ({ open, setOpen, selectedCardId }) => {
                 variant: 'alert',
                 alertSeverity: 'error',
             })
+            setOpen(false)
             console.log(error)
         }
     }

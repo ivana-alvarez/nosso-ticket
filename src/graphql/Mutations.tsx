@@ -28,8 +28,8 @@ export const LOGIN = gql`
 `
 
 export const CREATE_CARD = gql`
-    mutation createCard($data: CreateCardInput!, $id: String!) {
-        createCard(createCardInput: $data, id: $id) {
+    mutation createCard($data: CreateCardInput!, $user: String!) {
+        createCard(createCardInput: $data, user: $user) {
             card_no
             dept_no
             card_serial
@@ -80,7 +80,6 @@ export const REMOVE_CARD = gql`
     mutation removeCard($id: String!) {
         removeCard(id: $id) {
             _id
-            serial
             user {
                 _id
             }
