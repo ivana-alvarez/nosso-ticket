@@ -1,9 +1,6 @@
 import AlertDialog from 'components/AlertDialog'
 
-const handleAccept = () => {
-    console.log('transferir')
-}
-const TransferAdd = ({ open, setOpen }) => {
+const TransferAdd = ({ open, setOpen, handleAccept }) => {
     return (
         <>
             <AlertDialog

@@ -112,6 +112,7 @@ interface Inputs {
     identification: number
     passwordR: string
     config_password: string
+    phone: string
 }
 //schema validation
 const Schema = yup.object().shape({
@@ -119,6 +120,7 @@ const Schema = yup.object().shape({
     name: yup.string().required('Este campo es requerido'),
     last_name: yup.string().required('Este campo es requerido'),
     identification: yup.string().required('Este campo es requerido'),
+    phone: yup.string().required('Este campo es requerido'),
     passwordR: yup.string().required('Este campo es requerido'),
 })
 
@@ -169,6 +171,7 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
                         name: data.name,
                         lastname: data.last_name,
                         docNum: data.identification,
+                        phone: data.phone,
                         password: data.passwordR,
                         role: '6213b265ac9fd645e565fcd7',
                         docCode: 'V',
@@ -287,6 +290,32 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
                                     autoComplete="off"
                                     error={!!errors.identification}
                                     helperText={errors.identification?.message}
+                                    disabled={false}
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        // sx={{ padding: '1%'}}
+                        className={classes.searchControl}
+                    >
+                        <Controller
+                            name="phone"
+                            control={control}
+                            // defaultValue= {''}
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    fullWidth
+                                    label="Número de teléfono"
+                                    size="small"
+                                    autoComplete="off"
+                                    error={!!errors.phone}
+                                    helperText={errors.phone?.message}
                                     disabled={false}
                                 />
                             )}

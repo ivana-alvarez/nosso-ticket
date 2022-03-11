@@ -154,7 +154,7 @@ const SummaryIndex = () => {
                     }}
                 />
             ),
-            caption: 'Estado de cuentade recargas realizadas',
+            caption: 'Estado de cuenta de recargas realizadas',
             disabled: false,
         },
         // {

@@ -45,7 +45,11 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
     link: authLink.concat(
-        createHttpLink({ uri: 'http://192.168.0.107:3002/graphql' })
+        createHttpLink({
+            uri: 'http://10.10.20.36:3002/graphql',
+        })
+        //http://10.10.20.36:3002/graphql
+        // createHttpLink({ uri: 'http://192.168.0.107:3002/graphql' })
     ),
     cache: new InMemoryCache({
         addTypename: false,
