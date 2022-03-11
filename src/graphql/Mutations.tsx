@@ -86,3 +86,43 @@ export const REMOVE_CARD = gql`
         }
     }
 `
+
+export const MY_TRANSFER = gql`
+    mutation createLocalSafeTransfer($data: CreateSafeTransferInput!) {
+        createLocalSafeTransfer(createLocalSafeTransferInput: $data) {
+            _id
+            amount
+            completed
+            toOwnCard {
+                _id
+            }
+            txRef
+            fromCard {
+                _id
+            }
+            payer {
+                _id
+            }
+            regionalStatus
+            toCardSerial
+        }
+    }
+`
+export const OTHER_TRANSFER = gql`
+    mutation createSafeTransfer($data: CreateSafeTransferInput!) {
+        createSafeTransfer(createSafeTransferInput: $data) {
+            _id
+            amount
+            completed
+            txRef
+            fromCard {
+                _id
+            }
+            payer {
+                _id
+            }
+            regionalStatus
+            toCardSerial
+        }
+    }
+`

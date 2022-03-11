@@ -33,10 +33,12 @@ import TextField from '@mui/material/TextField'
 import { amounts } from '_mockApis/amounts/amounts'
 import TransferAdd from './TransferAdd'
 import { CardRegional } from 'types/types'
-import { ApolloError, useQuery } from '@apollo/client'
+import { ApolloError, useMutation, useQuery } from '@apollo/client'
 import { USER_CARD } from 'graphql/Querys'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { DefaultRootStateProps } from 'types'
+import { MY_TRANSFER } from 'graphql/Mutations'
+import { SNACKBAR_OPEN } from 'store/actions'
 
 const useStyles = makeStyles((theme: Theme) => ({
     searchControl: {
@@ -67,9 +69,9 @@ interface Inputs {
     card_my_account: boolean
     card_other_account: boolean
     to_card: string
-    amount_transfer: string
+    amount_transfer: number
     code_card: number
-    to2_card: string
+    to2_card: number
 }
 
 const Schema = yup.object().shape({
@@ -77,9 +79,9 @@ const Schema = yup.object().shape({
     card_my_account: yup.boolean(),
     card_other_account: yup.boolean(),
     to_card: yup.string().optional(),
-    amount_transfer: yup.string().optional(),
+    amount_transfer: yup.number().optional(),
     code_card: yup.number().optional(),
-    to2_card: yup.string().optional(),
+    to2_card: yup.number().optional(),
 })
 
 interface FleetProfileProps {
@@ -105,6 +107,7 @@ const getCards = (userId: string): Promise<CardRegional[]> => {
 
 const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     const classes = useStyles()
+    const dispatch = useDispatch()
 
     const {
         handleSubmit,
@@ -114,7 +117,6 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     } = useForm<Inputs>({
         resolver: yupResolver(Schema),
     })
-
     const login = useSelector((state: DefaultRootStateProps) => state.login)
     // Puede renderizar?
     const [canRender, setCanRender] = React.useState<boolean>(false)
@@ -130,6 +132,9 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
             setCanRender(true)
         }
     }, [userCards])
+
+    //mutations
+    const [safeTransfer] = useMutation(MY_TRANSFER)
 
     const [readOnlyState, setReadOnlyState] = React.useState<
         boolean | undefined
@@ -147,6 +152,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
 
     const [open, setOpen] = React.useState<boolean>(false)
     const [modal, setModal] = React.useState<string>('')
+    // const [transferOwnData, setTransferOwnData] = React.useState('')
 
     const handleTransfer = () => {
         setOpen(true)
@@ -199,19 +205,6 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     React.useLayoutEffect(() => {
         if (equalMyAccount) {
             console.log('ok')
-            // const findValue = companies.find(
-            //     (company) => company.company_code === getValues('filialCompany')
-            // )?.bank_details
-            // if (findValue) {
-            //     banks.map((item) => {
-            //         if (findValue?.[0].bank === item.id)
-            //             findValue[0].bank = item.bank_code
-            //     })
-            //     accountTypes.map((item) => {
-            //         if (findValue?.[0].account_type === item.id)
-            //             findValue[0].account_type = item.account_code
-            //     })
-            // }
         }
 
         if (equalOtherAccount) {
@@ -219,13 +212,41 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         }
     }, [equalMyAccount, equalOtherAccount])
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
-        console.log(data)
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        try {
+            const response = await safeTransfer({
+                variables: {
+                    data: {
+                        amount: data.amount_transfer,
+                        fromCard: data.from_card,
+                        payer: login.user._id,
+                        regionalStatus: 'Pending',
+                        toOwnCard: data.to_card,
+                        toCardSerial: '',
+                        externalTransfer: false,
+                    },
+                },
+            })
+            console.log(response.data.safeTransfer)
+            setOpen(false)
+            // setTransferOwnData(response.data.safeTransfer)
+        } catch (error) {
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Error de conexión',
+                anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                variant: 'alert',
+                alertSeverity: 'error',
+            })
+            console.log(error)
+        }
+        setOpen(false)
     }
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form>
                 <Grid
                     item
                     xs={12}
@@ -422,7 +443,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                                 {amounts.map((option) => (
                                                     <MenuItem
                                                         key={option.id}
-                                                        value={option.id}
+                                                        value={option.monto}
                                                     >
                                                         {option.monto}
                                                     </MenuItem>
@@ -551,7 +572,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                         <Button
                                             variant="contained"
                                             size="medium"
-                                            type="submit"
+                                            type="button"
                                             className="mt-2"
                                             onClick={handleTransfer}
                                         >
@@ -564,7 +585,11 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                     </Grid>
 
                     {modal === 'transfer' ? (
-                        <TransferAdd open={open} setOpen={setOpen} />
+                        <TransferAdd
+                            open={open}
+                            setOpen={setOpen}
+                            handleAccept={handleSubmit(onSubmit)}
+                        />
                     ) : null}
                     {/* {modal === 'add' ? (
                         <AddCardForm open={open} setOpen={setOpen} />
