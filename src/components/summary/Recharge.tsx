@@ -12,43 +12,65 @@ import TableCustom from '../Table/index'
 // import { DefaultRootStateProps } from 'types/index'
 // import { getCardsRequest } from 'store/cards/cardsActions'
 
-import { RECHARGE } from '_mockApis/summary/recharge'
+import { SafeForeignTransfer } from 'types/types'
+import { ApolloError, useQuery } from '@apollo/client'
+import { FIND_TRANSFER } from 'graphql/Querys'
+import { useSelector } from 'react-redux'
+import { DefaultRootStateProps } from 'types'
 
 const columns = [
     {
-        Header: 'Fechas',
-        accessor: 'date',
+        Header: 'Tarjeta receptora',
+        accessor: 'toCardSerial',
     },
     {
-        Header: 'Titulo',
-        accessor: 'title',
-    },
-    {
-        Header: 'Operacion',
-        accessor: 'operation',
-    },
-    {
-        Header: 'Equipo',
-        accessor: 'equipment',
+        Header: ' Tarjeta emisora',
+        accessor: 'fromCard',
     },
     {
         Header: 'Referencia',
-        accessor: 'reference',
+        accessor: 'txRef',
     },
     {
-        Header: 'Monto',
+        Header: 'Monto  (Bs)',
         accessor: 'amount',
     },
     {
-        Header: 'Estatus',
-        accessor: 'status',
-        disableFilters: true,
+        Header: 'status',
+        accessor: 'completed',
     },
 ]
+
+const geTransfer = (userId: string): Promise<SafeForeignTransfer[]> => {
+    return new Promise((resolve, reject) => {
+        const { data, loading, error } = useQuery(FIND_TRANSFER, {
+            onError: (err: ApolloError) => reject(err),
+            fetchPolicy: 'network-only',
+            variables: { userPayer: userId },
+        })
+        if (error) {
+            reject(error)
+        }
+        if (!loading) {
+            resolve(data.findAllTransfers)
+        }
+    })
+}
 
 const Recharge = () => {
     // States
     const [rowsInitial, setRowsInitial] = React.useState<Array<any>>([])
+    const login = useSelector((state: DefaultRootStateProps) => state.login)
+    const [canRender, setCanRender] = React.useState<boolean>(false)
+    const [userTransfer, setUserTransfer] = React.useState<
+        SafeForeignTransfer[] | any
+    >([])
+
+    // Llamo las transferencias
+    geTransfer(login.user._id)
+        .then((data: SafeForeignTransfer[]) => setUserTransfer(data))
+        .catch(() => setUserTransfer(undefined))
+
     // Customs Hooks
     // const dispatch = useDispatch()
     // const navigate = useNavigate()
@@ -75,8 +97,8 @@ const Recharge = () => {
     //     navigate(`/categoria-de-tarjetas/crear`)
     // }
 
-    const handleChip = (active) => {
-        return active ? (
+    const handleChip = (completed) => {
+        return completed ? (
             <Chip
                 label="Aprobado"
                 size="small"
@@ -93,44 +115,53 @@ const Recharge = () => {
         )
     }
 
-    React.useEffect(() => {
-        // dispatch(getCardsRequest())
-    }, [])
-
     //EFFECTS
     React.useEffect(() => {
-        const rows = RECHARGE.map(
-            ({
-                date,
-                title,
-                operation,
-                equipment,
-                reference,
-                amount,
-                status,
-            }) => ({
-                date,
-                title,
-                operation,
-                equipment,
-                reference,
-                amount,
-                status: status ? handleChip(true) : handleChip(false),
+        if (userTransfer?.length >= 1 && userTransfer !== undefined) {
+            let rows: SafeForeignTransfer[] = []
+            userTransfer.map((data: SafeForeignTransfer | any) => {
+                data.fromCard = data.fromCard.card_serial
+                data.completed = data.completed
+                    ? handleChip(true)
+                    : handleChip(false)
+                rows.push(data)
             })
-        )
-        setRowsInitial(rows)
-    }, [])
+            // const rows = RECHARGE.map(
+            //     ({
+            //         date,
+            //         title,
+            //         operation,
+            //         equipment,
+            //         reference,
+            //         amount,
+            //         status,
+            //     }) => ({
+            //         date,
+            //         title,
+            //         operation,
+            //         equipment,
+            //         reference,
+            //         amount,
+            //         status: status ? handleChip(true) : handleChip(false),
+            //     })
+            // )
+            setRowsInitial(rows)
+            setCanRender(true)
+        }
+    }, [userTransfer])
 
     return (
-        <div>
-            <TableCustom
-                columns={columns}
-                data={rowsInitial}
-                title="Gestión de Tarjetas"
-                addIconTooltip="Crear Tarjeta"
-                // handleCreate={handleCreate}
-            />
-        </div>
+        <>
+            {canRender && (
+                <TableCustom
+                    columns={columns}
+                    data={rowsInitial}
+                    title="Gestión de Tarjetas"
+                    addIconTooltip="Crear Tarjeta"
+                    // handleCreate={handleCreate}
+                />
+            )}
+        </>
     )
 }
 

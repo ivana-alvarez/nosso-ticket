@@ -17,3 +17,27 @@ export const USER_CARD = gql`
         }
     }
 `
+export const FIND_TRANSFER = gql`
+    query findAllTransfers($userPayer: String!) {
+        findAllTransfers(userPayer: $userPayer) {
+            _id
+            amount
+            completed
+            txRef
+            fromCard {
+                _id
+                card_money
+                card_serial
+                card_no
+            }
+            payer {
+                _id
+                name
+                lastname
+                email
+            }
+            regionalStatus
+            toCardSerial
+        }
+    }
+`

@@ -1,4 +1,5 @@
-// import React from 'react'
+import React from 'react'
+import dayjs from 'dayjs'
 // import ButtonUnstyled from '../Button/Button'
 import {
     useForm,
@@ -37,7 +38,11 @@ import Chip from 'ui-component/extended/Chip'
 
 // project imports
 // import { DefaultRootStateProps } from 'types'
-import { SUMMARY } from '../../_mockApis/summary/summary'
+import { CardRegional } from 'types/types'
+import { ApolloError, useQuery } from '@apollo/client'
+import { USER_CARD } from 'graphql/Querys'
+import { DefaultRootStateProps } from 'types'
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme: Theme) => ({
     searchControl: {
@@ -124,8 +129,27 @@ const Schema = yup.object().shape({
         .oneOf([yup.ref('password')], 'Las contraseñas no coinciden'),
 })
 
+const getCards = (userId: string): Promise<CardRegional[]> => {
+    return new Promise((resolve, reject) => {
+        const { data, loading, error } = useQuery(USER_CARD, {
+            onError: (err: ApolloError) => reject(err),
+            fetchPolicy: 'network-only',
+            variables: { user: userId },
+        })
+        if (error) {
+            reject(error)
+        }
+        if (!loading) {
+            resolve(data.UsersCards)
+        }
+    })
+}
+
 const AffiliateTitles = () => {
     const classes = useStyles()
+    const login = useSelector((state: DefaultRootStateProps) => state.login)
+    const [canRender, setCanRender] = React.useState<boolean>(false)
+    const [userCards, setUserCards] = React.useState<CardRegional[] | any>([])
     // const dispatch = useDispatch()
     // const navigate = useNavigate()
     // const userData = useSelector((state: DefaultRootStateProps) => state.profile)
@@ -142,32 +166,51 @@ const AffiliateTitles = () => {
         resolver: yupResolver(Schema),
     })
 
+    // Llamo las tarjetas
+    getCards(login.user._id)
+        .then((data: CardRegional[]) => setUserCards(data))
+        .catch(() => setUserCards(undefined))
+
+    React.useEffect(() => {
+        if (userCards?.length >= 1 && userCards !== undefined) {
+            setCanRender(true)
+        }
+    }, [userCards])
+
     return (
-        <form>
-            {SUMMARY.map((summ) => {
-                return (
-                    <>
-                        <Grid container spacing={2} sx={{ marginTop: '20px' }}>
-                            <Grid item xs={12}>
-                                <Typography variant="h4">
-                                    {summ.title}
-                                </Typography>
-                            </Grid>
-                            <Controller
-                                name="user_id"
-                                control={control}
-                                // defaultValue={userData?.employee_code}
-                                render={({ field }) => (
-                                    <Grid
-                                        item
-                                        xs={12}
-                                        md={6}
-                                        className={classes.searchControl}
-                                    >
-                                        <label htmlFor="Id del usuario">
-                                            Estado actual
-                                        </label>
-                                        {/* <TextField
+        <>
+            {canRender && (
+                <form>
+                    {userCards.map((card) => {
+                        return (
+                            <>
+                                <Grid
+                                    container
+                                    spacing={2}
+                                    sx={{ marginTop: '20px' }}
+                                >
+                                    <Grid item xs={12}>
+                                        <Typography variant="h4">
+                                            {card.card_serial}
+                                        </Typography>
+                                    </Grid>
+                                    <Controller
+                                        name="user_id"
+                                        control={control}
+                                        // defaultValue={userData?.employee_code}
+                                        render={({ field }) => (
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                md={6}
+                                                className={
+                                                    classes.searchControl
+                                                }
+                                            >
+                                                <label htmlFor="Id del usuario">
+                                                    Estado actual
+                                                </label>
+                                                {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -180,45 +223,51 @@ const AffiliateTitles = () => {
                                   }}
                                 variant="standard"
                             /> */}
-                                    </Grid>
-                                )}
-                            />
-
-                            <Controller
-                                name="first_name"
-                                control={control}
-                                // defaultValue={userData?.first_name}
-                                render={({ field }) => (
-                                    <Grid
-                                        item
-                                        xs={12}
-                                        md={6}
-                                        className={classes.searchControl}
-                                    >
-                                        <label htmlFor="">
-                                            {summ.current_state}
-                                        </label>
-                                        {summ.current_state ? (
-                                            <>
-                                                <Chip
-                                                    label="Activo"
-                                                    size="small"
-                                                    chipcolor="success"
-                                                    sx={{ width: '96px' }}
-                                                />
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Chip
-                                                    label="Bloqueado"
-                                                    size="small"
-                                                    chipcolor="orange"
-                                                    sx={{ width: '96px' }}
-                                                />
-                                            </>
+                                            </Grid>
                                         )}
+                                    />
 
-                                        {/* <TextField
+                                    <Controller
+                                        name="first_name"
+                                        control={control}
+                                        // defaultValue={userData?.first_name}
+                                        render={({ field }) => (
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                md={6}
+                                                className={
+                                                    classes.searchControl
+                                                }
+                                            >
+                                                <label htmlFor="">
+                                                    {/* {card.card_status} */}
+                                                </label>
+                                                {card.card_status === 1 ? (
+                                                    <>
+                                                        <Chip
+                                                            label="Activo"
+                                                            size="small"
+                                                            chipcolor="success"
+                                                            sx={{
+                                                                width: '96px',
+                                                            }}
+                                                        />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Chip
+                                                            label="Bloqueado"
+                                                            size="small"
+                                                            chipcolor="orange"
+                                                            sx={{
+                                                                width: '96px',
+                                                            }}
+                                                        />
+                                                    </>
+                                                )}
+
+                                                {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -231,23 +280,27 @@ const AffiliateTitles = () => {
                                 }}
                                 variant="standard"
                             /> */}
-                                    </Grid>
-                                )}
-                            />
+                                            </Grid>
+                                        )}
+                                    />
 
-                            <Controller
-                                name="second_name"
-                                control={control}
-                                // defaultValue={userData?.second_name}
-                                render={({ field }) => (
-                                    <Grid
-                                        item
-                                        xs={12}
-                                        md={6}
-                                        className={classes.searchControl}
-                                    >
-                                        <label htmlFor="">Saldo actual</label>
-                                        {/* <TextField
+                                    <Controller
+                                        name="second_name"
+                                        control={control}
+                                        // defaultValue={userData?.second_name}
+                                        render={({ field }) => (
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                md={6}
+                                                className={
+                                                    classes.searchControl
+                                                }
+                                            >
+                                                <label htmlFor="">
+                                                    Saldo actual
+                                                </label>
+                                                {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -260,26 +313,28 @@ const AffiliateTitles = () => {
                                   }}
                                 variant="standard"
                             /> */}
-                                    </Grid>
-                                )}
-                            />
+                                            </Grid>
+                                        )}
+                                    />
 
-                            <Controller
-                                name="last_name"
-                                control={control}
-                                // defaultValue={userData?.last_name}
-                                render={({ field }) => (
-                                    <Grid
-                                        item
-                                        xs={12}
-                                        md={6}
-                                        lg={4}
-                                        className={classes.searchControl}
-                                    >
-                                        <label htmlFor="">
-                                            {summ.current_balance}
-                                        </label>
-                                        {/* <TextField
+                                    <Controller
+                                        name="last_name"
+                                        control={control}
+                                        // defaultValue={userData?.last_name}
+                                        render={({ field }) => (
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                md={6}
+                                                lg={4}
+                                                className={
+                                                    classes.searchControl
+                                                }
+                                            >
+                                                <label htmlFor="">
+                                                    {card.card_money}
+                                                </label>
+                                                {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -292,23 +347,27 @@ const AffiliateTitles = () => {
                                 }}
                                 variant="standard"
                             /> */}
-                                    </Grid>
-                                )}
-                            />
+                                            </Grid>
+                                        )}
+                                    />
 
-                            <Controller
-                                name="personal_id"
-                                control={control}
-                                // defaultValue={userData?.personal_id?.replace(/\D/g, '')}
-                                render={({ field }) => (
-                                    <Grid
-                                        item
-                                        xs={12}
-                                        md={6}
-                                        className={classes.searchControl}
-                                    >
-                                        <label htmlFor="">Ultimo uso</label>
-                                        {/* <TextField
+                                    <Controller
+                                        name="personal_id"
+                                        control={control}
+                                        // defaultValue={userData?.personal_id?.replace(/\D/g, '')}
+                                        render={({ field }) => (
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                md={6}
+                                                className={
+                                                    classes.searchControl
+                                                }
+                                            >
+                                                <label htmlFor="">
+                                                    Ultimo uso
+                                                </label>
+                                                {/* <TextField
                                 fullWidth
                                 size="small"
                                 autoComplete="off"
@@ -321,25 +380,29 @@ const AffiliateTitles = () => {
                                 }}
                                 variant="standard"
                             /> */}
-                                    </Grid>
-                                )}
-                            />
+                                            </Grid>
+                                        )}
+                                    />
 
-                            <Controller
-                                name="contact_number"
-                                control={control}
-                                // defaultValue={userData?.mobile}
-                                render={({ field }) => (
-                                    <Grid
-                                        item
-                                        xs={12}
-                                        md={6}
-                                        className={classes.searchControl}
-                                    >
-                                        <label htmlFor="">
-                                            {summ.last_use}
-                                        </label>
-                                        {/* <TextField
+                                    <Controller
+                                        name="contact_number"
+                                        control={control}
+                                        // defaultValue={userData?.mobile}
+                                        render={({ field }) => (
+                                            <Grid
+                                                item
+                                                xs={12}
+                                                md={6}
+                                                className={
+                                                    classes.searchControl
+                                                }
+                                            >
+                                                <label htmlFor="">
+                                                    {dayjs(
+                                                        card.issue_time
+                                                    ).format('DD/MM/YYYY')}
+                                                </label>
+                                                {/* <TextField
                                 type="number"
                                 fullWidth                    
                                 size="small"
@@ -353,13 +416,13 @@ const AffiliateTitles = () => {
                                 }}
                                 variant="standard"
                             /> */}
-                                    </Grid>
-                                )}
-                            />
-                        </Grid>
+                                            </Grid>
+                                        )}
+                                    />
+                                </Grid>
 
-                        {/* <Divider sx={{ marginTop: '70px' }} /> */}
-                        {/* <CardActions>
+                                {/* <Divider sx={{ marginTop: '70px' }} /> */}
+                                {/* <CardActions>
                 <Grid container justifyContent="flex-end" spacing={0}>
                     <Grid item>
                             <Grid item sx={{ display: 'flex' }}>
@@ -385,10 +448,12 @@ const AffiliateTitles = () => {
                     </Grid>
                 </Grid>
             </CardActions> */}
-                    </>
-                )
-            })}
-        </form>
+                            </>
+                        )
+                    })}
+                </form>
+            )}
+        </>
     )
 }
 

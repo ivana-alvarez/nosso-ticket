@@ -2,7 +2,11 @@ import React from 'react'
 // import { useNavigate } from 'react-router-dom'
 import Chip from 'ui-component/extended/Chip'
 import TableCustom from 'components/Table'
-import { payments } from '../../_mockApis/payments/payments'
+import { SafeForeignTransfer } from 'types/types'
+import { FIND_TRANSFER } from 'graphql/Querys'
+import { ApolloError, useQuery } from '@apollo/client'
+import { useSelector } from 'react-redux'
+import { DefaultRootStateProps } from 'types'
 
 // import VisibilityTwoToneIcon from '@material-ui/icons/VisibilityTwoTone'
 // import EditIcon from '@material-ui/icons/Edit'
@@ -14,33 +18,33 @@ import { payments } from '../../_mockApis/payments/payments'
 // import { DefaultRootStateProps } from 'types/index'
 
 const columns = [
+    // {
+    //     Header: 'Fechas',
+    //     accessor: 'fecha',
+    // },
+    // {
+    //     Header: 'Titulo',
+    //     accessor: 'titulo',
+    // },
     {
-        Header: 'Fechas',
-        accessor: 'fecha',
+        Header: 'Tarjeta receptora',
+        accessor: 'toCardSerial',
     },
     {
-        Header: 'Titulo',
-        accessor: 'titulo',
-    },
-    {
-        Header: 'Operación',
-        accessor: 'operacion',
-    },
-    {
-        Header: 'Equipo',
-        accessor: 'equipo',
+        Header: ' Tarjeta emisora',
+        accessor: 'fromCard',
     },
     {
         Header: 'Referencia',
-        accessor: 'referencia',
+        accessor: 'txRef',
     },
     {
-        Header: 'Monto',
-        accessor: 'monto',
+        Header: 'Monto  (Bs)',
+        accessor: 'amount',
     },
     {
-        Header: 'Status',
-        accessor: 'active',
+        Header: 'status',
+        accessor: 'completed',
     },
     // {
     //     Header: 'Acciones',
@@ -49,9 +53,42 @@ const columns = [
     // },
 ]
 
+const geTransfer = (userId: string): Promise<SafeForeignTransfer[]> => {
+    return new Promise((resolve, reject) => {
+        const { data, loading, error } = useQuery(FIND_TRANSFER, {
+            onError: (err: ApolloError) => reject(err),
+            fetchPolicy: 'network-only',
+            variables: { userPayer: userId },
+        })
+        if (error) {
+            reject(error)
+        }
+        if (!loading) {
+            resolve(data.findAllTransfers)
+        }
+    })
+}
+
 const ReadPayments = () => {
     // States
     const [rowsInitial, setRowsInitial] = React.useState<Array<any>>([])
+    const login = useSelector((state: DefaultRootStateProps) => state.login)
+    // Puede renderizar?
+    const [canRender, setCanRender] = React.useState<boolean>(false)
+    const [userTransfer, setUserTransfer] = React.useState<
+        SafeForeignTransfer[] | any
+    >([])
+
+    // Llamo las transferencias
+    geTransfer(login.user._id)
+        .then((data: SafeForeignTransfer[]) => setUserTransfer(data))
+        .catch(() => setUserTransfer(undefined))
+
+    // React.useEffect(() => {
+    //     if (userTransfer?.length >= 1 && userTransfer !== undefined) {
+    //         setCanRender(true)
+    //     }
+    // }, [userTransfer])
     // Customs Hooks
     // const dispatch = useDispatch()
     // const navigate = useNavigate()
@@ -78,8 +115,8 @@ const ReadPayments = () => {
     //    console.log('click');
     // }
 
-    const handleChip = (active) => {
-        return active ? (
+    const handleChip = (completed) => {
+        return completed ? (
             <Chip
                 label="Aprobado"
                 size="small"
@@ -96,62 +133,68 @@ const ReadPayments = () => {
         )
     }
 
-    // React.useEffect(() => {
-    //     dispatch(getNodeRequest())
-    // }, [])
-
     //EFFECTS
-    React.useEffect(() => {
-        const rows = payments.map(
-            ({
-                fecha,
-                titulo,
-                operacion,
-                equipo,
-                referencia,
-                monto,
-                active,
-            }) => ({
-                fecha,
-                titulo,
-                operacion,
-                equipo,
-                referencia,
-                monto,
-                active: active ? handleChip(true) : handleChip(false),
 
-                // edit: permissions.includes('view_user') ? (
-                //     <div className="flex">
-                //         <button data-id={id} onClick={handleEdit}>
-                //             <IconButton color="primary">
-                //                 <EditIcon sx={{ fontSize: '1.3rem' }} />
-                //             </IconButton>
-                //         </button>
-                //     </div>
-                // ) : (
-                //     <div className="flex">
-                //         <button data-id={id} onClick={handleView}>
-                //             <IconButton color="primary">
-                //                 <VisibilityIcon sx={{ fontSize: '1.3rem' }} />
-                //             </IconButton>
-                //         </button>
-                //     </div>
-                // ),
+    React.useEffect(() => {
+        if (userTransfer?.length >= 1 && userTransfer !== undefined) {
+            let rows: SafeForeignTransfer[] = []
+            userTransfer.map((data: SafeForeignTransfer | any) => {
+                data.fromCard = data.fromCard.card_serial
+                data.completed = data.completed
+                    ? handleChip(true)
+                    : handleChip(false)
+                rows.push(data)
             })
-        )
-        setRowsInitial(rows)
-    }, [])
+            /*const rows = userTransfer.map(
+                ({
+                    completed,
+                    amount,
+                    fromCard,
+                    txRef,
+                    toCardSerial,
+                }: SafeForeignTransfer) => ({
+                    amount,
+                    txRef,
+                    toCardSerial,
+                    fromCard,
+                    active: completed ? handleChip(true) : handleChip(false),
+
+                    // edit: permissions.includes('view_user') ? (
+                    //     <div className="flex">
+                    //         <button data-id={id} onClick={handleEdit}>
+                    //             <IconButton color="primary">
+                    //                 <EditIcon sx={{ fontSize: '1.3rem' }} />
+                    //             </IconButton>
+                    //         </button>
+                    //     </div>
+                    // ) : (
+                    //     <div className="flex">
+                    //         <button data-id={id} onClick={handleView}>
+                    //             <IconButton color="primary">
+                    //                 <VisibilityIcon sx={{ fontSize: '1.3rem' }} />
+                    //             </IconButton>
+                    //         </button>
+                    //     </div>
+                    // ),
+                })
+            )*/
+            setRowsInitial(rows)
+            setCanRender(true)
+        }
+    }, [userTransfer])
 
     return (
         <>
-            <TableCustom
-                columns={columns}
-                data={rowsInitial}
-                title="Histórico de pagos y recargas"
+            {canRender && (
+                <TableCustom
+                    columns={columns}
+                    data={rowsInitial}
+                    title="Histórico de pagos y recargas"
 
-                // addIconTooltip="Añadir nodo"
-                // handleCreate={handleCreate}
-            />
+                    // addIconTooltip="Añadir nodo"
+                    // handleCreate={handleCreate}
+                />
+            )}
         </>
     )
 }
