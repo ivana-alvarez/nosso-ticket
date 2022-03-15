@@ -105,7 +105,7 @@ const RechargeCardForm = ({ open, setOpen }) => {
             const response = await addCard({
                 variables: {
                     data: {
-                        card_serial: data.search,
+                        card_no: data.search,
                         card_alias: cardName,
                         include_transits: false,
                     },

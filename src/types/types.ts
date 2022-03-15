@@ -36,3 +36,16 @@ export type User = {
     lastname?: string
     name?: string
 }
+
+export type SafeForeignTransfer = {
+    _id: string
+    amount: number
+    completed: boolean
+    externalTransfer: boolean
+    fromCard: any
+    payer: string
+    regionalStatus: string
+    toCardSerial: string
+    toOwnCard: string
+    txRef: string
+}

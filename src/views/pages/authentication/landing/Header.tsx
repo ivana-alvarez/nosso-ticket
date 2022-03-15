@@ -185,7 +185,7 @@ const HeaderPage = () => {
                                             color: theme.palette.primary.main,
                                         }}
                                     >
-                                        Pagos de Transporte!
+                                        pagos de Transporte!
                                     </Box>
                                     <Divider />
                                 </Typography>

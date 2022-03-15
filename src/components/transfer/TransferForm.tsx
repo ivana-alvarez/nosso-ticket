@@ -37,7 +37,7 @@ import { ApolloError, useMutation, useQuery } from '@apollo/client'
 import { USER_CARD } from 'graphql/Querys'
 import { useDispatch, useSelector } from 'react-redux'
 import { DefaultRootStateProps } from 'types'
-import { MY_TRANSFER } from 'graphql/Mutations'
+import { MY_TRANSFER, OTHER_TRANSFER } from 'graphql/Mutations'
 import { SNACKBAR_OPEN } from 'store/actions'
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -70,7 +70,7 @@ interface Inputs {
     card_other_account: boolean
     to_card: string
     amount_transfer: number
-    code_card: number
+    code_card: string
     to2_card: number
 }
 
@@ -80,7 +80,7 @@ const Schema = yup.object().shape({
     card_other_account: yup.boolean(),
     to_card: yup.string().optional(),
     amount_transfer: yup.number().optional(),
-    code_card: yup.number().optional(),
+    code_card: yup.string().optional(),
     to2_card: yup.number().optional(),
 })
 
@@ -133,8 +133,10 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         }
     }, [userCards])
 
-    //mutations
+    //mutations (transfe en mi cuenta)
     const [safeTransfer] = useMutation(MY_TRANSFER)
+    //mutations ( transfe cuentas externas)
+    const [otherTransfer] = useMutation(OTHER_TRANSFER)
 
     const [readOnlyState, setReadOnlyState] = React.useState<
         boolean | undefined
@@ -213,35 +215,85 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     }, [equalMyAccount, equalOtherAccount])
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        try {
-            const response = await safeTransfer({
-                variables: {
-                    data: {
-                        amount: data.amount_transfer,
-                        fromCard: data.from_card,
-                        payer: login.user._id,
-                        regionalStatus: 'Pending',
-                        toOwnCard: data.to_card,
-                        toCardSerial: '',
-                        externalTransfer: false,
+        if (myAccount === true) {
+            try {
+                const response = await safeTransfer({
+                    variables: {
+                        data: {
+                            amount: data.amount_transfer,
+                            fromCard: data.from_card,
+                            payer: login.user._id,
+                            regionalStatus: 'Pending',
+                            toOwnCard: data.to_card,
+                            toCardSerial: '',
+                            externalTransfer: false,
+                        },
                     },
-                },
-            })
-            console.log(response.data.safeTransfer)
+                })
+                console.log(response.data.createLocalSafeTransfer)
+                setOpen(false)
+                dispatch({
+                    type: SNACKBAR_OPEN,
+                    open: true,
+                    message: 'Transferencia realizada',
+                    anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                    variant: 'alert',
+                    alertSeverity: 'success',
+                })
+                // setTransferOwnData(response.data.safeTransfer)
+            } catch (error) {
+                dispatch({
+                    type: SNACKBAR_OPEN,
+                    open: true,
+                    message: 'Error de conexión',
+                    anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                    variant: 'alert',
+                    alertSeverity: 'error',
+                })
+                console.log(error)
+            }
             setOpen(false)
-            // setTransferOwnData(response.data.safeTransfer)
-        } catch (error) {
-            dispatch({
-                type: SNACKBAR_OPEN,
-                open: true,
-                message: 'Error de conexión',
-                anchorOrigin: { vertical: 'top', horizontal: 'right' },
-                variant: 'alert',
-                alertSeverity: 'error',
-            })
-            console.log(error)
         }
-        setOpen(false)
+
+        if (otherAccount === true) {
+            try {
+                const response = await otherTransfer({
+                    variables: {
+                        data: {
+                            amount: data.to2_card,
+                            fromCard: data.from_card,
+                            payer: login.user._id,
+                            toOwnCard: data.from_card,
+                            regionalStatus: 'Pending',
+                            toCardSerial: data.code_card.toUpperCase(),
+                            externalTransfer: true,
+                        },
+                    },
+                })
+                console.log(response.data.createSafeTransfer)
+
+                setOpen(false)
+                dispatch({
+                    type: SNACKBAR_OPEN,
+                    open: true,
+                    message: 'Transferencia realizada',
+                    anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                    variant: 'alert',
+                    alertSeverity: 'success',
+                })
+            } catch (error) {
+                dispatch({
+                    type: SNACKBAR_OPEN,
+                    open: true,
+                    message: 'Error de conexión',
+                    anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                    variant: 'alert',
+                    alertSeverity: 'error',
+                })
+                console.log(error)
+            }
+            setOpen(false)
+        }
     }
 
     return (
@@ -474,6 +526,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                         name="code_card"
                                         control={control}
                                         // defaultValue={companyData?.filial_company}
+
                                         render={({ field }) => (
                                             <TextField
                                                 {...field}
@@ -526,7 +579,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                                 {amounts.map((option) => (
                                                     <MenuItem
                                                         key={option.id}
-                                                        value={option.id}
+                                                        value={option.monto}
                                                     >
                                                         {option.monto}
                                                     </MenuItem>
