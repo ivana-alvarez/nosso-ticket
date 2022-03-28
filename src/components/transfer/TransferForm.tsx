@@ -78,34 +78,30 @@ const Schema = yup.object().shape({
     from_card: yup.string().required('Este campo es requerido'),
     card_my_account: yup.boolean(),
     card_other_account: yup.boolean(),
-    to_card: yup.string().optional(),
-    amount_transfer: yup.number().optional(),
-    code_card: yup.string().optional(),
-    to2_card: yup.number().optional(),
+    to_card: yup.string().when('card_my_account', {
+        is: true,
+        then: (value) => value.required('Este campo es requerido'),
+    }),
+    amount_transfer: yup.number().when('card_my_account', {
+        is: true,
+        then: (value) => value.required('Este campo es requerido'),
+    }),
+    code_card: yup.string().when('card_other_account', {
+        is: true,
+        then: (value) => value.required('Este campo es requerido'),
+    }),
+    to2_card: yup.number().when('card_other_account', {
+        is: true,
+        then: (value) => value.required('Este campo es requerido'),
+    }),
 })
 
-interface FleetProfileProps {
-    fleetId?: string
+interface TransferFormProps {
     readOnly?: boolean
     onlyView?: boolean
 }
-// const getCards = (userId: string): Promise<CardRegional[]> => {
-//     return new Promise((resolve, reject) => {
-//         const { data, loading, error } = useQuery(USER_CARD, {
-//             onError: (err: ApolloError) => reject(err),
-//             fetchPolicy: 'network-only',
-//             variables: { user: userId },
-//         })
-//         if (error) {
-//             reject(error)
-//         }
-//         if (!loading) {
-//             resolve(data.UsersCards)
-//         }
-//     })
-// }
 
-const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
+const TransferForm = ({ onlyView, readOnly }: TransferFormProps) => {
     const classes = useStyles()
     const dispatch = useDispatch()
 
@@ -136,13 +132,10 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
 
     const [editable, setEditable] = React.useState<boolean>(false)
 
-    const [myAccount, setMyAccount] = React.useState<boolean>()
+    const [myAccount, setMyAccount] = React.useState<boolean>(true)
     // !!companyData?.filial_company
-    const [equalMyAccount, setEqualMyAccount] = React.useState<boolean>(false)
 
-    const [otherAccount, setOtherAccount] = React.useState<boolean>()
-    const [equalOtherAccount, setEqualOtherAccount] =
-        React.useState<boolean>(false)
+    const [otherAccount, setOtherAccount] = React.useState<boolean>(false)
 
     const [open, setOpen] = React.useState<boolean>(false)
     const [modal, setModal] = React.useState<string>('')
@@ -153,7 +146,22 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         toCardSerial: '',
     })
 
-    const handleTransfer = () => {
+    // const handleTransfer = () => {
+    //     setDataForm({
+    //         amount: myAccount
+    //             ? getValues('amount_transfer')
+    //             : getValues('to2_card'),
+    //         fromCard: myAccount
+    //             ? getValues('from_card')
+    //             : getValues('from_card'),
+    //         toOwnCard: myAccount ? getValues('to_card') : null,
+    //         toCardSerial: otherAccount ? getValues('code_card') : null,
+    //     })
+    //     setOpen(true)
+    //     setModal('transfer')
+    // }
+
+    const onSubmit2: SubmitHandler<Inputs> = async (data) => {
         setDataForm({
             amount: myAccount
                 ? getValues('amount_transfer')
@@ -166,6 +174,10 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         })
         setOpen(true)
         setModal('transfer')
+    }
+
+    const error2 = (data) => {
+        console.log(data)
     }
 
     const handleAbleToEdit = () => {
@@ -194,23 +206,25 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     //         setValue(name, !otherAccount)
     //     }
     // }
-    const handleMyAccount = () => {
-        setValue('card_my_account', !myAccount, {
+    
+    const handleMyAccount = (e) => {
+        setValue('card_my_account', e.target.checked, {
             shouldValidate: true,
         })
-        setMyAccount(!myAccount)
-        setEqualMyAccount(false)
+        setMyAccount(e.target.checked)
+        setOtherAccount(false)
     }
 
-    const handleOtherAccount = () => {
-        setValue('card_other_account', !otherAccount, {
+    const handleOtherAccount = (e) => {
+        setValue('card_other_account', e.target.checked, {
             shouldValidate: true,
         })
-
-        setOtherAccount(!otherAccount)
-        setEqualOtherAccount(false)
+        
+        setOtherAccount(e.target.checked)
+        setMyAccount(false)
     }
-
+    console.log(getValues('card_my_account'))
+console.log(myAccount, otherAccount)
     React.useEffect(() => {
         if (error) {
             dispatch({
@@ -223,16 +237,6 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
             })
         }
     }, [error])
-
-    React.useLayoutEffect(() => {
-        if (equalMyAccount) {
-            console.log('ok')
-        }
-
-        if (equalOtherAccount) {
-            console.log('click')
-        }
-    }, [equalMyAccount, equalOtherAccount])
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         if (myAccount === true) {
@@ -394,7 +398,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                 control={control}
                                 render={({ field }) => (
                                     <FormControlLabel
-                                        {...field}
+                                        // {...field}
                                         value="top"
                                         name="card_my_account"
                                         control={
@@ -416,7 +420,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                 control={control}
                                 render={({ field }) => (
                                     <FormControlLabel
-                                        {...field}
+                                        // {...field}
                                         value="top"
                                         name="card_other_account"
                                         control={
@@ -647,8 +651,8 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                             variant="contained"
                                             size="medium"
                                             type="button"
-                                            className="mt-2"
-                                            onClick={handleTransfer}
+                                            className="mt-2"    
+                                            onClick={handleSubmit(onSubmit2, error2)}
                                         >
                                             Transferir
                                         </Button>
