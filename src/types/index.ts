@@ -240,36 +240,15 @@ export interface StopsAndZonesProps {
 }
 
 export interface UserProps {
-    id?: string
-    employee_code?: string
-    company_code?: string
-    second_name: string
-    second_last_name?: string
-    sex: string
-    personal_id: string
-    mobile: string
-    active: boolean
-    role?: Array<string>
-    permissions: Array<string>
-    description: string
-    department_no: number
-    operator_card: string
-    created_on: string
-    last_update_on: null
-    user?: string
-    username: string
-    password?: string
-    first_name: string
-    last_name: string
+    _id: string
+    docCode: string
+    docNum: string
     email: string
-    // user_data: {
-    //     id?: string
-    //     username: string
-    //     password?: string
-    //     first_name: string
-    //     last_name: string
-    //     email: string
-    // }
+    lastname: string
+    name: string
+    password: string
+    phone: string
+    role: string
 }
 
 export interface UserTry {

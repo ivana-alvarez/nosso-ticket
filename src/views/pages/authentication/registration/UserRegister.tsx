@@ -11,7 +11,7 @@ import {
 } from 'react-hook-form'
 
 // Redux
-// import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 // material-ui
 import { makeStyles } from '@material-ui/styles'
@@ -38,6 +38,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { useMutation } from '@apollo/client'
 import { CREATE_USER } from 'graphql/Mutations'
+import { createUserRequest } from 'store/user/userActions'
 
 //Icons
 // import { DefaultRootStateProps, TCardsProps } from 'types'
@@ -132,7 +133,7 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
     // CUSTOMS HOOKS
     const classes = useStyles()
     const navigate = useNavigate()
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const {
         handleSubmit,
         control,
@@ -178,7 +179,7 @@ const UserRegisterForm = (props: { login?: number }, { ...others }) => {
                     },
                 },
             })
-            console.log(response)
+            dispatch(createUserRequest(response.data.createUser))
             navigate('/login')
         } catch (error) {
             console.log(error)

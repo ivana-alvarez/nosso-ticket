@@ -32,8 +32,8 @@ import AnimateButton from 'ui-component/extended/AnimateButton'
 import TextField from '@mui/material/TextField'
 import { amounts } from '_mockApis/amounts/amounts'
 import TransferAdd from './TransferAdd'
-import { CardRegional } from 'types/types'
-import { ApolloError, useMutation, useQuery } from '@apollo/client'
+// import { CardRegional } from 'types/types'
+import { useMutation, useQuery } from '@apollo/client'
 import { USER_CARD } from 'graphql/Querys'
 import { useDispatch, useSelector } from 'react-redux'
 import { DefaultRootStateProps } from 'types'
@@ -89,21 +89,21 @@ interface FleetProfileProps {
     readOnly?: boolean
     onlyView?: boolean
 }
-const getCards = (userId: string): Promise<CardRegional[]> => {
-    return new Promise((resolve, reject) => {
-        const { data, loading, error } = useQuery(USER_CARD, {
-            onError: (err: ApolloError) => reject(err),
-            fetchPolicy: 'network-only',
-            variables: { user: userId },
-        })
-        if (error) {
-            reject(error)
-        }
-        if (!loading) {
-            resolve(data.UsersCards)
-        }
-    })
-}
+// const getCards = (userId: string): Promise<CardRegional[]> => {
+//     return new Promise((resolve, reject) => {
+//         const { data, loading, error } = useQuery(USER_CARD, {
+//             onError: (err: ApolloError) => reject(err),
+//             fetchPolicy: 'network-only',
+//             variables: { user: userId },
+//         })
+//         if (error) {
+//             reject(error)
+//         }
+//         if (!loading) {
+//             resolve(data.UsersCards)
+//         }
+//     })
+// }
 
 const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     const classes = useStyles()
@@ -114,24 +114,16 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         control,
         formState: { errors },
         setValue,
+        getValues,
     } = useForm<Inputs>({
         resolver: yupResolver(Schema),
     })
     const login = useSelector((state: DefaultRootStateProps) => state.login)
-    // Puede renderizar?
-    const [canRender, setCanRender] = React.useState<boolean>(false)
-    const [userCards, setUserCards] = React.useState<CardRegional[] | any>([])
-
-    // Llamo las tarjetas
-    getCards(login.user._id)
-        .then((data: CardRegional[]) => setUserCards(data))
-        .catch(() => setUserCards(undefined))
-
-    React.useEffect(() => {
-        if (userCards?.length >= 1 && userCards !== undefined) {
-            setCanRender(true)
-        }
-    }, [userCards])
+    //query
+    const { data, loading, error } = useQuery(USER_CARD, {
+        fetchPolicy: 'network-only',
+        variables: { user: login.user._id },
+    })
 
     //mutations (transfe en mi cuenta)
     const [safeTransfer] = useMutation(MY_TRANSFER)
@@ -154,9 +146,24 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
 
     const [open, setOpen] = React.useState<boolean>(false)
     const [modal, setModal] = React.useState<string>('')
-    // const [transferOwnData, setTransferOwnData] = React.useState('')
+    const [dataForm, setDataForm] = React.useState<any>({
+        amount: '',
+        fromCard: '',
+        toOwnCard: '',
+        toCardSerial: '',
+    })
 
     const handleTransfer = () => {
+        setDataForm({
+            amount: myAccount
+                ? getValues('amount_transfer')
+                : getValues('to2_card'),
+            fromCard: myAccount
+                ? getValues('from_card')
+                : getValues('from_card'),
+            toOwnCard: myAccount ? getValues('to_card') : null,
+            toCardSerial: otherAccount ? getValues('code_card') : null,
+        })
         setOpen(true)
         setModal('transfer')
     }
@@ -204,6 +211,19 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         setEqualOtherAccount(false)
     }
 
+    React.useEffect(() => {
+        if (error) {
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Error de conexión',
+                anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                variant: 'alert',
+                alertSeverity: 'error',
+            })
+        }
+    }, [error])
+
     React.useLayoutEffect(() => {
         if (equalMyAccount) {
             console.log('ok')
@@ -230,7 +250,9 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                         },
                     },
                 })
-                console.log(response.data.createLocalSafeTransfer)
+
+                console.log(response.data.SafeTransfer)
+
                 setOpen(false)
                 dispatch({
                     type: SNACKBAR_OPEN,
@@ -240,7 +262,6 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                     variant: 'alert',
                     alertSeverity: 'success',
                 })
-                // setTransferOwnData(response.data.safeTransfer)
             } catch (error) {
                 dispatch({
                     type: SNACKBAR_OPEN,
@@ -250,7 +271,6 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                     variant: 'alert',
                     alertSeverity: 'error',
                 })
-                console.log(error)
             }
             setOpen(false)
         }
@@ -290,7 +310,6 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                     variant: 'alert',
                     alertSeverity: 'error',
                 })
-                console.log(error)
             }
             setOpen(false)
         }
@@ -325,7 +344,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                         </Grid>
                     ) : null}
                 </Grid>
-                {canRender && (
+                {!loading ? (
                     <Grid container spacing={2} sx={{ marginTop: '5px' }}>
                         <Grid item xs={12} md={6}>
                             <Typography variant="h6">
@@ -356,7 +375,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                         error={!!errors.from_card}
                                         helperText={errors.from_card?.message}
                                     >
-                                        {userCards.map((option) => (
+                                        {data?.UsersCards.map((option) => (
                                             <MenuItem
                                                 key={option._id}
                                                 value={option._id}
@@ -447,14 +466,16 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                                 }
                                                 disabled={readOnly}
                                             >
-                                                {userCards.map((option) => (
-                                                    <MenuItem
-                                                        key={option._id}
-                                                        value={option._id}
-                                                    >
-                                                        {option.card_no}
-                                                    </MenuItem>
-                                                ))}
+                                                {data?.UsersCards.map(
+                                                    (option) => (
+                                                        <MenuItem
+                                                            key={option._id}
+                                                            value={option._id}
+                                                        >
+                                                            {option.card_no}
+                                                        </MenuItem>
+                                                    )
+                                                )}
                                             </TextField>
                                         )}
                                     />
@@ -591,7 +612,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                             </>
                         ) : null}
                     </Grid>
-                )}
+                ) : null}
                 <CardActions>
                     <Grid container justifyContent="flex-end" spacing={0}>
                         <Grid item>
@@ -642,6 +663,7 @@ const TransferForm = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                             open={open}
                             setOpen={setOpen}
                             handleAccept={handleSubmit(onSubmit)}
+                            dataForm={dataForm}
                         />
                     ) : null}
                     {/* {modal === 'add' ? (

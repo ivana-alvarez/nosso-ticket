@@ -63,15 +63,13 @@ export const CREATE_CARD = gql`
 export const UPDATE_USER = gql`
     mutation updateUser($data: UpdateUserInput!) {
         updateUser(updateUserInput: $data) {
+            _id
             docCode
             docNum
             email
             lastname
             name
-            role {
-                _id
-            }
-            _id
+            phone
         }
     }
 `
@@ -123,6 +121,18 @@ export const OTHER_TRANSFER = gql`
             }
             regionalStatus
             toCardSerial
+        }
+    }
+`
+
+export const BLOCK_CARD = gql`
+    mutation createBlockCard($data: CreateBlockCardInput!) {
+        createBlockCard(createBlockCardInput: $data) {
+            _id
+            card {
+                _id
+            }
+            isBlocked
         }
     }
 `
