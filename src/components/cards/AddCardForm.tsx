@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const SchemaSearch = yup.object().shape({
     search: yup
         .string()
-        .max(8, 'Debe tener 8 dígitos')
+        .max(17, 'Debe tener 17 dígitos')
         .required('Este campo es obligatorio'),
 })
 const Schema = yup.object().shape({
@@ -83,7 +83,7 @@ const RechargeCardForm = ({ open, setOpen }) => {
         control,
         formState: { errors },
         // setValue,
-        // getValues,
+        getValues,
     } = useForm({
         resolver: yupResolver(Schema),
     })
@@ -95,7 +95,6 @@ const RechargeCardForm = ({ open, setOpen }) => {
     //mutation
     const [addCard, { loading }] = useMutation(CREATE_CARD)
     const [cardData, setCardData] = React.useState<CardRegional[] | any>([])
-    const [cardName, setCardName] = React.useState<any>('')
 
     const [validCode, setValidCode] = React.useState(false)
 
@@ -106,7 +105,7 @@ const RechargeCardForm = ({ open, setOpen }) => {
                 variables: {
                     data: {
                         card_no: data.search,
-                        card_alias: cardName,
+                        card_alias: getValues('name'),
                         include_transits: false,
                     },
                     user: login.user._id,
@@ -122,19 +121,17 @@ const RechargeCardForm = ({ open, setOpen }) => {
                 variant: 'alert',
                 alertSeverity: 'error',
             })
-            console.log(error)
+            setOpen(false)
         }
     }
 
     const handleAccept = (data) => {
         const { name } = data
         console.log('accept', name)
-        setCardName(name)
-        console.log(cardName)
 
         setOpen(false)
         setCardData('')
-        setCardName('')
+
         // searchForm.setValue('search', '')
         // setValue('name', '')
         setValidCode(false)
@@ -142,97 +139,103 @@ const RechargeCardForm = ({ open, setOpen }) => {
     }
     return (
         <>
-            {loading ? 'cargando' : null}
-            <form>
-                <AlertDialog
-                    open={open}
-                    setOpen={setOpen}
-                    handleAccept={handleSubmit(handleAccept)}
-                    title="Agregar Tarjeta"
-                    acceptButtonText="Aceptar"
-                >
-                    <div className="flex flex-wrap">
-                        <div className="w-full lg:w-1/2 p-2">
-                            <div className="flex justify-center">
-                                {validCode ? (
-                                    <Card1 className="max-h-48" />
-                                ) : (
-                                    <AddCard className="max-h-48" />
-                                )}
+            {!loading ? (
+                <form>
+                    <AlertDialog
+                        open={open}
+                        setOpen={setOpen}
+                        handleAccept={handleSubmit(handleAccept)}
+                        title="Agregar Tarjeta"
+                        acceptButtonText="Aceptar"
+                    >
+                        <div className="flex flex-wrap">
+                            <div className="w-full lg:w-1/2 p-2">
+                                <div className="flex justify-center">
+                                    {validCode ? (
+                                        <Card1 className="max-h-48" />
+                                    ) : (
+                                        <AddCard className="max-h-48" />
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                        <div className="w-full lg:w-1/2 py-2">
-                            <div className={classes.searchControl}>
-                                <form
-                                    className="flex items-center"
-                                    onSubmit={searchForm.handleSubmit(onSubmit)}
-                                >
+                            <div className="w-full lg:w-1/2 py-2">
+                                <div className={classes.searchControl}>
+                                    <form
+                                        className="flex items-center"
+                                        onSubmit={searchForm.handleSubmit(
+                                            onSubmit
+                                        )}
+                                    >
+                                        <Controller
+                                            name="search"
+                                            control={searchForm.control}
+                                            // defaultValue={cardsData?.description || ''}
+                                            render={({ field }) => (
+                                                <TextField
+                                                    {...field}
+                                                    className="mr-4"
+                                                    fullWidth
+                                                    label="Código del Titular"
+                                                    size="small"
+                                                    autoComplete="off"
+                                                    error={
+                                                        !!searchForm.formState
+                                                            .errors.search
+                                                    }
+                                                    helperText={
+                                                        searchForm.formState
+                                                            .errors?.message
+                                                    }
+                                                    // disabled={readOnlyState}
+                                                />
+                                            )}
+                                        />
+                                        <Button
+                                            variant="contained"
+                                            className="h-8"
+                                            size="small"
+                                            type="submit"
+                                            autoFocus
+                                        >
+                                            Buscar
+                                        </Button>
+                                    </form>
+
+                                    <CardsInfo
+                                        card_money={cardData?.card_money}
+                                        init_time={cardData?.init_time}
+                                        issue_time={cardData?.issue_time}
+                                    />
+                                </div>
+                            </div>
+                            {validCode ? (
+                                <div className={`w-full md:w-1/2 mt-4`}>
                                     <Controller
-                                        name="search"
-                                        control={searchForm.control}
+                                        name="name"
+                                        control={control}
                                         // defaultValue={cardsData?.description || ''}
                                         render={({ field }) => (
                                             <TextField
                                                 {...field}
-                                                className="mr-4"
+                                                className={`${classes.searchControl}`}
                                                 fullWidth
-                                                label="Código del Titular"
+                                                label="Nombre del Titular"
                                                 size="small"
                                                 autoComplete="off"
-                                                error={
-                                                    !!searchForm.formState
-                                                        .errors.search
-                                                }
+                                                error={!!errors.name}
                                                 helperText={
-                                                    searchForm.formState.errors
-                                                        ?.message
+                                                    errors.name?.message
                                                 }
                                                 // disabled={readOnlyState}
                                             />
                                         )}
                                     />
-                                    <Button
-                                        variant="contained"
-                                        className="h-8"
-                                        size="small"
-                                        type="submit"
-                                        autoFocus
-                                    >
-                                        Buscar
-                                    </Button>
-                                </form>
-                                <CardsInfo
-                                    card_money={cardData?.card_money}
-                                    init_time={cardData?.init_time}
-                                    issue_time={cardData?.issue_time}
-                                />
-                            </div>
+                                </div>
+                            ) : null}
                         </div>
-                        {validCode ? (
-                            <div className={`w-full md:w-1/2 mt-4`}>
-                                <Controller
-                                    name="name"
-                                    control={control}
-                                    // defaultValue={cardsData?.description || ''}
-                                    render={({ field }) => (
-                                        <TextField
-                                            {...field}
-                                            className={`${classes.searchControl}`}
-                                            fullWidth
-                                            label="Nombre del Titular"
-                                            size="small"
-                                            autoComplete="off"
-                                            error={!!errors.name}
-                                            helperText={errors.name?.message}
-                                            // disabled={readOnlyState}
-                                        />
-                                    )}
-                                />
-                            </div>
-                        ) : null}
-                    </div>
-                </AlertDialog>
-            </form>
+                    </AlertDialog>
+                </form>
+            ) : null}
         </>
     )
 }

@@ -1,6 +1,6 @@
 import AlertDialog from 'components/AlertDialog'
 
-const TransferAdd = ({ open, setOpen, handleAccept }) => {
+const TransferAdd = ({ open, setOpen, handleAccept, dataForm }) => {
     return (
         <>
             <AlertDialog
@@ -16,9 +16,18 @@ const TransferAdd = ({ open, setOpen, handleAccept }) => {
                         operación?
                     </p>
                     <br />
-                    <h4>DESDE SU TíTULO :</h4>
-                    <h4>A TÍTULO DE TRANSPORTE : </h4>
-                    <h4>MONTO :</h4>
+                    <h4>
+                        DESDE SU TíTULO :{''}
+                        {dataForm.fromCard}
+                    </h4>
+                    <h4>
+                        A TÍTULO DE TRANSPORTE :{''}
+                        {dataForm.toOwnCard} || {dataForm.toCardSerial}
+                    </h4>
+                    <h4>
+                        MONTO :{''}
+                        {dataForm.amount} {''}Bs
+                    </h4>
                 </div>
             </AlertDialog>
         </>

@@ -6,11 +6,8 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 // import { DefaultRootStateProps } from 'types'
 
 //REDUX
-// import { useSelector } from 'react-redux'
-// import {
-//     createFleetRequest,
-//     updateFleetRequest,
-// } from 'store/fleetCompany/FleetCompanyActions'
+import { useDispatch } from 'react-redux'
+
 // material-ui
 import {
     Grid,
@@ -25,17 +22,17 @@ import {
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import AnimateButton from 'ui-component/extended/AnimateButton'
-// import ErrorTwoToneIcon from '@material-ui/icons/ErrorTwoTone'
-// import UploadTwoToneIcon from '@material-ui/icons/UploadTwoTone'
-// import Avatar from 'ui-component/extended/Avatar'
-// import { gridSpacing } from 'store/constant'
-
 import TextField from '@mui/material/TextField'
-import { useDispatch, useSelector } from 'react-redux'
+import {
+    // useDispatch,
+    useSelector,
+} from 'react-redux'
 import { DefaultRootStateProps } from 'types'
-import { useMutation } from '@apollo/client'
-import { UPDATE_USER } from 'graphql/Mutations'
+import { useMutation, useQuery } from '@apollo/client'
+import { USER } from 'graphql/Querys'
 import { SNACKBAR_OPEN } from 'store/actions'
+import { UPDATE_USER } from 'graphql/Mutations'
+import { updateUserRequest } from 'store/user/userActions'
 
 const useStyles = makeStyles((theme: Theme) => ({
     alertIcon: {
@@ -114,7 +111,12 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     const dispatch = useDispatch()
     const login = useSelector((state: DefaultRootStateProps) => state.login)
     //mutation
-    const [updateUser, { loading }] = useMutation(UPDATE_USER)
+    const [updateUser] = useMutation(UPDATE_USER)
+    //query
+    const { data, loading, error } = useQuery(USER, {
+        fetchPolicy: 'network-only',
+        variables: { id: login.user._id },
+    })
 
     const {
         handleSubmit,
@@ -125,16 +127,9 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
         resolver: yupResolver(Schema),
     })
 
-    const [readOnlyState, setReadOnlyState] = React.useState<
-        boolean | undefined
-    >(readOnly)
-
-    const [editable, setEditable] = React.useState<boolean>(false)
-
     const [usedTitle, setUsedTitle] = React.useState<boolean>(true)
 
     const [balanceTitle, setBalanceTitle] = React.useState<boolean>(true)
-    // const [dataUser, setDataUser] = React.useState<any>([])
 
     const handleSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const name = event.target.name
@@ -170,16 +165,34 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
     ]
 
     const handleAbleToEdit = () => {
-        setReadOnlyState(!readOnlyState)
-        setEditable(!editable)
+        // setReadOnlyState(!readOnlyState)
+        // setEditable(!editable)
     }
 
-    const handleCancelEdit = () => {
-        setReadOnlyState(!readOnlyState)
-        setEditable(!editable)
-        //     setValue('transportation_mean', fleetData?.transportation_mean, {
-        //         shouldValidate: true,
-    }
+    React.useEffect(() => {
+        setValue('name', data?.User?.name)
+        setValue('email', data?.User?.email)
+        setValue('last_name', data?.User?.lastname)
+        setValue('number_phone', data?.User?.phone)
+        setValue('type_document', {
+            value: data?.User?.docCode.charAt(0),
+            label: data?.User?.docCode.charAt(0),
+        })
+        setValue('number_document', data?.User?.docNum)
+    }, [data])
+
+    React.useEffect(() => {
+        if (error) {
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Error de conexión',
+                anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                variant: 'alert',
+                alertSeverity: 'error',
+            })
+        }
+    }, [error])
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
@@ -192,12 +205,19 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                         email: data.email,
                         lastname: data.last_name,
                         name: data.name,
-                        password: '1234',
+                        phone: data.number_phone,
                     },
                 },
             })
-            console.log(resolve.data.updateUser)
-            // setDataUser('')
+            dispatch(updateUserRequest(resolve.data.updateUser))
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Actualización realizada',
+                anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                variant: 'alert',
+                alertSeverity: 'success',
+            })
         } catch (error) {
             dispatch({
                 type: SNACKBAR_OPEN,
@@ -207,13 +227,11 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                 variant: 'alert',
                 alertSeverity: 'error',
             })
-            console.log(error)
         }
     }
 
     return (
         <>
-            {loading ? 'cargando' : null}
             <Grid item xs={12}>
                 <Typography variant="h4">Datos de usuario</Typography>
             </Grid>
@@ -278,168 +296,175 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
             </Grid>
 
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Grid container spacing={2} sx={{ marginTop: '5px' }}>
-                    <Controller
-                        name="name"
-                        control={control}
-                        // defaultValue={fleetData?.unit_id}
-                        render={({ field }) => (
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <TextField
-                                    label="Nombres"
-                                    fullWidth
-                                    size="small"
-                                    autoComplete="off"
-                                    {...field}
-                                    error={!!errors.name}
-                                    helperText={errors.name?.message}
-                                    disabled={readOnlyState}
-                                />
-                            </Grid>
-                        )}
-                    />
-                    <Controller
-                        name="last_name"
-                        control={control}
-                        // defaultValue={fleetData?.transportation_mean}
-                        render={({ field }) => (
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <TextField
-                                    fullWidth
-                                    label="Apellidos"
-                                    size="small"
-                                    autoComplete="off"
-                                    {...field}
-                                    disabled={readOnlyState}
-                                    error={!!errors.last_name}
-                                    helperText={errors.last_name?.message}
-                                />
-                            </Grid>
-                        )}
-                    />
-
-                    <Controller
-                        name="email"
-                        control={control}
-                        // defaultValue={fleetData?.make}
-                        render={({ field }) => (
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <TextField
-                                    fullWidth
-                                    label="Correo electrónico"
-                                    size="small"
-                                    autoComplete="off"
-                                    {...field}
-                                    disabled={readOnlyState}
-                                    error={!!errors.email}
-                                    helperText={errors.email?.message}
-                                />
-                            </Grid>
-                        )}
-                    />
-
-                    <Controller
-                        name="number_phone"
-                        control={control}
-                        // defaultValue={fleetData?.model}
-                        render={({ field }) => (
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                lg={6}
-                                className={classes.searchControl}
-                            >
-                                <TextField
-                                    fullWidth
-                                    label="Número de contacto"
-                                    size="small"
-                                    autoComplete="off"
-                                    {...field}
-                                    disabled={readOnlyState}
-                                    error={!!errors.number_phone}
-                                    helperText={errors.number_phone?.message}
-                                />
-                            </Grid>
-                        )}
-                    />
-
-                    <Controller
-                        name="type_document"
-                        control={control}
-                        // defaultValue={fleetData?.plate}
-                        render={({ field }) => (
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <TextField
-                                    select
-                                    fullWidth
-                                    label="Tipo de documento"
-                                    size="small"
-                                    autoComplete="off"
-                                    {...field}
-                                    disabled={readOnlyState}
-                                    error={!!errors.type_document}
-                                    helperText={errors.type_document?.message}
+                {!loading ? (
+                    <Grid container spacing={2} sx={{ marginTop: '5px' }}>
+                        <Controller
+                            name="name"
+                            control={control}
+                            // defaultValue={data?.user?.name}
+                            render={({ field }) => (
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
                                 >
-                                    {typesDocument.map((option) => (
-                                        <MenuItem
-                                            key={option.label}
-                                            value={option.label}
-                                        >
-                                            {option.value}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </Grid>
-                        )}
-                    />
+                                    <TextField
+                                        label="Nombres"
+                                        fullWidth
+                                        size="small"
+                                        autoComplete="off"
+                                        {...field}
+                                        error={!!errors.name}
+                                        helperText={errors.name?.message}
+                                        // disabled={readOnlyState}
+                                    />
+                                </Grid>
+                            )}
+                        />
+                        <Controller
+                            name="last_name"
+                            control={control}
+                            // defaultValue={data?.user?.lastname}
+                            render={({ field }) => (
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
+                                >
+                                    <TextField
+                                        fullWidth
+                                        label="Apellidos"
+                                        size="small"
+                                        autoComplete="off"
+                                        {...field}
+                                        // disabled={readOnlyState}
+                                        error={!!errors.last_name}
+                                        helperText={errors.last_name?.message}
+                                    />
+                                </Grid>
+                            )}
+                        />
 
-                    <Controller
-                        name="number_document"
-                        control={control}
-                        // defaultValue={fleetData?.vin}
-                        render={({ field }) => (
-                            <Grid
-                                item
-                                xs={12}
-                                md={6}
-                                className={classes.searchControl}
-                            >
-                                <TextField
-                                    label="Documento de identidad"
-                                    fullWidth
-                                    size="small"
-                                    autoComplete="off"
-                                    {...field}
-                                    disabled={readOnlyState}
-                                    error={!!errors.number_document}
-                                    helperText={errors.number_document?.message}
-                                ></TextField>
-                            </Grid>
-                        )}
-                    />
-                </Grid>
+                        <Controller
+                            name="email"
+                            control={control}
+                            // defaultValue={data?.user?.email}
+                            render={({ field }) => (
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
+                                >
+                                    <TextField
+                                        fullWidth
+                                        label="Correo electrónico"
+                                        size="small"
+                                        autoComplete="off"
+                                        {...field}
+                                        // disabled={readOnlyState}
+                                        error={!!errors.email}
+                                        helperText={errors.email?.message}
+                                    />
+                                </Grid>
+                            )}
+                        />
 
+                        <Controller
+                            name="number_phone"
+                            control={control}
+                            // defaultValue={data?.user?.phone}
+                            render={({ field }) => (
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    lg={6}
+                                    className={classes.searchControl}
+                                >
+                                    <TextField
+                                        fullWidth
+                                        label="Número de contacto"
+                                        size="small"
+                                        autoComplete="off"
+                                        {...field}
+                                        // disabled={readOnlyState}
+                                        error={!!errors.number_phone}
+                                        helperText={
+                                            errors.number_phone?.message
+                                        }
+                                    />
+                                </Grid>
+                            )}
+                        />
+
+                        <Controller
+                            name="type_document"
+                            control={control}
+                            // defaultValue={data?.user?.docCode}
+                            render={({ field }) => (
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
+                                >
+                                    <TextField
+                                        select
+                                        fullWidth
+                                        label="Tipo de documento"
+                                        size="small"
+                                        autoComplete="off"
+                                        {...field}
+                                        // disabled={readOnlyState}
+                                        error={!!errors.type_document}
+                                        helperText={
+                                            errors.type_document?.message
+                                        }
+                                    >
+                                        {typesDocument.map((option) => (
+                                            <MenuItem
+                                                key={option.label}
+                                                value={option.label}
+                                            >
+                                                {option.value}
+                                            </MenuItem>
+                                        ))}
+                                    </TextField>
+                                </Grid>
+                            )}
+                        />
+
+                        <Controller
+                            name="number_document"
+                            control={control}
+                            // defaultValue={data?.user?.docNum}
+                            render={({ field }) => (
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    className={classes.searchControl}
+                                >
+                                    <TextField
+                                        label="Documento de identidad"
+                                        fullWidth
+                                        size="small"
+                                        autoComplete="off"
+                                        {...field}
+                                        // disabled={readOnlyState}
+                                        error={!!errors.number_document}
+                                        helperText={
+                                            errors.number_document?.message
+                                        }
+                                    ></TextField>
+                                </Grid>
+                            )}
+                        />
+                    </Grid>
+                ) : null}
                 <Grid container spacing={2} sx={{ marginTop: '5px' }}>
                     <Grid item xs={12}>
                         <Typography variant="h4">Notificaciones</Typography>
@@ -467,7 +492,7 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                             onChange={handleSwitch}
                                             value={usedTitle}
                                             checked={usedTitle}
-                                            disabled={readOnlyState}
+                                            // disabled={readOnlyState}
                                         />
                                     }
                                     label="Recibir cuando el titulo sea usado"
@@ -500,7 +525,7 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                                             onChange={handleSwitch}
                                             value={balanceTitle}
                                             checked={balanceTitle}
-                                            disabled={readOnlyState}
+                                            // disabled={readOnlyState}
                                         />
                                     }
                                     label="Recibir por bajo balance en el titulo"
@@ -514,30 +539,30 @@ const ProfileUser = ({ fleetId, onlyView, readOnly }: FleetProfileProps) => {
                 <CardActions>
                     <Grid container justifyContent="flex-end" spacing={0}>
                         <Grid item>
-                            {editable ? (
-                                <Grid item sx={{ display: 'flex' }}>
-                                    <AnimateButton>
-                                        <Button
-                                            // variant="contained"
-                                            size="medium"
-                                            onClick={handleCancelEdit}
-                                            className="mx-4"
-                                            color="error"
-                                        >
-                                            Cancelar
-                                        </Button>
-                                    </AnimateButton>
-                                    <AnimateButton>
-                                        <Button
-                                            variant="contained"
-                                            size="medium"
-                                            type="submit"
-                                        >
-                                            Aceptar
-                                        </Button>
-                                    </AnimateButton>
-                                </Grid>
-                            ) : null}
+                            {/* {editable ? (
+                                    <Grid item sx={{ display: 'flex' }}>
+                                        <AnimateButton>
+                                            <Button
+                                                // variant="contained"
+                                                size="medium"
+                                                onClick={handleCancelEdit}
+                                                className="mx-4"
+                                                color="error"
+                                            >
+                                                Cancelar
+                                            </Button>
+                                        </AnimateButton>
+                                        <AnimateButton>
+                                            <Button
+                                                variant="contained"
+                                                size="medium"
+                                                type="submit"
+                                            >
+                                                Aceptar
+                                            </Button>
+                                        </AnimateButton>
+                                    </Grid>
+                                ) : null} */}
                             {readOnly ? null : (
                                 <Grid item>
                                     <AnimateButton>

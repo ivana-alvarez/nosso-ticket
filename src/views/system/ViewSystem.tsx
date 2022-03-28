@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Accordion from 'ui-component/extended/Accordion'
 import SubCard from 'ui-component/cards/SubCard'
 import TableStickyHead from '../../components/TableStickyHead'
@@ -10,14 +10,15 @@ import RemoveCardForm from 'components/cards/RemoveCardForm'
 import BlockCardForm from 'components/cards/BlockCardForm'
 import Card1 from 'components/icons/Card1'
 
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { DefaultRootStateProps } from 'types'
 import { Fab, Tooltip } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 
-import { ApolloError, useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { USER_CARD } from 'graphql/Querys'
 import { CardRegional } from 'types/types'
+import { SNACKBAR_OPEN } from 'store/actions'
 
 const basicData = [
     {
@@ -27,40 +28,15 @@ const basicData = [
     },
 ]
 
-const getCards = (userId: string): Promise<CardRegional[]> => {
-    return new Promise((resolve, reject) => {
-        const { data, loading, error } = useQuery(USER_CARD, {
-            onError: (err: ApolloError) => reject(err),
-            fetchPolicy: 'network-only',
-            variables: { user: userId },
-        })
-        if (error) {
-            reject(error)
-        }
-        if (!loading) {
-            resolve(data.UsersCards)
-        }
-    })
-}
-
 const ViewSystem = () => {
+    const dispatch = useDispatch()
     const login = useSelector((state: DefaultRootStateProps) => state.login)
-    // Puede renderizar?
-    const [canRender, setCanRender] = useState<boolean>(false)
-    const [userCards, setUserCards] = React.useState<CardRegional[] | any>([])
+    const { data, loading, error } = useQuery(USER_CARD, {
+        fetchPolicy: 'network-only',
+        variables: { user: login.user._id },
+    })
+
     const [selectedCardId, setSelectedCardId] = React.useState('')
-
-    // Llamo las tarjetas
-    getCards(login.user._id)
-        .then((data: CardRegional[]) => setUserCards(data))
-        .catch(() => setUserCards(undefined))
-
-    useEffect(() => {
-        if (userCards?.length >= 1 && userCards !== undefined) {
-            setCanRender(true)
-        }
-    }, [userCards])
-
     const [open, setOpen] = React.useState<boolean>(false)
     const [modal, setModal] = React.useState<string>('')
 
@@ -71,7 +47,8 @@ const ViewSystem = () => {
         setOpen(true)
         setModal('recharge')
     }
-    const blockHandle = () => {
+    const blockHandle = (e) => {
+        setSelectedCardId(e.currentTarget.dataset.id)
         setOpen(true)
         setModal('block')
     }
@@ -85,11 +62,24 @@ const ViewSystem = () => {
         setModal('add')
     }
 
+    React.useEffect(() => {
+        if (error) {
+            dispatch({
+                type: SNACKBAR_OPEN,
+                open: true,
+                message: 'Error de conexión',
+                anchorOrigin: { vertical: 'top', horizontal: 'right' },
+                variant: 'alert',
+                alertSeverity: 'error',
+            })
+        }
+    }, [error])
+
     return (
         <>
-            {canRender && (
+            {!loading ? (
                 <div className="flex flex-wrap">
-                    {userCards.map((data: CardRegional) => (
+                    {data?.UsersCards.map((data: CardRegional) => (
                         <div className="w-full xl:w-1/2 p-4">
                             <SubCard>
                                 <div className="flex flex-wrap">
@@ -125,7 +115,7 @@ const ViewSystem = () => {
                         </div>
                     ))}
                 </div>
-            )}
+            ) : null}
             <div className="fixed right-12 bottom-12">
                 <Tooltip title="Agregar Tarjeta" placement="top">
                     <Fab aria-label="add" onClick={handleAdd} color="primary">
@@ -140,7 +130,11 @@ const ViewSystem = () => {
                 <AddCardForm open={open} setOpen={setOpen} />
             ) : null}
             {modal === 'block' ? (
-                <BlockCardForm open={open} setOpen={setOpen} />
+                <BlockCardForm
+                    open={open}
+                    setOpen={setOpen}
+                    selectedCardId={selectedCardId}
+                />
             ) : null}
             {modal === 'remove' ? (
                 <RemoveCardForm

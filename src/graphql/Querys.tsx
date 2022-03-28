@@ -10,6 +10,8 @@ export const USER_CARD = gql`
             issue_time
             card_type
             card_no
+            card_serial
+            card_alias
             user {
                 _id
                 name
@@ -38,6 +40,20 @@ export const FIND_TRANSFER = gql`
             }
             regionalStatus
             toCardSerial
+        }
+    }
+`
+
+export const USER = gql`
+    query User($id: String!) {
+        User(id: $id) {
+            _id
+            docCode
+            docNum
+            email
+            lastname
+            name
+            phone
         }
     }
 `

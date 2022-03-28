@@ -41,6 +41,7 @@ const CardsActions = ({
                     size="small"
                     onClick={blockHandle}
                     className="hover:bg-hover rounded-full w-1/4"
+                    data-id={cardId}
                 >
                     <div className="flex flex-col items-center">
                         <LockOutlinedIcon className="w-8 h-8 mt-3" />
